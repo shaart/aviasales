@@ -3,6 +3,9 @@
 *.iml
 out/
 
+# Configuration
+credentials.properties
+
 # Maven
 target/
 
