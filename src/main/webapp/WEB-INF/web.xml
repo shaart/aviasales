@@ -2,24 +2,54 @@
   "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
   "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://java.sun.com/xml/ns/javaee"
-  xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-  id="aviasales"
-  version="2.5">
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+  http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
   <display-name>Archetype Created Web Application</display-name>
   <context-param>
     <param-name>credentials</param-name>
     <param-value>credentials.properties</param-value>
   </context-param>
   <!-- MAIN PAGE -->
+  <!--
+  Servlet: com.epam.aviasales.controllers.MainServlet
+  Is configured by annotation for correct work as root
+  -->
+  <!-- LOGIN -->
   <servlet>
-    <servlet-name>mainPageServlet</servlet-name>
-    <servlet-class>com.epam.aviasales.controllers.MainPageServlet</servlet-class>
+    <servlet-name>loginServlet</servlet-name>
+    <servlet-class>com.epam.aviasales.controllers.LoginServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>mainPageServlet</servlet-name>
-    <url-pattern>/</url-pattern>
+    <servlet-name>loginServlet</servlet-name>
+    <url-pattern>/login</url-pattern>
+  </servlet-mapping>
+  <!-- REGISTER -->
+  <servlet>
+    <servlet-name>registerServlet</servlet-name>
+    <servlet-class>com.epam.aviasales.controllers.RegisterServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>registerServlet</servlet-name>
+    <url-pattern>/register</url-pattern>
+  </servlet-mapping>
+  <!-- FLIGHTS -->
+  <servlet>
+    <servlet-name>flightsServlet</servlet-name>
+    <servlet-class>com.epam.aviasales.controllers.FlightsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>flightsServlet</servlet-name>
+    <url-pattern>/flights</url-pattern>
+  </servlet-mapping>
+  <!-- MANAGE -->
+  <servlet>
+    <servlet-name>manageServlet</servlet-name>
+    <servlet-class>com.epam.aviasales.controllers.ManageServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>manageServlet</servlet-name>
+    <url-pattern>/manage</url-pattern>
   </servlet-mapping>
 </web-app>
