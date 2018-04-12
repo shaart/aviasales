@@ -8,7 +8,7 @@
     <id name="id" type="java.lang.Long" column="id">
       <generator class="identity"/>
     </id>
-    <property name="name" type="string" column="name" length="45" not-null="true" unique="true"/>
+    <property name="name" type="java.lang.String" column="name" length="45" not-null="true" unique="true"/>
     <property name="businessSeatsCount" type="java.lang.Integer" column="business_seats_count"
       length="11"
       not-null="true"/>
