@@ -5,14 +5,14 @@
 <hibernate-mapping>
   <class name="com.epam.aviasales.domain.Airplane" table="airplane"
     catalog="imshaart_aviasalesdemo">
-    <id name="id" type="java.lang.Integer" column="id">
+    <id name="id" type="java.lang.Long" column="id">
       <generator class="identity"/>
     </id>
     <property name="name" type="string" column="name" length="45" not-null="true" unique="true"/>
-    <property name="businessSeatsNumber" type="java.lang.Integer" column="business_seats_number"
+    <property name="businessSeatsCount" type="java.lang.Integer" column="business_seats_count"
       length="11"
       not-null="true"/>
-    <property name="economySeatsNumber" type="java.lang.Integer" column="economy_seats_number"
+    <property name="economySeatsCount" type="java.lang.Integer" column="economy_seats_count"
       length="11"
       not-null="true"/>
   </class>

@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 public class Airplane {
 
-  private Integer id;
+  private Long id;
   private String name;
-  private Integer businessSeatsNumber;
-  private Integer economySeatsNumber;
+  private Integer businessSeatsCount;
+  private Integer economySeatsCount;
 }

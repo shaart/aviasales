@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class Ticket {
 
-  private Integer id;
+  private Long id;
   private PersonalData personalData;
   private Flight flight;
   private Account account;
