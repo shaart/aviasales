@@ -11,6 +11,11 @@
     <param-name>credentials</param-name>
     <param-value>credentials.properties</param-value>
   </context-param>
+  <!--DEFAULT LANGUAGE-->
+  <context-param>
+    <param-name>javax.servlet.jsp.jstl.fmt.fallbackLocale</param-name>
+    <param-value>en</param-value>
+  </context-param>
   <!-- MAIN PAGE -->
   <!--
   Servlet: com.epam.aviasales.controllers.MainServlet
