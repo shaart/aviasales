@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="com.epam.aviasales.domain.Ticket" table="ticket" catalog="imshaart_aviasalesdemo">
+    <id name="id" type="java.lang.Long" column="id">
+      <generator class="identity"/>
+    </id>
+    <many-to-one name="personalData" class="com.epam.aviasales.domain.PersonalData"
+      column="personal_data_id" not-null="true" cascade="all"/>
+    <many-to-one name="flight" class="com.epam.aviasales.domain.Flight"
+      column="flight_id" not-null="true" cascade="all"/>
+    <many-to-one name="account" class="com.epam.aviasales.domain.Account"
+      column="account_id" not-null="true" cascade="all"/>
+    <property name="price" type="java.lang.Integer" column="price" length="11" not-null="true"/>
+    <property name="isBusiness" type="java.lang.Boolean" column="is_business" not-null="true"/>
+  </class>
+</hibernate-mapping>
