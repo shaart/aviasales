@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.epam.aviasales.domain">
+  <class name="Flight" table="flight" catalog="imshaart_aviasalesdemo">
+    <id name="id" type="java.lang.Long" column="id">
+      <generator class="identity"/>
+    </id>
+    <many-to-one name="fromAirportId" class="Airport" column="from_airport_id" not-null="true"/>
+    <many-to-one name="toAirportId" class="Airport" column="to_airport_id" not-null="true"/>
+    <many-to-one name="airplaneId" class="Airplane" column="airplane_id" not-null="true"/>
+    <property name="departureTime" type="java.time.LocalDateTime" column="departure_time" not-null="true"/>
+    <property name="arrivalTime" type="java.time.LocalDateTime" column="arrival_time" not-null="true"/>
+    <property name="baseTicketPrice" type="java.lang.Integer" column="base_ticket_price" not-null="true"/>
+    <property name="extraBaggagePrice" type="java.lang.Integer" column="extra_baggage_price" not-null="true"/>
+    <property name="freeSeatEconomy" type="java.lang.Integer" column="free_seat_economy" not-null="true"/>
+    <property name="freeSeatBusiness" type="java.lang.Integer" column="free_seat_business" not-null="true"/>
+  </class>
+</hibernate-mapping>

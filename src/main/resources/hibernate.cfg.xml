@@ -3,18 +3,19 @@
         "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-    <session-factory>
-        <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
-        <property name="hibernate.hbm2ddl.auto">update</property>
+  <session-factory>
+    <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+    <property name="hibernate.hbm2ddl.auto">update</property>
 
-        <property name="show_sql">true</property>
+    <property name="show_sql">true</property>
 
-        <mapping resource="com.epam/Ticket.hbm.xml"/>
-        <mapping resource="com.epam/Airplane.hbm.xml"/>
-        <mapping resource="com.epam/Account.hbm.xml"/>
-        <mapping resource="com.epam/PersonalData.hbm.xml"/>
-    </session-factory>
-
-</hibernate-configuration>
+    <mapping resource="com.epam/Airport.hbm.xml"/>
+    <mapping resource="com.epam/Flight.hbm.xml"/>
+    <mapping resource="com.epam/Ticket.hbm.xml"/>
+    <mapping resource="com.epam/Airplane.hbm.xml"/>
+    <mapping resource="com.epam/Account.hbm.xml"/>
+    <mapping resource="com.epam/PersonalData.hbm.xml"/>
+  </session-factory>
+  </hibernate-configuration>
