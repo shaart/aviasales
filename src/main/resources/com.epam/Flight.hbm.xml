@@ -4,7 +4,7 @@
 
 <hibernate-mapping package="com.epam.aviasales.domain">
   <class name="Flight" table="flight" catalog="imshaart_aviasalesdemo">
-    <id name="id" type="java.lang.Integer" column="id">
+    <id name="id" type="java.lang.Long" column="id">
       <generator class="identity"/>
     </id>
     <many-to-one name="fromAirportId" class="Airport" column="from_airport_id" not-null="true"/>
