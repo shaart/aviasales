@@ -22,4 +22,14 @@
     <servlet-name>mainPageServlet</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>UserProfileServlet</servlet-name>
+    <servlet-class>com.epam.aviasales.controllers.UserProfileServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>UserProfileServlet</servlet-name>
+    <url-pattern>/profile</url-pattern>
+  </servlet-mapping>
 </web-app>

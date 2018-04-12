@@ -1,5 +1,6 @@
 package com.epam.aviasales.util;
 
+import java.io.Serializable;
 import java.util.ResourceBundle;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
