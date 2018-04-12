@@ -7,9 +7,6 @@
     <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
-    <property name="hibernate.connection.url">
-      jdbc:mysql://aviasalesdemo.heliohost.org:3306/imshaart_aviasalesdemo
-    </property>
     <property name="show_sql">true</property>
 
     <mapping resource="com.epam/Ticket.hbm.xml"/>

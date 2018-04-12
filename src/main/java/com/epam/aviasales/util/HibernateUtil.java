@@ -20,6 +20,7 @@ public class HibernateUtil {
       ResourceBundle credentials = ResourceBundle.getBundle("credentials");
       configuration.setProperty("hibernate.connection.username", credentials.getString("db.username"));
       configuration.setProperty("hibernate.connection.password", credentials.getString("db.password"));
+      configuration.setProperty("hibernate.connection.url", credentials.getString("db.url"));
 
       configuration.configure();
       serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties())
