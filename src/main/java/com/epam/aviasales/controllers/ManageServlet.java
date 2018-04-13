@@ -12,6 +12,12 @@ public class ManageServlet extends HttpServlet {
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
 
-    super.doGet(req, resp);
+    req.getRequestDispatcher("manage.jsp").forward(req, resp);
+  }
+
+  @Override
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+      throws ServletException, IOException {
+    super.doPost(req, resp);
   }
 }
