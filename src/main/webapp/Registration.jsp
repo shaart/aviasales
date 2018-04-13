@@ -39,13 +39,19 @@
         <input type="login" name="inputLogin" id="inputLogin" class="form-control" placeholder=<fmt:message key="username" bundle="${lang}"/> required autofocus>
         <label for="inputPassword" class="sr-only"></label>
         <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder=<fmt:message key="password" bundle="${lang}"/> required>
+        <label for="inputPassword" class="sr-only"></label>
+        <input type="password" name="inputPasswordConfirm" id="inputPasswordConfirm" class="form-control" placeholder=<fmt:message key="password" bundle="${lang}"/> required>
+        <label for="inputPassword" class="sr-only"></label>
+        <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder=<fmt:message key="email" bundle="${lang}"/> required>
+        <label for="inputPassword" class="sr-only"></label>
+        <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder=<fmt:message key="password" bundle="${lang}"/> required>
+        <label for="inputPassword" class="sr-only"></label>
+        <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder=<fmt:message key="password" bundle="${lang}"/> required>
         <button class="btn btn-lg btn-primary btn-block" type="submit"><fmt:message key="log_in" bundle="${lang}"/></button>
     </form>
-    <c:if test = "${errorMessage != null}">
-        <p>
-            <font color="red"><fmt:message key="${errorMessage}" bundle="${lang}"/></font>
-        </p>
-    </c:if>
+    <p>
+        <font color="red">${errorMessage}</font>
+    </p>
 
 </div>
 
