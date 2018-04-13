@@ -20,7 +20,9 @@ public class AccountService {
     return instance;
   }
 /*ToDO add validation code*/
-  public boolean validate(String login, String password) {
-    return "1@e.com".equals(login) && "1".equals(password);
+  public Account validate(String login, String password) {
+    return new Account();
+   // return "1@e.com".equals(login) && "1".equals(password);
   }
+
 }

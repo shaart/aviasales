@@ -18,29 +18,23 @@ public class LoginServlet extends HttpServlet {
     req.getRequestDispatcher("Login.jsp").forward(req, resp);
   }
   /*ToDo: add code for remembeMe checkbox, add Account to attributes?
-   * ToDo: Change pageToRedirect to /profile*/
+   * */
   @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+  protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    String login = req.getParameter("inputLogin");
-    String password = req.getParameter("inputPassword");
-    // проверка логина и пароля
-    // если все верно, то добавляем в сеанс id пользователя или Account
-    // и редиректим туда, откуда он там пришел
+    String login = request.getParameter("inputLogin");
+    String password = request.getParameter("inputPassword");
 
     AccountService accountService = AccountService.getInstance();
-    boolean isAccountValidated = accountService.validate(login, password);
-    if (isAccountValidated) {
-      HttpSession session = req.getSession(true);
-      session.setAttribute("login", login);
-
-      String pageToRedirect = (String) session.getAttribute("prevPage");
-      pageToRedirect = pageToRedirect != null ? pageToRedirect : "/";
-      resp.sendRedirect(pageToRedirect);
+    Account account = accountService.validate(login, password);
+    /*if (isAccountValidated) {
+      HttpSession session = request.getSession(true);
+      session.setAttribute("account", );
+      response.sendRedirect("/");
     } else {
-      req.setAttribute("errorMessage", "Credentials are invalid");
-      req.getRequestDispatcher("Login.jsp").forward(req, resp);
-    }
+      request.setAttribute("errorMessage", "Credentials are invalid");
+      request.getRequestDispatcher("Login.jsp").forward(request, response);
+    }*/
   }
 }
