@@ -14,7 +14,7 @@ public class Ticket implements Serializable {
 
   private Long id;
   private PersonalData personalData;
-  private Flight flight;
+  //private Flight flight;
   private Account account;
   private Integer price;
   private Boolean isBusiness;
