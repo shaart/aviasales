@@ -1,8 +1,9 @@
 package com.epam.aviasales.controllers;
 
 import com.epam.aviasales.domain.Account;
-import com.epam.aviasales.services.AccountService;
 
+import com.epam.aviasales.services.AccountService;
+import com.epam.aviasales.services.impl.AccountServiceImpl;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,8 +15,8 @@ public class UserProfileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        AccountService accountService = AccountService.getInstance();
-        Account account1 = accountService.getAccount("johnsmith");
+        AccountService accountService = AccountServiceImpl.getInstance();
+        Account account1 = accountService.getByName("johnsmith");
 
         req.setAttribute("type", account1.getType());
         req.setAttribute("name", account1.getName());
