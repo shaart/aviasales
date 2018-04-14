@@ -1,22 +1,19 @@
 package com.epam.aviasales.services;
 
 import com.epam.aviasales.domain.Account;
-import com.epam.aviasales.repositories.AccountRepository;
+import java.util.List;
 
-public class AccountService {
-    private static AccountService instance;
-    private AccountService(){
+public interface AccountService {
 
-    }
-    public Account getAccount(String login){
-        AccountRepository accountRepository = AccountRepository.getInstance();
-        return accountRepository.getAccount(login);
-    }
-    public static synchronized AccountService getInstance(){
-        if(instance == null){
-            instance = new AccountService();
-        }
-        return instance;
-    }
+  List<Account> getAccounts();
 
+  List<Account> getAccounts(int page, int count);
+
+  Account getByName(String name);
+
+  Account getById(Long id);
+
+  Account getAccountByLogin(String login);
+
+  void insert(Account account);
 }

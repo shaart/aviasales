@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Flight implements Serializable {
+
   private Long id;
   private Airport fromAirportId;
   private Airport toAirportId;
