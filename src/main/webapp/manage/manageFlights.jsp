@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://aviasales.epam.com/jsp/util/functions" prefix="juf" %>
 <c:set var="language" value="${not empty param.language ? param.language :
     not empty language ?  language : pageContext.request.locale}"
        scope="session"/>
@@ -19,25 +20,25 @@
         <tr>
             <th class="text-center" style="width: 3%;">
                 <fmt:message key="flight.label.id" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 10%;">
+            <th class="text-center" style="width: 7%;">
                 <fmt:message key="flight.label.from" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 10%;">
+            <th class="text-center" style="width: 7%;">
                 <fmt:message key="flight.label.to" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 10%;">
+            <th class="text-center" style="width: 7%;">
                 <fmt:message key="flight.label.airplane" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 10%;">
+            <th class="text-center" style="width: 7%;">
                 <fmt:message key="flight.label.departure" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 10%;">
+            <th class="text-center" style="width: 7%;">
                 <fmt:message key="flight.label.arrival" bundle="${lang}"/></th>
             <th class="text-center" style="width: 5%;">
                 <fmt:message key="flight.label.base_ticket_price" bundle="${lang}"/></th>
             <th class="text-center" style="width: 5%;">
                 <fmt:message key="flight.label.extra_baggage_price" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 5%;">
+            <th class="text-center" style="width: 3%;">
                 <fmt:message key="flight.label.free_seat_economy" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 5%;">
+            <th class="text-center" style="width: 3%;">
                 <fmt:message key="flight.label.free_seat_business" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 25%;">
+            <th class="text-center" style="width: 10%;">
                 <fmt:message key="flight.label.control" bundle="${lang}"/></th>
         </tr>
         </thead>
@@ -45,7 +46,7 @@
         <c:forEach var="flight" items="${flights}">
             <tr>
                 <form action="/manage/flights" method="post">
-                    <td><input readonly type="number" class="form-control" width="10" name="id"
+                    <td><input readonly type="text" class="form-control" width="10" name="id"
                                value="${flight.id}"></td>
                     <td><input type="text" class="form-control" name="fromAirport"
                                value="${flight.fromAirport.name}"></td>
@@ -53,10 +54,13 @@
                                value="${flight.toAirport.name}"></td>
                     <td><input type="text" class="form-control" name="airplane"
                                value="${flight.airplane.name}"></td>
-                    <td><input type="datetime-local" class="form-control" name="departureTime"
-                               value="${flight.departureTime}"></td>
-                    <td><input type="datetime-local" class="form-control" name="arrivalTime"
-                               value="${flight.arrivalTime}"></td>
+                    <td><input class="form-control" name="departureTime"
+                               value="${juf:getLocalizedDateTime(flight.departureTime, language)}">
+                    <td>
+                        <input type="text" class="form-control"
+                               name="arrivalTime"
+                               value="${juf:getLocalizedDateTime(flight.arrivalTime, language)}">
+                    </td>
                     <td><input type="number" class="form-control" name="baseTicketPrice"
                                value="${flight.baseTicketPrice}"></td>
                     <td><input type="number" class="form-control" name="extraBaggagePrice"
@@ -68,11 +72,11 @@
                     <td>
                         <div class="btn-group btn-group-justified">
                             <div class="btn-group">
-                                <input type="submit" class="btn btn-primary" name="action"
-                                       value="<fmt:message key="flight.label.control.update" bundle="${lang}"/>">
+                                <input type="submit" class="btn btn-primary" name="actionSave"
+                                       value="<fmt:message key="flight.label.control.save" bundle="${lang}"/>">
                             </div>
                             <div class="btn-group">
-                                <input type="submit" class="btn btn-primary" name="action"
+                                <input type="submit" class="btn btn-primary" name="actionDelete"
                                        value="<fmt:message key="flight.label.control.delete" bundle="${lang}"/>">
                             </div>
                         </div>
