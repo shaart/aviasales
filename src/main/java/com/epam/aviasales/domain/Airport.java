@@ -9,6 +9,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Airport implements Serializable {
+
   private Long id;
   private String name;
 }

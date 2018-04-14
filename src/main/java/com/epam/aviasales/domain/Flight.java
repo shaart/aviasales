@@ -15,6 +15,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class Flight implements Serializable {
+
   private Long id;
   private Airport fromAirport;
   private Airport toAirport;
