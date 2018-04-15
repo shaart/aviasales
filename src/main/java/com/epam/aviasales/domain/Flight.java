@@ -8,15 +8,15 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Setter
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class Flight implements Serializable {
   private Long id;
-  private Airport fromAirportId;
-  private Airport toAirportId;
-  private Airplane airplaneId;
+  private Airport fromAirport;
+  private Airport toAirport;
+  private Airplane airplane;
   private LocalDateTime departureTime;
   private LocalDateTime arrivalTime;
   private Integer baseTicketPrice;
