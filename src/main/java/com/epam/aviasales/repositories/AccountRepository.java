@@ -5,6 +5,7 @@ import com.epam.aviasales.util.HibernateUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -26,7 +27,7 @@ public class AccountRepository {
     for (int i = 1; i < CACHE_COUNT; i++) {
       ACCOUNTS_CACHE.put(Long.valueOf(i),
           new Account(Long.valueOf(i), i % 30 == 0 ? 2 : (i % 15 == 0 ? 1 : 0),
-              i == 15 ? "Bob Marley" : "BOB-" + i, "smartbob" + i, "SHA256-" + i,
+              i == 15 ? "Bob Marley" : "BOB-" + i, "smartbob" + i, new String(DigestUtils.sha256("SHA256-" + i)),
               "bob" + i + "@bobworld.com", "123456789"));
     }
   }
@@ -41,8 +42,9 @@ public class AccountRepository {
       return airplaneList;
     }
 
-    final int startI = (page - 1) * count;
-    for (int i = startI; i < startI + count; i++) {
+    final int startI = (page - 1) * count + 1;
+    final int REQ_NUM = count == Integer.MAX_VALUE ? count : startI + count;
+    for (int i = startI; i < REQ_NUM; i++) {
       if (i >= ACCOUNTS_CACHE.size()) {
         break;
       }

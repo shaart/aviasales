@@ -38,8 +38,9 @@ public class AirplaneRepository {
       return airplaneList;
     }
 
-    final int startI = (page - 1) * count;
-    for (int i = startI; i < startI + count; i++) {
+    final int startI = (page - 1) * count + 1;
+    final int REQ_NUM = count == Integer.MAX_VALUE ? count : startI + count;
+    for (int i = startI; i < REQ_NUM; i++) {
       if (i >= AIRPLANE_CACHE.size()) {
         break;
       }

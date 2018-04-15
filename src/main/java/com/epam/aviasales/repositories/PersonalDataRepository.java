@@ -42,8 +42,9 @@ public class PersonalDataRepository {
       return PersonalDataList;
     }
 
-    final int startI = (page - 1) * count;
-    for (int i = startI; i < startI + count; i++) {
+    final int startI = (page - 1) * count + 1;
+    final int REQ_NUM = count == Integer.MAX_VALUE ? count : startI + count;
+    for (int i = startI; i < REQ_NUM; i++) {
       if (i >= PERSONAL_DATA_CACHE.size()) {
         break;
       }

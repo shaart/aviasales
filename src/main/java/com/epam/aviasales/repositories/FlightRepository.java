@@ -70,13 +70,31 @@ public class FlightRepository {
       return flightList;
     }
 
-    final int startI = (page - 1) * count;
-    for (int i = startI; i < startI + count; i++) {
+    final int startI = (page - 1) * count + 1;
+    final int REQ_NUM = count == Integer.MAX_VALUE ? count : startI + count;
+    for (int i = startI; i < REQ_NUM; i++) {
       if (i >= FLIGHT_CACHE.size()) {
         break;
       }
       flightList.add(FLIGHT_CACHE.get(Long.valueOf(i)));
     }
     return flightList;
+  }
+
+  public void deleteById(Long id) {
+  }
+
+  public void delete(Flight flight) {
+  }
+
+  public void update(Flight flight) {
+  }
+
+  public boolean isExists(Flight flight) {
+    return false;
+  }
+
+  public boolean isExists(Long id) {
+    return false;
   }
 }

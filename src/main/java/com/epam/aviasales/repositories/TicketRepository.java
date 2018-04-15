@@ -36,7 +36,7 @@ public class TicketRepository {
       TICKET_CACHE.put(Long.valueOf(i),
           new Ticket(Long.valueOf(i), personalDataService.getById(Long.valueOf(i)),
               flightService.getById(Long.valueOf(i)), accountService.getById(Long.valueOf(i)),
-              1000 + i * 100, i % 7 == 0 ? true : false));
+              1000 + i * 100, i % 7 == 0));
     }
   }
 
@@ -50,8 +50,9 @@ public class TicketRepository {
       return ticketList;
     }
 
-    final int startI = (page - 1) * count;
-    for (int i = startI; i < startI + count; i++) {
+    final int startI = (page - 1) * count + 1;
+    final int REQ_NUM = count == Integer.MAX_VALUE ? count : startI + count;
+    for (int i = startI; i < REQ_NUM; i++) {
       if (i >= TICKET_CACHE.size()) {
         break;
       }
