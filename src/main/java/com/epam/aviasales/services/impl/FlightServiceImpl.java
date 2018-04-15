@@ -30,4 +30,29 @@ public class FlightServiceImpl implements FlightService {
   public Flight getById(Long id) {
     return flightRepository.getById(id);
   }
+
+  @Override
+  public void delete(Flight flight) {
+    flightRepository.delete(flight);
+  }
+
+  @Override
+  public void deleteByID(Long id) {
+    flightRepository.deleteById(id);
+  }
+
+  @Override
+  public void update(Flight flight) {
+    flightRepository.update(flight);
+  }
+
+  @Override
+  public boolean isExists(Flight flight) {
+    return flightRepository.isExists(flight);
+  }
+
+  @Override
+  public boolean isExists(Long id) {
+    return flightRepository.isExists(id);
+  }
 }
