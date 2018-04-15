@@ -11,11 +11,37 @@
 <html lang="${language}">
 <head>
     <title><fmt:message key="manage.title" bundle="${lang}"/></title>
+    <%--<script type="text/javascript" href="js/tableSearch.js"></script>--%>
+    <script type="text/javascript">
+      function searchAtTable() {
+        // Declare variables
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("seekFor");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("dataTable");
+        tr = table.getElementsByTagName("tr");
+        var rows = tr.getElementsByClassName("lookatme");
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("td");
+          if (td) {
+            if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
+          }
+        }
+      }
+    </script>
 </head>
 <body>
 <%@include file="../layout/header.jsp" %>
 <div class="container" style="width: 100%">
-    <table class="table-bordered">
+    <span class="glyphicon glyphicon-search"></span>
+    <input id="seekFor" type="text" onkeyup="searchAtTable()"
+           placeholder="<fmt:message key="flight.label.search" bundle="${lang}"/>"
+           title="<fmt:message key="flight.label.search.title" bundle="${lang}"/>">
+    <table id="dataTable" class="table-bordered">
         <thead>
         <tr>
             <th class="text-center" style="width: 3%;">
