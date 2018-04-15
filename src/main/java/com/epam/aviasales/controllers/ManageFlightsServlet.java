@@ -33,7 +33,6 @@ public class ManageFlightsServlet extends HttpServlet {
       airportsService = AirportServiceImpl.getInstance();
       airplaneService = AirplaneServiceImpl.getInstance();
     } catch (Exception e) {
-      e.printStackTrace();
       log.error(e);
     }
   }
@@ -49,7 +48,7 @@ public class ManageFlightsServlet extends HttpServlet {
 
       req.getRequestDispatcher("manageFlights.jsp").forward(req, resp);
     } catch (Exception e) {
-      e.printStackTrace();
+      log.error(e);
       req.setAttribute("error", e.toString());
       req.getRequestDispatcher("../error.jsp").forward(req, resp);
     }
@@ -82,7 +81,7 @@ public class ManageFlightsServlet extends HttpServlet {
           Integer freeSeatEconomy = Integer.parseInt(req.getParameter("freeSeatEconomy"));
           Integer freeSeatBusiness = Integer.parseInt(req.getParameter("freeSeatBusiness"));
 
-          Flight reqFlight = new Flight(
+          Flight updFlight = new Flight(
               id,
               fromAirport,
               toAirport,
@@ -94,20 +93,22 @@ public class ManageFlightsServlet extends HttpServlet {
               freeSeatEconomy,
               freeSeatBusiness);
 
-          responseOut.println(reqFlight);
+          responseOut.println(updFlight);
+          flightService.update(updFlight);
           break;
         case "delete":
           Flight flight = new Flight();
           flight.setId(id);
 
+          flightService.delete(flight);
           break;
         default:
           return;
       }
-    } catch (Exception e) {
-      // out to user
-      return;
 
+      req.getRequestDispatcher("/manage/flights").forward(req, resp);
+    } catch (Exception e) {
+      log.error(e);
     }
   }
 }

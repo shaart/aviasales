@@ -2,11 +2,13 @@ package com.epam.aviasales.util;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
+import lombok.extern.log4j.Log4j;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
+@Log4j
 public class HibernateUtil {
 
   private static final SessionFactory sessionFactory = buildSessionFactory();
@@ -29,7 +31,7 @@ public class HibernateUtil {
 
       return configuration.buildSessionFactory(serviceRegistry);
     } catch (Throwable ex) {
-      System.err.println("Initial SessionFactory creation failed." + ex);
+      log.error("Initial SessionFactory creation failed.", ex);
       throw new ExceptionInInitializerError(ex);
     }
   }
