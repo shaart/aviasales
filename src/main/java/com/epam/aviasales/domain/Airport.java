@@ -4,10 +4,10 @@ import lombok.*;
 
 import java.io.Serializable;
 
-@Setter
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class Airport implements Serializable {
   private Long id;
   private String name;
