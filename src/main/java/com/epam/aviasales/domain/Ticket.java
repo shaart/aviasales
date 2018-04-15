@@ -1,13 +1,13 @@
 package com.epam.aviasales.domain;
 
-import java.io.Serializable;
 import lombok.AllArgsConstructor;
+import java.io.Serializable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class Ticket implements Serializable {

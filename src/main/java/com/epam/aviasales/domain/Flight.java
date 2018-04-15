@@ -9,13 +9,12 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import lombok.ToString;
 
-@Setter
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @ToString
 public class Flight implements Serializable {
-
   private Long id;
   private Airport fromAirport;
   private Airport toAirport;

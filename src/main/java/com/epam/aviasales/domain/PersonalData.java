@@ -1,15 +1,15 @@
 package com.epam.aviasales.domain;
 
-import java.io.Serializable;
 import lombok.AllArgsConstructor;
+import java.io.Serializable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class PersonalData implements Serializable {

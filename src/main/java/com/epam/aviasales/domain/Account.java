@@ -6,17 +6,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class Account implements Serializable {
-
-  private Long id;
-  private Integer type;
-  private String name;
-  private String login;
-  private String password;
-  private String email;
-  private String phone;
+    private Long id;
+    private Integer type;
+    private String name;
+    private String login;
+    private String password;
+    private String email;
+    private String phone;
 }
