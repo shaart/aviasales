@@ -155,4 +155,11 @@ public class TicketRepositoryImpl implements TicketRepository {
   public List<Ticket> getTickets(int page, int count) {
     return null;
   }
+
+  public List<Ticket> getTicketsByAccountId(Long accountId) {
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    Query query = session.createQuery("from Ticket WHERE account.id = :accountId");
+    query.setParameter("accountId", accountId);
+    return query.list();
+  }
 }

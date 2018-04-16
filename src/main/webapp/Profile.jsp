@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.time.LocalDateTime" %><%--
   Created by IntelliJ IDEA.
   User: vikto
   Date: 4/12/2018
@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib uri="/WEB-INF/functions.tld" prefix="f" %>
 <c:set var="language" value="${not empty param.language ?
     param.language : not empty language ? language : pageContext.request.locale}" scope="session"/>
 <fmt:setLocale value="${language}"/>
@@ -33,45 +34,68 @@
 
 
 <h2>
-    User type : ${account.type}<br>
     Name : ${account.name}<br>
     LoginName : ${account.login}<br>
     Email : ${account.email}<br>
     Phone : ${account.phone}
 </h2>
-<table class="table table-hover">
-    <thead>
-    <tr>
-        <th scope="col"><fmt:message key="profile.label.name" bundle="${lang}"/></th>
-        <th scope="col"><fmt:message key="profile.label.passport" bundle="${lang}"/></th>
-        <th scope="col"><fmt:message key="profile.label.dob" bundle="${lang}"/></th>
-        <th scope="col"><fmt:message key="profile.label.airportFrom" bundle="${lang}"/></th>
-        <th scope="col"><fmt:message key="profile.label.airportTo" bundle="${lang}"/></th>
-        <th scope="col"><fmt:message key="profile.label.departureTime" bundle="${lang}"/></th>
-        <th scope="col"><fmt:message key="profile.label.arrivalTime" bundle="${lang}"/></th>
-        <th scope="col"><fmt:message key="profile.label.extraBaggagePrice" bundle="${lang}"/></th>
-        <th scope="col"><fmt:message key="profile.label.class" bundle="${lang}"/></th>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach var="ticket" items="${tickets}">
-        <tr>
-            <td>${ticket.personalData.name}</td>
-            <td>${ticket.personalData.passport} </td>
-            <td>${ticket.personalData.dateOfBirth}</td>
-            <td>${ticket.flight.fromAirportId.name}</td>
-            <td>${ticket.flight.toAirportId.name}</td>
-            <td>${ticket.flight.departureTime}</td>
-            <td>${ticket.flight.arrivalTime}</td>
-            <td>${ticket.flight.extraBaggagePrice}</td>
-            <td><c:choose>
-                <c:when test="${ticket.isBusiness == true}"><fmt:message key="profile.label.business" bundle="${lang}"/></c:when>
-                <c:otherwise><fmt:message key="profile.label.economy" bundle="${lang}"/></c:otherwise>
-            </c:choose>
-            </td>
-        </tr>
-    </c:forEach>
-    </tbody>
-</table>
+<c:choose>
+    <c:when test="${noTickets == false}">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col"><fmt:message key="profile.label.name" bundle="${lang}"/></th>
+                <th scope="col"><fmt:message key="profile.label.passport" bundle="${lang}"/></th>
+                <th scope="col"><fmt:message key="profile.label.dob" bundle="${lang}"/></th>
+                <th scope="col"><fmt:message key="profile.label.airportFrom" bundle="${lang}"/></th>
+                <th scope="col"><fmt:message key="profile.label.airportTo" bundle="${lang}"/></th>
+                <th scope="col"><fmt:message key="profile.label.departureTime"
+                                             bundle="${lang}"/></th>
+                <th scope="col"><fmt:message key="profile.label.arrivalTime" bundle="${lang}"/></th>
+                <th scope="col"><fmt:message key="profile.label.extraBaggagePrice"
+                                             bundle="${lang}"/></th>
+                <th scope="col"><fmt:message key="profile.label.class" bundle="${lang}"/></th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="ticket" items="${tickets}">
+                <tr>
+                    <form action="/profile" method="post">
+                        <td>${ticket.personalData.name}</td>
+                        <td>${ticket.personalData.passport} </td>
+                        <td>${ticket.personalData.dateOfBirth}</td>
+                        <td>${ticket.flight.fromAirportId.name}</td>
+                        <td>${ticket.flight.toAirportId.name}</td>
+                        <td>${ticket.flight.departureTime}</td>
+                        <td>${ticket.flight.arrivalTime}</td>
+                        <td>${ticket.flight.extraBaggagePrice}</td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${ticket.isBusiness == true}"><fmt:message
+                                        key="profile.label.business"
+                                        bundle="${lang}"/></c:when>
+                                <c:otherwise><fmt:message key="profile.label.economy"
+                                                          bundle="${lang}"/></c:otherwise>
+                            </c:choose>
+                        </td>
+
+                        <td>
+                            <c:if test="${f:isBefore(ticket.flight.departureTime)}">
+                                <button type="submit" class="btn btn-primary btn-sm"><fmt:message
+                                        key="profile.label.return"
+                                        bundle="${lang}"/>
+                                </button>
+                            </c:if>
+                        </td>
+                        <input type="hidden" name="ticketId" value="${ticket.id}">
+                    </form>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </c:when>
+    <c:otherwise><fmt:message key="profile.message.noTicket" bundle="${lang}"/></c:otherwise>
+</c:choose>
 </body>
 </html>

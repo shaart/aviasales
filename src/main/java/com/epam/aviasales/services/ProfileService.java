@@ -2,12 +2,13 @@ package com.epam.aviasales.services;
 
 import com.epam.aviasales.domain.Ticket;
 import com.epam.aviasales.repositories.TicketRepository;
+import com.epam.aviasales.repositories.impl.TicketRepositoryImpl;
 
 import java.util.List;
 
 public class ProfileService {
   private static volatile ProfileService instance;
-  private static final TicketRepository ticketRepository = TicketRepository.getInstance();
+  private static final TicketRepository ticketRepository = TicketRepositoryImpl.getInstance();
 
   private ProfileService() {}
 
@@ -25,6 +26,6 @@ public class ProfileService {
   }
 
   public List<Ticket> getAccountTickets(Long accountId) {
-    return ticketRepository.getTickets(accountId);
+    return ticketRepository.getTicketsByAccountId(accountId);
   }
 }

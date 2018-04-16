@@ -27,10 +27,22 @@ public class ProfileServlet extends HttpServlet {
     HttpSession session = request.getSession();
     Account account = (Account) session.getAttribute("account");
     List<Ticket> tickets = profileService.getAccountTickets(account.getId());
+    if (tickets.isEmpty()) {
+      request.setAttribute("noTickets", true);
+    } else request.setAttribute("noTickets", false);
 
     request.setAttribute("account", account);
+    /*Todo Localization for arrival and departure dates*/
     request.setAttribute("tickets", tickets);
 
+    request.getRequestDispatcher("Profile.jsp").forward(request, response);
+  }
+
+  @Override
+  protected void doPost(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+
+    String login = request.getParameter("ticketId");
     request.getRequestDispatcher("Profile.jsp").forward(request, response);
   }
 }

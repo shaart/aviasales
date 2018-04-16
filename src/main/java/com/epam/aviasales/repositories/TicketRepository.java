@@ -20,4 +20,6 @@ public interface TicketRepository {
   List<Ticket> getTicketsLike(Ticket seekingTicket, int page, int size);
 
   void updateTicket(Long id, Ticket receivedTicket);
+
+  List<Ticket> getTicketsByAccountId(Long accountId);
 }
