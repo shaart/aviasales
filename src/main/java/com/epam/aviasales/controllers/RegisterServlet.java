@@ -2,6 +2,7 @@ package com.epam.aviasales.controllers;
 
 import com.epam.aviasales.domain.Account;
 import com.epam.aviasales.services.RegisterService;
+import com.epam.aviasales.services.impl.RegisterServiceImpl;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.IOException;
@@ -32,15 +33,18 @@ public class RegisterServlet extends HttpServlet {
     String email = request.getParameter("inputEmail");
     String phone = request.getParameter("inputPhone");
 
-    Account account = new Account();
-    account.setLogin(login);
-    account.setType(0);
-    account.setName(fullName);
-    account.setPassword(DigestUtils.sha256Hex(password));
-    account.setEmail(email);
-    account.setPhone(phone);
+    Account account =
+        Account.builder()
+            .login(login)
+            .type(0)
+            .name(fullName)
+            .password(DigestUtils.sha256Hex(password))
+            .email(email)
+            .phone(phone)
+            .build();
 
     List<String> errorMessages = registerService.addAccount(account);
+    System.out.println(errorMessages.isEmpty());
     if (errorMessages.isEmpty()) {
       account.setPassword(null);
       HttpSession session = request.getSession(true);
@@ -53,6 +57,6 @@ public class RegisterServlet extends HttpServlet {
   }
 
   public void init() {
-    registerService = RegisterService.getInstance();
+    registerService = RegisterServiceImpl.getInstance();
   }
 }

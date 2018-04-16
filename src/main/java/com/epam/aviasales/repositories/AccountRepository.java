@@ -10,8 +10,11 @@ public interface AccountRepository {
   List<Account> getAccountByLogin(String login);
 
   List<Account> getAccounts();
+public interface AccountRepository {
+  void insert(Account account);
 
   List<Account> getAccounts(int page, int count);
+  List<Account> getAccountByLogin(String login);
 
   void addAccount(Account account);
 
