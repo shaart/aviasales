@@ -42,7 +42,11 @@ public class AccountServiceImpl implements AccountService {
 
   @Override
   public Account getAccountByLogin(String login) {
-    return accountRepository.getAccountByLogin(login);
+    List<Account> accounts = accountRepository.getAccountByLogin(login);
+    if (accounts == null || accounts.isEmpty()) {
+      return null;
+    }
+    return accounts.get(0);
   }
 
   @Override

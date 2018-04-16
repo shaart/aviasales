@@ -43,7 +43,7 @@ public class TicketRepositoryImplMock implements TicketRepository {
   static {
     final int CACHE_COUNT = 100;
 
-    for (int i = 2; i < CACHE_COUNT; i++) {
+    for (int i = 1; i < CACHE_COUNT; i++) {
       Long longI = Long.valueOf(i);
       TICKET_CACHE.put(longI,
           Ticket.builder().id(longI)

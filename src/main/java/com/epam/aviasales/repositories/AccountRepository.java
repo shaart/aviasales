@@ -9,11 +9,13 @@ public interface AccountRepository {
 
   Account getAccountById(Long id);
 
-  Account getAccountByLogin(String login);
+  List<Account> getAccountByLogin(String login);
 
   List<Account> getAccounts();
 
   List<Account> getAccounts(int page, int count);
 
   void addAccount(Account account);
+
+  boolean isExist(String rowValue, String rowName);
 }

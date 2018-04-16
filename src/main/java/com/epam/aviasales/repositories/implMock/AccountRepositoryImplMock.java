@@ -10,6 +10,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import org.apache.commons.codec.digest.DigestUtils;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AccountRepositoryImplMock implements AccountRepository {
@@ -37,9 +38,12 @@ public class AccountRepositoryImplMock implements AccountRepository {
 
     for (int i = 1; i < CACHE_COUNT; i++) {
       ACCOUNTS_CACHE.put(Long.valueOf(i),
-          Account.builder().id(Long.valueOf(i)).role(i % 30 == 0 ? Role.ADMIN : (i % 15 == 0 ? Role.MANAGER : Role.USER))
+          Account.builder().id(Long.valueOf(i))
+              .role(i % 30 == 0 ? Role.ADMIN : (i % 15 == 0 ? Role.MANAGER : Role.USER))
               .name(i == 15 ? "Bob Marley" : "BOB-" + i).login("smartbob" + i)
-              .password("SHA256-" + i).email("bob" + i + "@bobworld.com").phone("123456789")
+              .password(DigestUtils.sha256Hex("SHA256-" + i))
+              .email("bob" + i + "@bobworld.com")
+              .phone("123456789")
               .build());
     }
   }
@@ -51,9 +55,9 @@ public class AccountRepositoryImplMock implements AccountRepository {
 
   @Override
   public List<Account> getAccounts(int page, int count) {
-    List<Account> airplaneList = new ArrayList<>();
+    List<Account> accountList = new ArrayList<>();
     if (page <= 0 || count <= 0) {
-      return airplaneList;
+      return accountList;
     }
 
     final int startI = (page - 1) * count;
@@ -61,9 +65,9 @@ public class AccountRepositoryImplMock implements AccountRepository {
       if (i >= ACCOUNTS_CACHE.size()) {
         break;
       }
-      airplaneList.add(ACCOUNTS_CACHE.get(Long.valueOf(i)));
+      accountList.add(ACCOUNTS_CACHE.get(Long.valueOf(i)));
     }
-    return airplaneList;
+    return accountList;
   }
 
   @Override
@@ -84,16 +88,22 @@ public class AccountRepositoryImplMock implements AccountRepository {
   @Override
   public void addAccount(Account account) {
     ACCOUNTS_CACHE.put(account.getId(), account);
-
   }
 
   @Override
-  public Account getAccountByLogin(String login) {
+  public boolean isExist(String rowValue, String rowName) {
+    return false;
+  }
+
+  @Override
+  public List<Account> getAccountByLogin(String login) {
+    List<Account> accounts = new ArrayList<>();
     for (Account account : ACCOUNTS_CACHE.values()) {
       if (account.getLogin().equals(login)) {
-        return account;
+        accounts.add(account);
+        return accounts;
       }
     }
-    return null;
+    return accounts;
   }
 }
