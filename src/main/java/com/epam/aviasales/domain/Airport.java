@@ -8,6 +8,7 @@ import java.io.Serializable;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Airport implements Serializable {
 
   private Long id;

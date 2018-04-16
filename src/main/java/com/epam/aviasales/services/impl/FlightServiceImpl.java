@@ -2,6 +2,7 @@ package com.epam.aviasales.services.impl;
 
 import com.epam.aviasales.domain.Flight;
 import com.epam.aviasales.repositories.FlightRepository;
+import com.epam.aviasales.repositories.implMock.FlightRepositoryImplMock;
 import com.epam.aviasales.services.FlightService;
 import java.util.List;
 import lombok.AccessLevel;
@@ -11,12 +12,14 @@ import lombok.NoArgsConstructor;
 public class FlightServiceImpl implements FlightService {
 
   private static final FlightService instance = new FlightServiceImpl();
-  private static final FlightRepository flightRepository = FlightRepository.getInstance();
 
   public static FlightService getInstance() {
     return instance;
   }
 
+  private static final FlightRepository flightRepository = FlightRepositoryImplMock.getInstance();
+
+  @Override
   public List<Flight> getFlights() {
     return flightRepository.getFlights(1, Integer.MAX_VALUE);
   }
