@@ -12,10 +12,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AirplaneRepositoryImplMock implements AirplaneRepository {
 
-  private static final AirplaneRepository instance = new AirplaneRepositoryImplMock();
+  private static volatile AirplaneRepository instance;
 
   public static AirplaneRepository getInstance() {
-    return instance;
+    AirplaneRepository localInstance = instance;
+    if (localInstance == null) {
+      synchronized (AirplaneRepositoryImplMock.class) {
+        localInstance = instance;
+        if (localInstance == null) {
+          instance = localInstance = new AirplaneRepositoryImplMock();
+        }
+      }
+    }
+
+    return localInstance;
   }
 
   private static final Map<Long, Airplane> AIRPLANE_CACHE = new HashMap<>();

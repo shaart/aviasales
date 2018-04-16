@@ -14,10 +14,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PersonalDataRepositoryImplMock implements PersonalDataRepository {
 
-  private static final PersonalDataRepository instance = new PersonalDataRepositoryImplMock();
+  private static volatile PersonalDataRepository instance;
 
   public static PersonalDataRepository getInstance() {
-    return instance;
+    PersonalDataRepository localInstance = instance;
+    if (localInstance == null) {
+      synchronized (PersonalDataRepositoryImplMock.class) {
+        localInstance = instance;
+        if (localInstance == null) {
+          instance = localInstance = new PersonalDataRepositoryImplMock();
+        }
+      }
+    }
+
+    return localInstance;
   }
 
   private static final Map<Long, PersonalData> PERSONAL_DATA_CACHE = new HashMap<>();

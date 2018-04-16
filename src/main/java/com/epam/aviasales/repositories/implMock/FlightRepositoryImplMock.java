@@ -18,11 +18,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FlightRepositoryImplMock implements FlightRepository {
 
-  private static final FlightRepository instance = new FlightRepositoryImplMock();
+  private static volatile FlightRepository instance;
 
   public static FlightRepository getInstance() {
-    return instance;
+    FlightRepository localInstance = instance;
+    if (localInstance == null) {
+      synchronized (FlightRepositoryImplMock.class) {
+        localInstance = instance;
+        if (localInstance == null) {
+          instance = localInstance = new FlightRepositoryImplMock();
+        }
+      }
+    }
+
+    return localInstance;
   }
+
 
   private static final Map<Long, Flight> FLIGHT_CACHE = new HashMap<>();
 

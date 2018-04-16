@@ -18,10 +18,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TicketRepositoryImplMock implements TicketRepository {
 
-  private static final TicketRepository instance = new TicketRepositoryImplMock();
+  private static volatile TicketRepository instance;
 
   public static TicketRepository getInstance() {
-    return instance;
+    TicketRepository localInstance = instance;
+    if (localInstance == null) {
+      synchronized (TicketRepositoryImplMock.class) {
+        localInstance = instance;
+        if (localInstance == null) {
+          instance = localInstance = new TicketRepositoryImplMock();
+        }
+      }
+    }
+
+    return localInstance;
   }
 
   private static final PersonalDataService personalDataService = PersonalDataServiceImpl

@@ -2,21 +2,31 @@ package com.epam.aviasales.repositories.implMock;
 
 import com.epam.aviasales.domain.Account;
 import com.epam.aviasales.repositories.AccountRepository;
-import com.epam.aviasales.util.HibernateUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import org.hibernate.Query;
-import org.hibernate.Session;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AccountRepositoryImplMock implements AccountRepository {
 
-  private static final AccountRepository instance = new AccountRepositoryImplMock();
+  private static volatile AccountRepository instance;
 
   public static AccountRepository getInstance() {
-    return instance;
+    AccountRepository localInstance = instance;
+    if (localInstance == null) {
+      synchronized (AccountRepositoryImplMock.class) {
+        localInstance = instance;
+        if (localInstance == null) {
+          instance = localInstance = new AccountRepositoryImplMock();
+        }
+      }
+    }
+
+    return localInstance;
   }
 
   private static final Map<Long, Account> ACCOUNTS_CACHE = new HashMap<>();
@@ -54,9 +64,9 @@ public class AccountRepositoryImplMock implements AccountRepository {
   }
 
   public Account getByName(String name) {
-    for (Account airplane : ACCOUNTS_CACHE.values()) {
-      if (airplane.getName().equals(name)) {
-        return airplane;
+    for (Account account : ACCOUNTS_CACHE.values()) {
+      if (account.getName().equals(name)) {
+        return account;
       }
     }
     return null;
@@ -67,22 +77,16 @@ public class AccountRepositoryImplMock implements AccountRepository {
   }
 
   public void insert(Account account) {
-    Session session = HibernateUtil.getSessionFactory().openSession();
-
-    session.beginTransaction();
-
-    session.save(account);
-    session.getTransaction().commit();
-
-    session.close();
+    ACCOUNTS_CACHE.put(account.getId(), account);
 
   }
 
   public Account getAccountByLogin(String login) {
-    Session session = HibernateUtil.getSessionFactory().openSession();
-    Query query = session.createQuery("from Account WHERE login = :pl");
-    query.setParameter("pl", login);
-    List list = query.list();
-    return list.isEmpty() ? new Account() : (Account) list.get(0);
+    for (Account account : ACCOUNTS_CACHE.values()) {
+      if (account.getLogin().equals(login)) {
+        return account;
+      }
+    }
+    return null;
   }
 }

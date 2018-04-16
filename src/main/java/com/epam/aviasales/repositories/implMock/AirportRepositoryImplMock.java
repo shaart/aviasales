@@ -12,10 +12,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AirportRepositoryImplMock implements AirportRepository {
 
-  private static final AirportRepository instance = new AirportRepositoryImplMock();
+  private static volatile AirportRepository instance;
 
   public static AirportRepository getInstance() {
-    return instance;
+    AirportRepository localInstance = instance;
+    if (localInstance == null) {
+      synchronized (AirportRepositoryImplMock.class) {
+        localInstance = instance;
+        if (localInstance == null) {
+          instance = localInstance = new AirportRepositoryImplMock();
+        }
+      }
+    }
+
+    return localInstance;
   }
 
   private static final Map<Long, Airport> AIRPORT_CACHE = new HashMap<>();
