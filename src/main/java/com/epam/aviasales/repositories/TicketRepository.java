@@ -29,11 +29,11 @@ public class TicketRepository {
     return getTicket(id)!=null;
   }
 
-  public void delete(Ticket ticket){
+  public void delete(Long id){
     Session session = HibernateUtil.getSessionFactory().openSession();
     session.beginTransaction();
 
-    session.delete(ticket);
+    session.delete(getTicket(id));
 
     session.getTransaction().commit();
     session.close();
