@@ -2,6 +2,7 @@ package com.epam.aviasales.domain;
 
 import lombok.AllArgsConstructor;
 import java.io.Serializable;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
