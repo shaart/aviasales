@@ -80,4 +80,9 @@ public class TicketRepositoryImplMock implements TicketRepository {
   public Ticket getTicketById(Long id) {
     return TICKET_CACHE.get(id);
   }
+
+  @Override
+  public void addTicket(Ticket ticket) {
+    TICKET_CACHE.put(ticket.getId(), ticket);
+  }
 }

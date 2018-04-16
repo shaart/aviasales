@@ -1,9 +1,9 @@
-package com.epam.aviasales.repositories;
+package com.epam.aviasales.services;
 
 import com.epam.aviasales.domain.Ticket;
 import java.util.List;
 
-public interface TicketRepository {
+public interface TicketService {
 
   List<Ticket> getTickets();
 
