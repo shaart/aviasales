@@ -1,6 +1,7 @@
 package com.epam.aviasales.controllers;
 
 import com.epam.aviasales.domain.Account;
+import com.epam.aviasales.domain.Role;
 import com.epam.aviasales.services.RegisterService;
 import com.epam.aviasales.services.impl.RegisterServiceImpl;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -36,7 +37,7 @@ public class RegisterServlet extends HttpServlet {
     Account account =
         Account.builder()
             .login(login)
-            .type(0)
+            .role(Role.USER)
             .name(fullName)
             .password(DigestUtils.sha256Hex(password))
             .email(email)
