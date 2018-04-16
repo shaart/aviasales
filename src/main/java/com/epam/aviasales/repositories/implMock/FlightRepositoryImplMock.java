@@ -34,7 +34,6 @@ public class FlightRepositoryImplMock implements FlightRepository {
     return localInstance;
   }
 
-
   private static final Map<Long, Flight> FLIGHT_CACHE = new HashMap<>();
 
   private static final AirportService airportService = AirportServiceImpl.getInstance();
@@ -59,14 +58,17 @@ public class FlightRepositoryImplMock implements FlightRepository {
     }
   }
 
-  public Flight getById(Long id) {
+  @Override
+  public Flight getFlightById(Long id) {
     return FLIGHT_CACHE.get(id);
   }
 
+  @Override
   public List<Flight> getFlights() {
     return getFlights(1, Integer.MAX_VALUE);
   }
 
+  @Override
   public List<Flight> getFlights(int page, int count) {
 
     List<Flight> flightList = new ArrayList<>();

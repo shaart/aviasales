@@ -40,10 +40,12 @@ public class AirportRepositoryImplMock implements AirportRepository {
     }
   }
 
+  @Override
   public List<Airport> getAirports() {
     return getAirports(1, Integer.MAX_VALUE);
   }
 
+  @Override
   public List<Airport> getAirports(int page, int count) {
     List<Airport> airportList = new ArrayList<>();
     if (page <= 0 || count <= 0) {
@@ -60,7 +62,8 @@ public class AirportRepositoryImplMock implements AirportRepository {
     return airportList;
   }
 
-  public Airport getByName(String name) {
+  @Override
+  public Airport getAirportByName(String name) {
     for (Airport airport : AIRPORT_CACHE.values()) {
       if (airport.getName().equals(name)) {
         return airport;
@@ -69,7 +72,8 @@ public class AirportRepositoryImplMock implements AirportRepository {
     return null;
   }
 
-  public Airport getById(Long id) {
+  @Override
+  public Airport getAirportById(Long id) {
     return AIRPORT_CACHE.get(id);
   }
 }

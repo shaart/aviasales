@@ -9,7 +9,7 @@ public interface AirplaneRepository {
 
   List<Airplane> getAirplanes(int page, int count);
 
-  Airplane getByName(String name);
+  Airplane getAirplaneByName(String name);
 
-  Airplane getById(Long id);
+  Airplane getAirplaneById(Long id);
 }

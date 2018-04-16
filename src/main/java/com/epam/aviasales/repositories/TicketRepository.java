@@ -9,5 +9,5 @@ public interface TicketRepository {
 
   List<Ticket> getTickets(int page, int count);
 
-  Ticket getById(Long id);
+  Ticket getTicketById(Long id);
 }

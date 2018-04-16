@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface FlightRepository {
 
-  Flight getById(Long id);
+  Flight getFlightById(Long id);
 
   List<Flight> getFlights();
 

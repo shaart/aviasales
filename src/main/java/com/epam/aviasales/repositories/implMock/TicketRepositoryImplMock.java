@@ -54,6 +54,7 @@ public class TicketRepositoryImplMock implements TicketRepository {
     }
   }
 
+  @Override
   public List<Ticket> getTickets() {
     return getTickets(1, Integer.MAX_VALUE);
   }
@@ -76,7 +77,7 @@ public class TicketRepositoryImplMock implements TicketRepository {
   }
 
   @Override
-  public Ticket getById(Long id) {
+  public Ticket getTicketById(Long id) {
     return TICKET_CACHE.get(id);
   }
 }

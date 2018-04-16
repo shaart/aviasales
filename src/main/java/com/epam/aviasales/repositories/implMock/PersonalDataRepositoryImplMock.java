@@ -43,10 +43,12 @@ public class PersonalDataRepositoryImplMock implements PersonalDataRepository {
     }
   }
 
+  @Override
   public List<PersonalData> getPersonalDatas() {
     return getPersonalDatas(1, Integer.MAX_VALUE);
   }
 
+  @Override
   public List<PersonalData> getPersonalDatas(int page, int count) {
     List<PersonalData> PersonalDataList = new ArrayList<>();
     if (page <= 0 || count <= 0) {
@@ -63,7 +65,8 @@ public class PersonalDataRepositoryImplMock implements PersonalDataRepository {
     return PersonalDataList;
   }
 
-  public PersonalData getByPassport(String passport) {
+  @Override
+  public PersonalData getPersonalDataByPassport(String passport) {
     for (PersonalData PersonalData : PERSONAL_DATA_CACHE.values()) {
       if (PersonalData.getPassport().equals(passport)) {
         return PersonalData;
@@ -72,7 +75,8 @@ public class PersonalDataRepositoryImplMock implements PersonalDataRepository {
     return null;
   }
 
-  public PersonalData getById(Long id) {
+  @Override
+  public PersonalData getPersonalDataById(Long id) {
     return PERSONAL_DATA_CACHE.get(id);
   }
 }

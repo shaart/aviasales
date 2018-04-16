@@ -41,10 +41,12 @@ public class AirplaneRepositoryImplMock implements AirplaneRepository {
     }
   }
 
+  @Override
   public List<Airplane> getAirplanes() {
     return getAirplanes(1, Integer.MAX_VALUE);
   }
 
+  @Override
   public List<Airplane> getAirplanes(int page, int count) {
     List<Airplane> airplaneList = new ArrayList<>();
     if (page <= 0 || count <= 0) {
@@ -61,7 +63,8 @@ public class AirplaneRepositoryImplMock implements AirplaneRepository {
     return airplaneList;
   }
 
-  public Airplane getByName(String name) {
+  @Override
+  public Airplane getAirplaneByName(String name) {
     for (Airplane airplane : AIRPLANE_CACHE.values()) {
       if (airplane.getName().equals(name)) {
         return airplane;
@@ -70,7 +73,8 @@ public class AirplaneRepositoryImplMock implements AirplaneRepository {
     return null;
   }
 
-  public Airplane getById(Long id) {
+  @Override
+  public Airplane getAirplaneById(Long id) {
     return AIRPLANE_CACHE.get(id);
   }
 }

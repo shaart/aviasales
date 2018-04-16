@@ -43,10 +43,12 @@ public class AccountRepositoryImplMock implements AccountRepository {
     }
   }
 
+  @Override
   public List<Account> getAccounts() {
     return getAccounts(1, Integer.MAX_VALUE);
   }
 
+  @Override
   public List<Account> getAccounts(int page, int count) {
     List<Account> airplaneList = new ArrayList<>();
     if (page <= 0 || count <= 0) {
@@ -63,7 +65,8 @@ public class AccountRepositoryImplMock implements AccountRepository {
     return airplaneList;
   }
 
-  public Account getByName(String name) {
+  @Override
+  public Account getAccountByName(String name) {
     for (Account account : ACCOUNTS_CACHE.values()) {
       if (account.getName().equals(name)) {
         return account;
@@ -72,15 +75,18 @@ public class AccountRepositoryImplMock implements AccountRepository {
     return null;
   }
 
-  public Account getById(Long id) {
+  @Override
+  public Account getAccountById(Long id) {
     return ACCOUNTS_CACHE.get(id);
   }
 
-  public void insert(Account account) {
+  @Override
+  public void addAccount(Account account) {
     ACCOUNTS_CACHE.put(account.getId(), account);
 
   }
 
+  @Override
   public Account getAccountByLogin(String login) {
     for (Account account : ACCOUNTS_CACHE.values()) {
       if (account.getLogin().equals(login)) {

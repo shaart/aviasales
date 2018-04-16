@@ -9,7 +9,7 @@ public interface PersonalDataRepository {
 
   List<PersonalData> getPersonalDatas(int page, int count);
 
-  PersonalData getByPassport(String passport);
+  PersonalData getPersonalDataByPassport(String passport);
 
-  PersonalData getById(Long id);
+  PersonalData getPersonalDataById(Long id);
 }

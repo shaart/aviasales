@@ -5,9 +5,9 @@ import java.util.List;
 
 public interface AccountRepository {
 
-  Account getByName(String name);
+  Account getAccountByName(String name);
 
-  Account getById(Long id);
+  Account getAccountById(Long id);
 
   Account getAccountByLogin(String login);
 
@@ -15,5 +15,5 @@ public interface AccountRepository {
 
   List<Account> getAccounts(int page, int count);
 
-  void insert(Account account);
+  void addAccount(Account account);
 }

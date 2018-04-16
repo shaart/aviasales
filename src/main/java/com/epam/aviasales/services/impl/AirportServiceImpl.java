@@ -32,11 +32,11 @@ public class AirportServiceImpl implements AirportService {
 
   @Override
   public Airport getByName(String name) {
-    return airportRepository.getByName(name);
+    return airportRepository.getAirportByName(name);
   }
 
   @Override
   public Airport getById(Long id) {
-    return airportRepository.getById(id);
+    return airportRepository.getAirportById(id);
   }
 }
