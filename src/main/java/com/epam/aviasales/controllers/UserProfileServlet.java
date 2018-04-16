@@ -16,7 +16,7 @@ public class UserProfileServlet extends HttpServlet {
             throws ServletException, IOException {
 
         AccountService accountService = AccountServiceImpl.getInstance();
-        Account account1 = accountService.getAccountByLogin("johnsmith");
+        Account account1 = accountService.getAccountByLogin("smartbob1");
 
         req.setAttribute("role", account1.getRole());
         req.setAttribute("name", account1.getName());

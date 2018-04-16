@@ -48,9 +48,9 @@ public class FlightRepositoryImplMock implements FlightRepository {
       int departureDay = (1 + i > MAX_DAY) ? (1 + i) % MAX_DAY + 1 : (1 + i);
       FLIGHT_CACHE.put(
           Long.valueOf(i),
-          Flight.builder().id(Long.valueOf(i)).fromAirportId(airportService.getAirportById(1L))
-              .toAirportId(airportService.getAirportById(2L))
-              .airplaneId(airplaneService.getAirportById(2L))
+          Flight.builder().id(Long.valueOf(i)).fromAirport(airportService.getAirportById(1L))
+              .toAirport(airportService.getAirportById(2L))
+              .airplane(airplaneService.getAirportById(2L))
               .departureTime(LocalDateTime.of(2018, Month.APRIL, departureDay, 00, 00, 00))
               .arrivalTime(LocalDateTime
                   .of(2018, Month.APRIL, arrivalDay, 06, 00, 00)).baseTicketPrice(2000)
