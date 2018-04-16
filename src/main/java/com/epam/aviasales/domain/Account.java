@@ -15,7 +15,7 @@ import lombok.Setter;
 public class Account implements Serializable {
 
   private Long id;
-  private Integer type;
+  private Role role;
   private String name;
   private String login;
   private String password;

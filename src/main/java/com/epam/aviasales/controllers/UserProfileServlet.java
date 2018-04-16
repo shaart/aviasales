@@ -18,7 +18,7 @@ public class UserProfileServlet extends HttpServlet {
         AccountService accountService = AccountServiceImpl.getInstance();
         Account account1 = accountService.getAccountByLogin("johnsmith");
 
-        req.setAttribute("type", account1.getType());
+        req.setAttribute("role", account1.getRole());
         req.setAttribute("name", account1.getName());
         req.setAttribute("login", account1.getLogin());
         req.setAttribute("email", account1.getEmail());

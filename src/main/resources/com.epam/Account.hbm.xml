@@ -8,8 +8,8 @@
             <column name="id" />
             <generator class="identity" />
         </id>
-        <property name="type" type="java.lang.Integer">
-            <column name="type" length="1" not-null="true"/>
+        <property name="role" type="com.epam.aviasales.domain.Role">
+            <column name="role" length="1" not-null="true"/>
         </property>
         <property name="name" type="java.lang.String">
             <column name="name" length="256" not-null="true" />

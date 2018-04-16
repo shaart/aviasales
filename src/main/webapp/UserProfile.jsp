@@ -12,7 +12,7 @@
 </head>
 <body>
 <h2>
-    User type : ${type}<br>
+    User role : ${role}<br>
     Name : ${name}<br>
     LoginName : ${login}<br>
     Email :  ${email}<br>

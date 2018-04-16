@@ -1,6 +1,7 @@
 package com.epam.aviasales.repositories.implMock;
 
 import com.epam.aviasales.domain.Account;
+import com.epam.aviasales.domain.Role;
 import com.epam.aviasales.repositories.AccountRepository;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +37,7 @@ public class AccountRepositoryImplMock implements AccountRepository {
 
     for (int i = 1; i < CACHE_COUNT; i++) {
       ACCOUNTS_CACHE.put(Long.valueOf(i),
-          Account.builder().id(Long.valueOf(i)).type(i % 30 == 0 ? 2 : (i % 15 == 0 ? 1 : 0))
+          Account.builder().id(Long.valueOf(i)).role(i % 30 == 0 ? Role.ADMIN : (i % 15 == 0 ? Role.MANAGER : Role.USER))
               .name(i == 15 ? "Bob Marley" : "BOB-" + i).login("smartbob" + i)
               .password("SHA256-" + i).email("bob" + i + "@bobworld.com").phone("123456789")
               .build());
