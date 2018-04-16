@@ -131,11 +131,11 @@
   </servlet-mapping>
   <!-- PROFILE -->
   <servlet>
-    <servlet-name>UserProfileServlet</servlet-name>
-    <servlet-class>com.epam.aviasales.controllers.UserProfileServlet</servlet-class>
+    <servlet-name>ProfileServlet</servlet-name>
+    <servlet-class>com.epam.aviasales.controllers.ProfileServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>UserProfileServlet</servlet-name>
+    <servlet-name>ProfileServlet</servlet-name>
     <url-pattern>/profile</url-pattern>
   </servlet-mapping>
 </web-app>
