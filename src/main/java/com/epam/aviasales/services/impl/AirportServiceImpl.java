@@ -14,7 +14,7 @@ public class AirportServiceImpl implements AirportService {
   private static volatile AirportService instance;
 
   public static AirportService getInstance() {
-    AirportServiceImpl localInstance = instance;
+    AirportService localInstance = instance;
     if (localInstance == null) {
       synchronized (AirportServiceImpl.class) {
         localInstance = instance;
@@ -52,11 +52,11 @@ public class AirportServiceImpl implements AirportService {
 
   @Override
   public void addAirport(Airport airport) {
-    airportRepository.insert(airport);
+    airportRepository.addAirport(airport);
   }
 
   @Override
   public void deleteAirport(Long id) {
-    airportRepository.delete(id);
+    airportRepository.deleteAirport(id);
   }
 }

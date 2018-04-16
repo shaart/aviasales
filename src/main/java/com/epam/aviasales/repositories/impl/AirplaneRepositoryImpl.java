@@ -1,45 +1,62 @@
 package com.epam.aviasales.repositories.impl;
 
 import com.epam.aviasales.domain.Airplane;
+import com.epam.aviasales.repositories.AirplaneRepository;
 import com.epam.aviasales.util.HibernateUtil;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.hibernate.Query;
 import org.hibernate.Session;
-
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class AirplaneRepository {
+public class AirplaneRepositoryImpl implements AirplaneRepository {
 
-  private static final AirplaneRepository instance = new AirplaneRepository();
+  private static volatile AirplaneRepository instance;
 
-  public void insert(Airplane airplane) {
+  public static AirplaneRepository getInstance() {
+    AirplaneRepository localInstance = instance;
+    if (localInstance == null) {
+      synchronized (AirplaneRepositoryImpl.class) {
+        localInstance = instance;
+        if (localInstance == null) {
+          instance = localInstance = new AirplaneRepositoryImpl();
+        }
+      }
+    }
+
+    return localInstance;
+  }
+
+  @Override
+  public void addAirplane(Airplane airplane) {
     Session session = HibernateUtil.getSessionFactory().openSession();
-
     session.beginTransaction();
 
     session.save(airplane);
-    session.getTransaction().commit();
 
+    session.getTransaction().commit();
     session.close();
   }
 
+  @Override
   public boolean isExist(Long id) {
-    return getAirplane(id) != null;
+    return getAirplaneById(id) != null;
   }
 
-  public void delete(Airplane airplane) {
+  @Override
+  public void deleteAirplane(Long id) {
     Session session = HibernateUtil.getSessionFactory().openSession();
     session.beginTransaction();
 
-    session.delete(airplane);
+    session.delete(getAirplaneById(id));
 
     session.getTransaction().commit();
     session.close();
   }
 
-  public Airplane getAirplane(Long id) {
+  @Override
+  public Airplane getAirplaneById(Long id) {
     Session session = HibernateUtil.getSessionFactory().openSession();
     session.beginTransaction();
 
@@ -49,10 +66,10 @@ public class AirplaneRepository {
 
     session.getTransaction().commit();
     session.close();
-
     return list.size() > 0 ? (Airplane) list.get(0) : null;
   }
 
+  @Override
   public List<Airplane> getAirplanes() {
     Session session = HibernateUtil.getSessionFactory().openSession();
     session.beginTransaction();
@@ -66,7 +83,13 @@ public class AirplaneRepository {
     return list.size() > 0 ? (List<Airplane>) list : null;
   }
 
-  public static AirplaneRepository getInstance() {
-    return instance;
+  @Override
+  public List<Airplane> getAirplanes(int page, int count) {
+    return null;
+  }
+
+  @Override
+  public Airplane getAirplaneByName(String name) {
+    return null;
   }
 }

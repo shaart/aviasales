@@ -12,4 +12,8 @@ public interface TicketRepository {
   Ticket getTicketById(Long id);
 
   void addTicket(Ticket ticket);
+
+  void deleteTicket(Long id);
+
+  boolean isExist(Long id);
 }

@@ -77,4 +77,19 @@ public class AirplaneRepositoryImplMock implements AirplaneRepository {
   public Airplane getAirplaneById(Long id) {
     return AIRPLANE_CACHE.get(id);
   }
+
+  @Override
+  public void deleteAirplane(Long id) {
+    AIRPLANE_CACHE.remove(id);
+  }
+
+  @Override
+  public void addAirplane(Airplane airplane) {
+    AIRPLANE_CACHE.put(airplane.getId(), airplane);
+  }
+
+  @Override
+  public boolean isExist(Long id) {
+    return AIRPLANE_CACHE.containsKey(id);
+  }
 }

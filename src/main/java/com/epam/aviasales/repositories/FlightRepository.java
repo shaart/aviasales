@@ -9,5 +9,13 @@ public interface FlightRepository {
 
   List<Flight> getFlights();
 
-  List<Flight> getFlights(int page, int count);
+  List<Flight> getFlightsPage(int page, int count);
+
+  void addFlight(Flight flight);
+
+  void deleteFlight(Long id);
+
+  boolean isExist(Long id);
+
+  List<Flight> getFlights(Long fromId, Long toId);
 }

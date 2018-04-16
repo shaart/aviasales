@@ -12,4 +12,10 @@ public interface AirportRepository {
   Airport getAirportByName(String name);
 
   Airport getAirportById(Long id);
+
+  void addAirport(Airport airport);
+
+  void deleteAirport(Long id);
+
+  boolean isExist(Long id);
 }

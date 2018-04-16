@@ -11,14 +11,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AccountServiceImpl implements AccountService {
 
-  private static final AccountService instance = new AccountServiceImpl();
+  private static volatile AccountService instance;
+
+  private static final AccountRepository accountRepository = AccountRepositoryImplMock.getInstance();
 
   public static AccountService getInstance() {
-    return instance;
-  }
+    AccountService localInstance = instance;
+    if (localInstance == null) {
+      synchronized (AccountServiceImpl.class) {
+        localInstance = instance;
+        if (localInstance == null) {
+          instance = localInstance = new AccountServiceImpl();
+        }
+      }
+    }
 
-  private static final AccountRepository accountRepository = AccountRepositoryImplMock
-      .getInstance();
+    return localInstance;
+  }
 
   @Override
   public List<Account> getAccounts() {

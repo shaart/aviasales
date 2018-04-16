@@ -85,4 +85,14 @@ public class TicketRepositoryImplMock implements TicketRepository {
   public void addTicket(Ticket ticket) {
     TICKET_CACHE.put(ticket.getId(), ticket);
   }
+
+  @Override
+  public void deleteTicket(Long id) {
+    TICKET_CACHE.remove(id);
+  }
+
+  @Override
+  public boolean isExist(Long id) {
+    return TICKET_CACHE.containsKey(id);
+  }
 }

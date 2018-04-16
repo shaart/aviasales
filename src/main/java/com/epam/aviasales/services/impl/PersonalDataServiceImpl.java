@@ -11,10 +11,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PersonalDataServiceImpl implements PersonalDataService {
 
-  private static final PersonalDataService instance = new PersonalDataServiceImpl();
+  private static volatile PersonalDataService instance;
 
   public static PersonalDataService getInstance() {
-    return instance;
+    PersonalDataService localInstance = instance;
+    if (localInstance == null) {
+      synchronized (PersonalDataServiceImpl.class) {
+        localInstance = instance;
+        if (localInstance == null) {
+          instance = localInstance = new PersonalDataServiceImpl();
+        }
+      }
+    }
+
+    return localInstance;
   }
 
   private static final PersonalDataRepository personalDataRepository = PersonalDataRepositoryImplMock

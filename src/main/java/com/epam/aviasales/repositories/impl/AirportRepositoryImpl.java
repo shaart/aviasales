@@ -7,7 +7,6 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.hibernate.Query;
 import org.hibernate.Session;
-
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

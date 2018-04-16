@@ -13,7 +13,7 @@ public interface AirplaneService {
 
   Airplane getAirplaneById(Long id);
 
-  void createAirplane(Airplane airplane);
+  void addAirplane(Airplane airplane);
 
-  void deleteAirplane(Airplane airplane);
+  void deleteAirplane(Long id);
 }

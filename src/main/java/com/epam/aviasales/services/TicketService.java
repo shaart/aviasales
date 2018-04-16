@@ -13,8 +13,6 @@ public interface TicketService {
 
   void addTicket(Ticket ticket);
 
-  Ticket getTicket(Long id);
-
   void deleteTicket(Long id);
 
   boolean isValid(Ticket ticket);

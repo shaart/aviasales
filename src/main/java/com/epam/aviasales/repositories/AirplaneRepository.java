@@ -12,4 +12,10 @@ public interface AirplaneRepository {
   Airplane getAirplaneByName(String name);
 
   Airplane getAirplaneById(Long id);
+
+  void deleteAirplane(Long id);
+
+  void addAirplane(Airplane airplane);
+
+  boolean isExist(Long id);
 }

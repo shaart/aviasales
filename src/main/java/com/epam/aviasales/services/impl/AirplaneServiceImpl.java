@@ -13,7 +13,7 @@ public class AirplaneServiceImpl implements AirplaneService {
 
   private static volatile AirplaneService instance;
 
-  private final AirplaneRepository airplaneRepository = AirplaneRepository.getInstance();
+  private final AirplaneRepository airplaneRepository = AirplaneRepositoryImplMock.getInstance();
 
   public static AirplaneService getInstance() {
     AirplaneService localInstance = instance;
@@ -21,13 +21,13 @@ public class AirplaneServiceImpl implements AirplaneService {
       synchronized (AirplaneServiceImpl.class) {
         localInstance = instance;
         if (localInstance == null) {
-          instance = new AirplaneServiceImpl();
+          instance = localInstance = new AirplaneServiceImpl();
         }
       }
     }
-  }
+
     return localInstance;
-}
+  }
 
   @Override
   public List<Airplane> getAirplanes() {
@@ -40,30 +40,23 @@ public class AirplaneServiceImpl implements AirplaneService {
   }
 
   @Override
-  public Airplane getAirportByName(String name) {
+  public Airplane getAirplaneById(Long id) {
+    return airplaneRepository.getAirplaneById(id);
+  }
+
+  @Override
+  public void addAirplane(Airplane airplane) {
+    airplaneRepository.addAirplane(airplane);
+
+  }
+
+  @Override
+  public Airplane getAirplaneByName(String name) {
     return airplaneRepository.getAirplaneByName(name);
   }
 
   @Override
-  public Airplane getAirportById(Long id) {
-    return airplaneRepository.getAirplaneById(id);
-    @Override
-    public Airplane getAirplane (Long id){
-      return airplaneRepository.getAirplane(id);
-    }
-
-    @Override
-    public List<Airplane> getAirplane () {
-      return airplaneRepository.getAirplanes();
-    }
-
-    @Override
-    public void createAirplane (Airplane airplane){
-      airplaneRepository.insert(airplane);
-    }
-
-    @Override
-    public void deleteAirplane (Long id){
-      airplaneRepository.deleteAirplane(id);
-    }
+  public void deleteAirplane(Long id) {
+    airplaneRepository.deleteAirplane(id);
   }
+}

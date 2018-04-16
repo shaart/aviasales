@@ -8,11 +8,11 @@
       <generator class="identity"/>
     </id>
     <many-to-one name="personalData" class="com.epam.aviasales.domain.PersonalData"
-      column="personal_data_id" not-null="true" cascade="all"/>
+      column="personal_data_id" not-null="true" cascade="all" lazy="false"/>
     <many-to-one name="flight" class="com.epam.aviasales.domain.Flight"
-      column="flight_id" not-null="true" cascade="all"/>
+      column="flight_id" not-null="true" cascade="all" lazy="false"/>
     <many-to-one name="account" class="com.epam.aviasales.domain.Account"
-      column="account_id" not-null="true" cascade="all"/>
+      column="account_id" not-null="true" cascade="all" lazy="false"/>
     <property name="price" type="java.lang.Integer" column="price" length="11" not-null="true"/>
     <property name="isBusiness" type="java.lang.Boolean" column="is_business" not-null="true"/>
   </class>

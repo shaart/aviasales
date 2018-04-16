@@ -15,13 +15,14 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("")
 public class MainServlet extends HttpServlet {
+
   private AirportService airportService;
   private LocalDate currentDate;
 
   @Override
   public void init() throws ServletException {
-     airportService = AirportServiceImpl.getInstance();
-     currentDate = LocalDate.now();
+    airportService = AirportServiceImpl.getInstance();
+    currentDate = LocalDate.now();
   }
 
   @Override

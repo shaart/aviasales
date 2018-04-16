@@ -76,4 +76,19 @@ public class AirportRepositoryImplMock implements AirportRepository {
   public Airport getAirportById(Long id) {
     return AIRPORT_CACHE.get(id);
   }
+
+  @Override
+  public void addAirport(Airport airport) {
+    AIRPORT_CACHE.put(airport.getId(), airport);
+  }
+
+  @Override
+  public void deleteAirport(Long id) {
+    AIRPORT_CACHE.remove(id);
+  }
+
+  @Override
+  public boolean isExist(Long id) {
+    return AIRPORT_CACHE.containsKey(id);
+  }
 }
