@@ -65,8 +65,8 @@
                         <td>${ticket.personalData.name}</td>
                         <td>${ticket.personalData.passport} </td>
                         <td>${ticket.personalData.dateOfBirth}</td>
-                        <td>${ticket.flight.fromAirportId.name}</td>
-                        <td>${ticket.flight.toAirportId.name}</td>
+                        <td>${ticket.flight.fromAirport.name}</td>
+                        <td>${ticket.flight.toAirport.name}</td>
                         <td>${ticket.flight.departureTime}</td>
                         <td>${ticket.flight.arrivalTime}</td>
                         <td>${ticket.flight.extraBaggagePrice}</td>
