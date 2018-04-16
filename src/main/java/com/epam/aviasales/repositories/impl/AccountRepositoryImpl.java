@@ -13,7 +13,8 @@ public class AccountRepositoryImpl implements AccountRepository {
 
   private AccountRepositoryImpl() {}
 
-  public void insert(Account account) {
+  @Override
+  public void addAccount(Account account) {
     Session session = HibernateUtil.getSessionFactory().openSession();
     session.beginTransaction();
     session.save(account);
@@ -21,11 +22,32 @@ public class AccountRepositoryImpl implements AccountRepository {
     session.close();
   }
 
+  @Override
+  public Account getAccountByName(String name) {
+    return null;
+  }
+
+  @Override
+  public Account getAccountById(Long id) {
+    return null;
+  }
+
+  @Override
   public List<Account> getAccountByLogin(String login) {
     Session session = HibernateUtil.getSessionFactory().openSession();
     Query query = session.createQuery("from Account WHERE login = :login");
     query.setParameter("login", login);
     return query.list();
+  }
+
+  @Override
+  public List<Account> getAccounts() {
+    return null;
+  }
+
+  @Override
+  public List<Account> getAccounts(int page, int count) {
+    return null;
   }
 
   public static AccountRepositoryImpl getInstance() {
@@ -42,12 +64,12 @@ public class AccountRepositoryImpl implements AccountRepository {
   }
 
   /*ToDo there is no check for row. Add it!, This is a bad way to choose the row*/
-  public boolean isExist(String parameter, String row) {
+  public boolean isExist(String rowValue, String rowName) {
     Session session = HibernateUtil.getSessionFactory().openSession();
-    Query query = session.createQuery("from Account WHERE " + row + " = :parameter");
-    query.setParameter("parameter", parameter);
+    Query query = session.createQuery("from Account WHERE " + rowName + " = :parameter");
+    query.setParameter("parameter", rowValue);
     List list = query.list();
 
-    return list.isEmpty() ? false : true;
+    return !list.isEmpty();
   }
 }
