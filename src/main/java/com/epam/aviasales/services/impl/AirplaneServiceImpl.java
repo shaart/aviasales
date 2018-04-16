@@ -11,14 +11,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AirplaneServiceImpl implements AirplaneService {
 
-  private static final AirplaneService instance = new AirplaneServiceImpl();
+  private static volatile AirplaneService instance;
+
+  private final AirplaneRepository airplaneRepository = AirplaneRepository.getInstance();
 
   public static AirplaneService getInstance() {
-    return instance;
+    AirplaneService localInstance = instance;
+    if (localInstance == null) {
+      synchronized (AirplaneServiceImpl.class) {
+        localInstance = instance;
+        if (localInstance == null) {
+          instance = new AirplaneServiceImpl();
+        }
+      }
+    }
   }
-
-  private static final AirplaneRepository airplaneRepository = AirplaneRepositoryImplMock
-      .getInstance();
+    return localInstance;
+}
 
   @Override
   public List<Airplane> getAirplanes() {
@@ -38,5 +47,23 @@ public class AirplaneServiceImpl implements AirplaneService {
   @Override
   public Airplane getAirportById(Long id) {
     return airplaneRepository.getAirplaneById(id);
+    @Override
+    public Airplane getAirplane (Long id){
+      return airplaneRepository.getAirplane(id);
+    }
+
+    @Override
+    public List<Airplane> getAirplane () {
+      return airplaneRepository.getAirplanes();
+    }
+
+    @Override
+    public void createAirplane (Airplane airplane){
+      airplaneRepository.insert(airplane);
+    }
+
+    @Override
+    public void deleteAirplane (Long id){
+      airplaneRepository.deleteAirplane(id);
+    }
   }
-}

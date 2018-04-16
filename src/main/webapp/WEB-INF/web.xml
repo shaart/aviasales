@@ -48,6 +48,15 @@
     <servlet-name>flightsServlet</servlet-name>
     <url-pattern>/flights</url-pattern>
   </servlet-mapping>
+  <!-- TICKET -->
+  <servlet>
+    <servlet-name>ticketServlet</servlet-name>
+    <servlet-class>com.epam.aviasales.controllers.TicketServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ticketServlet</servlet-name>
+    <url-pattern>/ticket</url-pattern>
+  </servlet-mapping>
   <!-- MANAGE -->
   <servlet>
     <servlet-name>manageServlet</servlet-name>
@@ -57,10 +66,19 @@
     <servlet-name>manageServlet</servlet-name>
     <url-pattern>/manage</url-pattern>
   </servlet-mapping>
+  <!-- CONFIRMATION -->
+  <servlet>
+    <servlet-name>confirmationServlet</servlet-name>
+    <servlet-class>com.epam.aviasales.controllers.ConfirmationServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>confirmationServlet</servlet-name>
+    <url-pattern>/confirm</url-pattern>
+  </servlet-mapping>
 
   <servlet>
     <servlet-name>UserProfileServlet</servlet-name>
-    <servlet-class>com.epam.aviasales.controllers.UserProfileServlet</servlet-class>
+    <servlet-class>com.epam.aviasales.controllers.ContributesServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>

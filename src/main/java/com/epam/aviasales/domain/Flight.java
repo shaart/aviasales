@@ -26,4 +26,10 @@ public class Flight implements Serializable {
   private Integer extraBaggagePrice;
   private Integer freeSeatEconomy;
   private Integer freeSeatBusiness;
+
+  @Override
+  public String toString() {
+    return fromAirport.getName() + " (" + departureTime + ") -> " + toAirport.getName() + " ("
+        + arrivalTime + ")";
+  }
 }

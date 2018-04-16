@@ -11,14 +11,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TicketServiceImpl implements TicketService {
 
-  private static final TicketService instance = new TicketServiceImpl();
+  private static volatile TicketService instance;
 
   public static TicketService getInstance() {
-    return instance;
+    TicketServiceImpl localInstance = instance;
+    if (localInstance == null) {
+      synchronized (TicketServiceImpl.class) {
+        localInstance = instance;
+        if (localInstance == null) {
+          instance = localInstance = new TicketServiceImpl();
+        }
+      }
+    }
+    return localInstance;
   }
 
-  private static final TicketRepository ticketRepository = TicketRepositoryImplMock
-      .getInstance();
+  private static final TicketRepository ticketRepository = TicketRepositoryImpl.getInstance();
 
   @Override
   public List<Ticket> getTickets() {
@@ -38,5 +46,20 @@ public class TicketServiceImpl implements TicketService {
   @Override
   public void addTicket(Ticket ticket) {
     ticketRepository.addTicket(ticket);
+  }
+
+  @Override
+  public void addTicket(Ticket ticket) {
+    ticketRepository.insert(ticket);
+  }
+
+  @Override
+  public void deleteTicket(Long id) {
+    ticketRepository.delete(id);
+  }
+
+  @Override
+  public boolean isValid(Ticket ticket) {
+    return false;
   }
 }

@@ -12,4 +12,8 @@ public interface AirportService {
   Airport getAirportByName(String name);
 
   Airport getAirportById(Long id);
+
+  void addAirport(Airport airport);
+
+  void deleteAirport(Long id);
 }
