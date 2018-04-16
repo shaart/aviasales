@@ -9,5 +9,5 @@ public interface FlightService {
 
   List<Flight> getFlights(int page, int count);
 
-  Flight getById(Long id);
+  Flight getFlightById(Long id);
 }

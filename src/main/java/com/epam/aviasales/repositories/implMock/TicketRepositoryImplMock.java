@@ -47,9 +47,9 @@ public class TicketRepositoryImplMock implements TicketRepository {
       Long longI = Long.valueOf(i);
       TICKET_CACHE.put(longI,
           Ticket.builder().id(longI)
-              .personalData(personalDataService.getById(longI))
-              .flight(flightService.getById(longI))
-              .account(accountService.getById(longI)).price(1000 + i * 100)
+              .personalData(personalDataService.getPersonalDataById(longI))
+              .flight(flightService.getFlightById(longI))
+              .account(accountService.getAccountById(longI)).price(1000 + i * 100)
               .isBusiness(i % 7 == 0 ? true : false).build());
     }
   }

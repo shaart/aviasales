@@ -9,7 +9,7 @@ public interface AirportService {
 
   List<Airport> getAirports(int page, int count);
 
-  Airport getByName(String name);
+  Airport getAirportByName(String name);
 
-  Airport getById(Long id);
+  Airport getAirportById(Long id);
 }

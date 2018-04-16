@@ -31,12 +31,12 @@ public class AirplaneServiceImpl implements AirplaneService {
   }
 
   @Override
-  public Airplane getByName(String name) {
+  public Airplane getAirportByName(String name) {
     return airplaneRepository.getAirplaneByName(name);
   }
 
   @Override
-  public Airplane getById(Long id) {
+  public Airplane getAirportById(Long id) {
     return airplaneRepository.getAirplaneById(id);
   }
 }

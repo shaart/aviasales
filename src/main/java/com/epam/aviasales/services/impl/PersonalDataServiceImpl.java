@@ -31,12 +31,12 @@ public class PersonalDataServiceImpl implements PersonalDataService {
   }
 
   @Override
-  public PersonalData getByPassport(String name) {
+  public PersonalData getPersonalDataByPassport(String name) {
     return personalDataRepository.getPersonalDataByPassport(name);
   }
 
   @Override
-  public PersonalData getById(Long id) {
+  public PersonalData getPersonalDataById(Long id) {
     return personalDataRepository.getPersonalDataById(id);
   }
 }

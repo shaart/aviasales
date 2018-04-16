@@ -30,7 +30,7 @@ public class FlightServiceImpl implements FlightService {
   }
 
   @Override
-  public Flight getById(Long id) {
+  public Flight getFlightById(Long id) {
     return flightRepository.getFlightById(id);
   }
 }

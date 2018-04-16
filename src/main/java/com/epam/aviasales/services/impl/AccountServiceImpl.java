@@ -31,12 +31,12 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
-  public Account getByName(String name) {
+  public Account getAccountByName(String name) {
     return accountRepository.getAccountByName(name);
   }
 
   @Override
-  public Account getById(Long id) {
+  public Account getAccountById(Long id) {
     return accountRepository.getAccountById(id);
   }
 
@@ -46,7 +46,7 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
-  public void insert(Account account) {
+  public void addAccount(Account account) {
     accountRepository.addAccount(account);
   }
 }
