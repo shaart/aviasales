@@ -31,15 +31,15 @@ public class FlightServlet extends HttpServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
 
-    Integer id_airport_from = Integer.parseInt(req.getParameter("flight_from"));
-    Integer id_airport_to = Integer.parseInt(req.getParameter("flight_to"));
+    Long id_airport_from = Long.parseLong(req.getParameter("flight_from"));
+    Long id_airport_to = Long.parseLong(req.getParameter("flight_to"));
     LocalDate date = LocalDate.parse(req.getParameter("departure"));
 
     req.setAttribute("from", id_airport_from);
     req.setAttribute("to", id_airport_to);
     req.setAttribute("date", date);
 
-    List<Flight> flightList = flightsService.getFlights();
+    List<Flight> flightList = flightsService.getFlights(id_airport_from,id_airport_to,date);
     req.setAttribute("flights", flightList);
     req.getRequestDispatcher("/").forward(req, resp);
   }
