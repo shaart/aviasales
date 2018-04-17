@@ -46,12 +46,16 @@ public class TicketRepositoryImplMock implements TicketRepository {
 
     for (int i = 1; i < CACHE_COUNT; i++) {
       Long longI = Long.valueOf(i);
-      TICKET_CACHE.put(longI,
-          Ticket.builder().id(longI)
+      TICKET_CACHE.put(
+          longI,
+          Ticket.builder()
+              .id(longI)
               .personalData(personalDataService.getPersonalDataById(longI))
               .flight(flightService.getFlightById(longI))
-              .account(accountService.getAccountById(longI)).price(1000 + i * 100)
-              .isBusiness(i % 7 == 0 ? true : false).build());
+              .account(accountService.getAccountById(longI))
+              .price(1000 + i * 100)
+              .isBusiness(i % 7 == 0 ? true : false)
+              .build());
     }
   }
 
@@ -98,6 +102,16 @@ public class TicketRepositoryImplMock implements TicketRepository {
   @Override
   public boolean isExist(Long id) {
     return TICKET_CACHE.containsKey(id);
+  }
+
+  public List<Ticket> getTicketsByAccountId(Long accountId) {
+    List<Ticket> ticketList = new ArrayList<>();
+    for (Map.Entry<Long, Ticket> entry : TICKET_CACHE.entrySet()) {
+      if (entry.getValue().getAccount().getId() == accountId) {
+        ticketList.add(entry.getValue());
+      }
+    }
+    return ticketList;
   }
 
   @Override

@@ -31,6 +31,6 @@ public class ProfileServiceImpl implements ProfileService {
   }
 
   public void deleteAccountTicketById(Long ticketId) {
-    ticketRepository.delete(ticketId);
+    ticketRepository.deleteTicket(ticketId);
   }
 }
