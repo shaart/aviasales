@@ -6,6 +6,8 @@ import com.epam.aviasales.services.AirplaneService;
 import com.epam.aviasales.services.AirportService;
 import com.epam.aviasales.services.impl.AirplaneServiceImpl;
 import com.epam.aviasales.services.impl.AirportServiceImpl;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
@@ -84,6 +86,11 @@ public class FlightRepositoryImplMock implements FlightRepository {
   @Override
   public List<Flight> getFlights(Long fromId, Long toId) {
     return null;
+  }
+
+  @Override
+  public List<Flight> getFlights(Long airportIdFrom, Long airportIdTo, LocalDate date) {
+    throw new UnsupportedOperationException();
   }
 
   @Override
