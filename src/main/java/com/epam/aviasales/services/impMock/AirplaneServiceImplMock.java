@@ -1,27 +1,27 @@
-package com.epam.aviasales.services.impl;
+package com.epam.aviasales.services.impMock;
 
 import com.epam.aviasales.domain.Airplane;
 import com.epam.aviasales.repositories.AirplaneRepository;
-import com.epam.aviasales.repositories.impl.AirplaneRepositoryImpl;
+import com.epam.aviasales.repositories.implMock.AirplaneRepositoryImplMock;
 import com.epam.aviasales.services.AirplaneService;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class AirplaneServiceImpl implements AirplaneService {
+public class AirplaneServiceImplMock implements AirplaneService {
 
   private static volatile AirplaneService instance;
 
-  private final AirplaneRepository airplaneRepository = AirplaneRepositoryImpl.getInstance();
+  private final AirplaneRepository airplaneRepository = AirplaneRepositoryImplMock.getInstance();
 
   public static AirplaneService getInstance() {
     AirplaneService localInstance = instance;
     if (localInstance == null) {
-      synchronized (AirplaneServiceImpl.class) {
+      synchronized (AirplaneServiceImplMock.class) {
         localInstance = instance;
         if (localInstance == null) {
-          instance = localInstance = new AirplaneServiceImpl();
+          instance = localInstance = new AirplaneServiceImplMock();
         }
       }
     }

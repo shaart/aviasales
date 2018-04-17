@@ -1,26 +1,27 @@
-package com.epam.aviasales.services.impl;
+package com.epam.aviasales.services.impMock;
 
 import com.epam.aviasales.domain.PersonalData;
 import com.epam.aviasales.repositories.PersonalDataRepository;
-// TODO: CREATE IMPLEMENTATION AND CHANGE THIS ON
 import com.epam.aviasales.repositories.implMock.PersonalDataRepositoryImplMock;
 import com.epam.aviasales.services.PersonalDataService;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+// TODO: CREATE IMPLEMENTATION AND CHANGE THIS ON
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class PersonalDataServiceImpl implements PersonalDataService {
+public class PersonalDataServiceImplMock implements PersonalDataService {
 
   private static volatile PersonalDataService instance;
 
   public static PersonalDataService getInstance() {
     PersonalDataService localInstance = instance;
     if (localInstance == null) {
-      synchronized (PersonalDataServiceImpl.class) {
+      synchronized (PersonalDataServiceImplMock.class) {
         localInstance = instance;
         if (localInstance == null) {
-          instance = localInstance = new PersonalDataServiceImpl();
+          instance = localInstance = new PersonalDataServiceImplMock();
         }
       }
     }

@@ -1,27 +1,27 @@
-package com.epam.aviasales.services.impl;
+package com.epam.aviasales.services.impMock;
 
 import com.epam.aviasales.domain.Account;
 import com.epam.aviasales.repositories.AccountRepository;
-import com.epam.aviasales.repositories.impl.AccountRepositoryImpl;
+import com.epam.aviasales.repositories.implMock.AccountRepositoryImplMock;
 import com.epam.aviasales.services.AccountService;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class AccountServiceImpl implements AccountService {
+public class AccountServiceImplMock implements AccountService {
 
   private static volatile AccountService instance;
 
-  private static final AccountRepository accountRepository = AccountRepositoryImpl.getInstance();
+  private static final AccountRepository accountRepository = AccountRepositoryImplMock.getInstance();
 
   public static AccountService getInstance() {
     AccountService localInstance = instance;
     if (localInstance == null) {
-      synchronized (AccountServiceImpl.class) {
+      synchronized (AccountServiceImplMock.class) {
         localInstance = instance;
         if (localInstance == null) {
-          instance = localInstance = new AccountServiceImpl();
+          instance = localInstance = new AccountServiceImplMock();
         }
       }
     }
