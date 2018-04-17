@@ -22,30 +22,23 @@ public class RegisterServlet extends HttpServlet {
       throws ServletException, IOException {
     req.getRequestDispatcher("Registration.jsp").forward(req, resp);
   }
-  /*ToDo: add code for remembeMe checkbox,
-   * */
+
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    String login = request.getParameter("inputLogin");
-    String fullName = request.getParameter("inputName");
-    String password = request.getParameter("inputPassword");
-    String email = request.getParameter("inputEmail");
-    String phone = request.getParameter("inputPhone");
-
     Account account =
         Account.builder()
-            .login(login)
+            .login(request.getParameter("inputLogin"))
             .role(Role.USER)
-            .name(fullName)
-            .password(DigestUtils.sha256Hex(password))
-            .email(email)
-            .phone(phone)
+            .name(request.getParameter("inputName"))
+            .password(DigestUtils.sha256Hex(request.getParameter("inputPassword")))
+            .email(request.getParameter("inputEmail"))
+            .phone(request.getParameter("inputPhone"))
             .build();
 
     List<String> errorMessages = registerService.addAccount(account);
-    System.out.println(errorMessages.isEmpty());
+
     if (errorMessages.isEmpty()) {
       account.setPassword(null);
       HttpSession session = request.getSession(true);
