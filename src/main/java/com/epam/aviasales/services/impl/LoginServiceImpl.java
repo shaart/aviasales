@@ -4,17 +4,19 @@ import com.epam.aviasales.domain.Account;
 import com.epam.aviasales.repositories.AccountRepository;
 import com.epam.aviasales.repositories.impl.AccountRepositoryImpl;
 import com.epam.aviasales.services.LoginService;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LoginServiceImpl implements LoginService {
+
   private static volatile LoginServiceImpl instance;
   private final AccountRepository accountRepository = AccountRepositoryImpl.getInstance();
   private Account account;
-
-  private LoginServiceImpl() {}
 
   public Account getAccount() {
     return account;
@@ -30,8 +32,10 @@ public class LoginServiceImpl implements LoginService {
         }
       }
     }
+
     return localInstance;
   }
+
   /*ToDo add validation code
    * Validate login and password Strings before sending it to repository
    * */

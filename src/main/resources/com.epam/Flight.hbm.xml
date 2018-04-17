@@ -7,9 +7,9 @@
     <id name="id" type="java.lang.Long" column="id">
       <generator class="identity"/>
     </id>
-    <many-to-one name="fromAirport" class="Airport" column="from_airport_id" not-null="true"/>
-    <many-to-one name="toAirport" class="Airport" column="to_airport_id" not-null="true"/>
-    <many-to-one name="airplane" class="Airplane" column="airplane_id" not-null="true"/>
+    <many-to-one name="fromAirport" class="Airport" column="from_airport_id" not-null="true" lazy="false"/>
+    <many-to-one name="toAirport" class="Airport" column="to_airport_id" not-null="true" lazy="false"/>
+    <many-to-one name="airplane" class="Airplane" column="airplane_id" not-null="true" lazy="false"/>
     <property name="departureTime" type="java.time.LocalDateTime" column="departure_time"
       not-null="true"/>
     <property name="arrivalTime" type="java.time.LocalDateTime" column="arrival_time"

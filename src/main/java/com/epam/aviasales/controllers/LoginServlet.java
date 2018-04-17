@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class LoginServlet extends HttpServlet {
+
   private LoginService loginService;
 
   @Override
@@ -20,6 +21,7 @@ public class LoginServlet extends HttpServlet {
       throws ServletException, IOException {
     req.getRequestDispatcher("Login.jsp").forward(req, resp);
   }
+
   /*ToDo: add code for remembeMe checkbox,
    * */
   @Override

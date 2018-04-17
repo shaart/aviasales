@@ -1,70 +1,21 @@
 package com.epam.aviasales.repositories;
 
 import com.epam.aviasales.domain.Airport;
-import com.epam.aviasales.util.HibernateUtil;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import org.hibernate.Query;
-import org.hibernate.Session;
-
 import java.util.List;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class AirportRepository {
+public interface AirportRepository {
 
-  private static final AirportRepository instance = new AirportRepository();
+  List<Airport> getAirports();
 
-  public void insert(Airport airport) {
-    Session session = HibernateUtil.getSessionFactory().openSession();
-    session.beginTransaction();
+  List<Airport> getAirports(int page, int count);
 
-    session.save(airport);
+  Airport getAirportByName(String name);
 
-    session.getTransaction().commit();
-    session.close();
-  }
+  Airport getAirportById(Long id);
 
-  public boolean isExist(Long id) {
-    return getAirport(id) != null;
-  }
+  void addAirport(Airport airport);
 
-  public void delete(Long id) {
-    Session session = HibernateUtil.getSessionFactory().openSession();
-    session.beginTransaction();
+  void deleteAirport(Long id);
 
-    session.delete(getAirport(id));
-
-    session.getTransaction().commit();
-    session.close();
-  }
-
-  public Airport getAirport(Long id) {
-    Session session = HibernateUtil.getSessionFactory().openSession();
-    session.beginTransaction();
-
-    Query query = session.createQuery("from Airport where id=:id");
-    query.setParameter("id", id);
-    List list = query.list();
-
-    session.getTransaction().commit();
-    session.close();
-    return list.size() > 0 ? (Airport) list.get(0) : null;
-  }
-
-  public List<Airport> getAirports() {
-    Session session = HibernateUtil.getSessionFactory().openSession();
-    session.beginTransaction();
-
-    Query query = session.createQuery("from Airport");
-    List list = query.list();
-
-    session.getTransaction().commit();
-    session.close();
-
-    return list.size() > 0 ? (List<Airport>) list : null;
-  }
-
-  public static AirportRepository getInstance() {
-    return instance;
-  }
+  boolean isExist(Long id);
 }

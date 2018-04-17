@@ -1,14 +1,19 @@
 package com.epam.aviasales.services;
 
 import com.epam.aviasales.domain.Airport;
-
 import java.util.List;
 
 public interface AirportService {
 
-  Airport getAirport(Long id);
   List<Airport> getAirports();
-  void createAirport(Airport airport);
-  void deleteAirport(Long id);
 
+  List<Airport> getAirports(int page, int count);
+
+  Airport getAirportByName(String name);
+
+  Airport getAirportById(Long id);
+
+  void addAirport(Airport airport);
+
+  void deleteAirport(Long id);
 }

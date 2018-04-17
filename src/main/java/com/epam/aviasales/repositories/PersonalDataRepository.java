@@ -1,12 +1,15 @@
 package com.epam.aviasales.repositories;
 
 import com.epam.aviasales.domain.PersonalData;
-import com.epam.aviasales.util.HibernateUtil;
-import org.hibernate.Session;
+import java.util.List;
 
-import java.time.LocalDate;
-import java.time.Month;
+public interface PersonalDataRepository {
 
-public class PersonalDataRepository {
+  List<PersonalData> getPersonalDatas();
 
+  List<PersonalData> getPersonalDatas(int page, int count);
+
+  PersonalData getPersonalDataByPassport(String passport);
+
+  PersonalData getPersonalDataById(Long id);
 }
