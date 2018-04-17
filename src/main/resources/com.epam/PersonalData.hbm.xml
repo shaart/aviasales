@@ -15,7 +15,7 @@
     <property name="passport" type="java.lang.String">
       <column name="passport" length="50" not-null="true" unique="true"/>
     </property>
-    <property name="dateOfBirth" type="java.time.LocalDate">
+    <property name="dateOfBirth" type="com.epam.aviasales.util.LocalDateUserType">
       <column name="date_of_birth" length="20" not-null="true"/>
     </property>
   </class>
