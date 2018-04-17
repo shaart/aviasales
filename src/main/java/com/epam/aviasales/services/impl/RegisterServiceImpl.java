@@ -1,6 +1,7 @@
 package com.epam.aviasales.services.impl;
 
 import com.epam.aviasales.domain.Account;
+import com.epam.aviasales.repositories.AccountRepository;
 import com.epam.aviasales.repositories.impl.AccountRepositoryImpl;
 import com.epam.aviasales.services.RegisterService;
 
@@ -9,7 +10,7 @@ import java.util.List;
 
 public class RegisterServiceImpl implements RegisterService {
   private static volatile RegisterServiceImpl instance;
-  private static final AccountRepositoryImpl accountRepository =
+  private static final AccountRepository accountRepository =
       AccountRepositoryImpl.getInstance();
 
   private RegisterServiceImpl() {}
@@ -37,7 +38,7 @@ public class RegisterServiceImpl implements RegisterService {
       errorMessages.add("register.error.email_exist");
     }
     if (errorMessages.isEmpty()) {
-      accountRepository.insert(account);
+      accountRepository.addAccount(account);
     }
     return errorMessages;
   }
