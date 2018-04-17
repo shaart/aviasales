@@ -16,4 +16,8 @@ public interface FlightService {
   void addFlight(Flight flight);
 
   void deleteFlight(Long id);
+
+  void updateFlight(Long id, Flight updatedFlight);
+
+  boolean isExist(Long id);
 }

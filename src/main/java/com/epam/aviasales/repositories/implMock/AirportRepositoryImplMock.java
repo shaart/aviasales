@@ -55,7 +55,10 @@ public class AirportRepositoryImplMock implements AirportRepository {
       if (i >= AIRPORT_CACHE.size()) {
         break;
       }
-      airportList.add(AIRPORT_CACHE.get(Long.valueOf(i)));
+      Airport airport = AIRPORT_CACHE.get(Long.valueOf(i));
+      if (airport != null) {
+        airportList.add(airport);
+      }
     }
     return airportList;
   }

@@ -31,7 +31,7 @@ public class FlightServiceImplMock implements FlightService {
 
   @Override
   public List<Flight> getFlights() {
-    return flightRepository.getFlights(1L, Long.MAX_VALUE);
+    return flightRepository.getFlightsPage(1, Integer.MAX_VALUE);
   }
 
   @Override
@@ -52,6 +52,16 @@ public class FlightServiceImplMock implements FlightService {
   @Override
   public void deleteFlight(Long id) {
     flightRepository.deleteFlight(id);
+  }
+
+  @Override
+  public void updateFlight(Long id, Flight updatedFlight) {
+    flightRepository.updateFlight(id, updatedFlight);
+  }
+
+  @Override
+  public boolean isExist(Long id) {
+    return flightRepository.isExist(id);
   }
 
   @Override

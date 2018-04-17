@@ -56,7 +56,10 @@ public class AirplaneRepositoryImplMock implements AirplaneRepository {
       if (i >= AIRPLANE_CACHE.size()) {
         break;
       }
-      airplaneList.add(AIRPLANE_CACHE.get(Long.valueOf(i)));
+      Airplane airplane = AIRPLANE_CACHE.get(Long.valueOf(i));
+      if (airplane != null) {
+        airplaneList.add(airplane);
+      }
     }
     return airplaneList;
   }

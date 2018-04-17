@@ -18,4 +18,6 @@ public interface FlightRepository {
   boolean isExist(Long id);
 
   List<Flight> getFlights(Long fromId, Long toId);
+
+  void updateFlight(Long id, Flight updatedFlight);
 }

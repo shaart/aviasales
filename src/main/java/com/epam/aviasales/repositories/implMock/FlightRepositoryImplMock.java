@@ -4,6 +4,8 @@ import com.epam.aviasales.domain.Flight;
 import com.epam.aviasales.repositories.FlightRepository;
 import com.epam.aviasales.services.AirplaneService;
 import com.epam.aviasales.services.AirportService;
+import com.epam.aviasales.services.impMock.AirplaneServiceImplMock;
+import com.epam.aviasales.services.impMock.AirportServiceImplMock;
 import com.epam.aviasales.services.impl.AirplaneServiceImpl;
 import com.epam.aviasales.services.impl.AirportServiceImpl;
 import java.time.LocalDateTime;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.criteria.CriteriaBuilder.In;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -19,8 +22,8 @@ public class FlightRepositoryImplMock implements FlightRepository {
 
   private static volatile FlightRepository instance;
   private static final Map<Long, Flight> FLIGHT_CACHE = new HashMap<>();
-  private static final AirportService airportService = AirportServiceImpl.getInstance();
-  private static final AirplaneService airplaneService = AirplaneServiceImpl.getInstance();
+  private static final AirportService airportService = AirportServiceImplMock.getInstance();
+  private static final AirplaneService airplaneService = AirplaneServiceImplMock.getInstance();
 
   public static FlightRepository getInstance() {
     FlightRepository localInstance = instance;
@@ -63,7 +66,7 @@ public class FlightRepositoryImplMock implements FlightRepository {
 
   @Override
   public List<Flight> getFlights() {
-    return getFlights(1L, Long.MAX_VALUE);
+    return getFlightsPage(1, Integer.MAX_VALUE);
   }
 
   @Override
@@ -83,7 +86,12 @@ public class FlightRepositoryImplMock implements FlightRepository {
 
   @Override
   public List<Flight> getFlights(Long fromId, Long toId) {
-    return null;
+    throw new UnsupportedOperationException("List<Flight> getFlights(Long fromId, Long toId)");
+  }
+
+  @Override
+  public void updateFlight(Long id, Flight updatedFlight) {
+    FLIGHT_CACHE.put(id, updatedFlight);
   }
 
   @Override
@@ -99,7 +107,10 @@ public class FlightRepositoryImplMock implements FlightRepository {
       if (i >= FLIGHT_CACHE.size()) {
         break;
       }
-      flightList.add(FLIGHT_CACHE.get(Long.valueOf(i)));
+      Flight flight = FLIGHT_CACHE.get(Long.valueOf(i));
+      if (flight != null) {
+        flightList.add(flight);
+      }
     }
     return flightList;
   }

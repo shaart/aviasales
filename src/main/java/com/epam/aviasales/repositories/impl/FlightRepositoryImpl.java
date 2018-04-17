@@ -3,6 +3,7 @@ package com.epam.aviasales.repositories.impl;
 import com.epam.aviasales.domain.Flight;
 import com.epam.aviasales.repositories.FlightRepository;
 import com.epam.aviasales.util.HibernateUtil;
+import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.hibernate.Query;
@@ -86,6 +87,11 @@ public class FlightRepositoryImpl implements FlightRepository {
     session.close();
 
     return list.size() > 0 ? (List<Flight>) list : null;
+  }
+
+  @Override
+  public void updateFlight(Long id, Flight updatedFlight) {
+
   }
 
   @Override
