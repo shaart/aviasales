@@ -69,16 +69,6 @@ public class AccountRepositoryImplMock implements AccountRepository {
   }
 
   @Override
-  public Account getAccountByName(String name) {
-    for (Account account : ACCOUNTS_CACHE.values()) {
-      if (account.getName().equals(name)) {
-        return account;
-      }
-    }
-    return null;
-  }
-
-  @Override
   public Account getAccountById(Long id) {
     return ACCOUNTS_CACHE.get(id);
   }

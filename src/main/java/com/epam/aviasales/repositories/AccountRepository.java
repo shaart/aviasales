@@ -5,8 +5,6 @@ import java.util.List;
 
 public interface AccountRepository {
 
-  Account getAccountByName(String name);
-
   Account getAccountById(Long id);
 
   List<Account> getAccountByLogin(String login);

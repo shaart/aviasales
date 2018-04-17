@@ -38,11 +38,6 @@ public class AccountRepositoryImpl implements AccountRepository {
   }
 
   @Override
-  public Account getAccountByName(String name) {
-    return null;
-  }
-
-  @Override
   public Account getAccountById(Long id) {
     return null;
   }

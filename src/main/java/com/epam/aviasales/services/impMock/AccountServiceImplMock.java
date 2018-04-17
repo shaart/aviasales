@@ -40,11 +40,6 @@ public class AccountServiceImplMock implements AccountService {
   }
 
   @Override
-  public Account getAccountByName(String name) {
-    return accountRepository.getAccountByName(name);
-  }
-
-  @Override
   public Account getAccountById(Long id) {
     return accountRepository.getAccountById(id);
   }

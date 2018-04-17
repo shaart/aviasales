@@ -9,8 +9,6 @@ public interface AccountService {
 
   List<Account> getAccounts(int page, int count);
 
-  Account getAccountByName(String name);
-
   Account getAccountById(Long id);
 
   Account getAccountByLogin(String login);
