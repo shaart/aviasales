@@ -3,6 +3,7 @@ package com.epam.aviasales.controllers;
 import com.epam.aviasales.domain.*;
 import com.epam.aviasales.services.ProfileService;
 
+import com.epam.aviasales.services.impl.ProfileServiceImpl;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,7 @@ public class ProfileServlet extends HttpServlet {
 
   @Override
   public void init() {
-    profileService = ProfileService.getInstance();
+    profileService = ProfileServiceImpl.getInstance();
   }
 
   @Override
@@ -42,7 +43,8 @@ public class ProfileServlet extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    String login = request.getParameter("ticketId");
+    String ticketId = request.getParameter("ticketId");
+    profileService.deleteAccountTicketById(Long.valueOf(ticketId));
     request.getRequestDispatcher("Profile.jsp").forward(request, response);
   }
 }
