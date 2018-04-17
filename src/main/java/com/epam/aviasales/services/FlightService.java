@@ -7,17 +7,13 @@ public interface FlightService {
 
   List<Flight> getFlights();
 
-  List<Flight> getFlights(int page, int count);
+  List<Flight> getFlights(Long fromId, Long toId);
 
-  Flight getById(Long id);
+  List<Flight> getFlightsPage(int page, int count);
 
-  void delete(Flight flight);
+  Flight getFlightById(Long id);
 
-  void deleteByID(Long id);
+  void addFlight(Flight flight);
 
-  void update(Flight flight);
-
-  boolean isExists(Flight flight);
-
-  boolean isExists(Long id);
+  void deleteFlight(Long id);
 }

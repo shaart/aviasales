@@ -2,6 +2,7 @@ package com.epam.aviasales.services.impl;
 
 import com.epam.aviasales.domain.Account;
 import com.epam.aviasales.repositories.AccountRepository;
+import com.epam.aviasales.repositories.impl.AccountRepositoryImpl;
 import com.epam.aviasales.services.AccountService;
 import java.util.List;
 import lombok.AccessLevel;
@@ -10,13 +11,25 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AccountServiceImpl implements AccountService {
 
-  private static final AccountRepository accountRepository = AccountRepository.getInstance();
-  private static final AccountService instance = new AccountServiceImpl();
+  private static volatile AccountService instance;
+
+  private static final AccountRepository accountRepository = AccountRepositoryImpl.getInstance();
 
   public static AccountService getInstance() {
-    return instance;
+    AccountService localInstance = instance;
+    if (localInstance == null) {
+      synchronized (AccountServiceImpl.class) {
+        localInstance = instance;
+        if (localInstance == null) {
+          instance = localInstance = new AccountServiceImpl();
+        }
+      }
+    }
+
+    return localInstance;
   }
 
+  @Override
   public List<Account> getAccounts() {
     return accountRepository.getAccounts(1, 20);
   }
@@ -27,22 +40,21 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
-  public Account getByName(String name) {
-    return accountRepository.getByName(name);
-  }
-
-  @Override
-  public Account getById(Long id) {
-    return accountRepository.getById(id);
+  public Account getAccountById(Long id) {
+    return accountRepository.getAccountById(id);
   }
 
   @Override
   public Account getAccountByLogin(String login) {
-    return accountRepository.getAccountByLogin(login);
+    List<Account> accounts = accountRepository.getAccountByLogin(login);
+    if (accounts == null || accounts.isEmpty()) {
+      return null;
+    }
+    return accounts.get(0);
   }
 
   @Override
-  public void insert(Account account) {
-    accountRepository.insert(account);
+  public void addAccount(Account account) {
+    accountRepository.addAccount(account);
   }
 }

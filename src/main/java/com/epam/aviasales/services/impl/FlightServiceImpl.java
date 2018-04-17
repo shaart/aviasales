@@ -2,6 +2,7 @@ package com.epam.aviasales.services.impl;
 
 import com.epam.aviasales.domain.Flight;
 import com.epam.aviasales.repositories.FlightRepository;
+import com.epam.aviasales.repositories.impl.FlightRepositoryImpl;
 import com.epam.aviasales.services.FlightService;
 import java.util.List;
 import lombok.AccessLevel;
@@ -10,25 +11,52 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FlightServiceImpl implements FlightService {
 
-  private static final FlightService instance = new FlightServiceImpl();
-  private static final FlightRepository flightRepository = FlightRepository.getInstance();
+  private static volatile FlightService instance;
 
   public static FlightService getInstance() {
-    return instance;
+    FlightService localInstance = instance;
+    if (localInstance == null) {
+      synchronized (FlightServiceImpl.class) {
+        localInstance = instance;
+        if (localInstance == null) {
+          instance = localInstance = new FlightServiceImpl();
+        }
+      }
+    }
+
+    return localInstance;
   }
 
+  private static final FlightRepository flightRepository = FlightRepositoryImpl.getInstance();
+
+  @Override
   public List<Flight> getFlights() {
-    return flightRepository.getFlights(1, Integer.MAX_VALUE);
+    return flightRepository.getFlights(1L, Long.MAX_VALUE);
   }
 
   @Override
-  public List<Flight> getFlights(int page, int count) {
-    return flightRepository.getFlights(page, count);
+  public List<Flight> getFlightsPage(int page, int count) {
+    return flightRepository.getFlightsPage(page, count);
   }
 
   @Override
-  public Flight getById(Long id) {
-    return flightRepository.getById(id);
+  public Flight getFlightById(Long id) {
+    return flightRepository.getFlightById(id);
+  }
+
+  @Override
+  public void addFlight(Flight flight) {
+    flightRepository.addFlight(flight);
+  }
+
+  @Override
+  public void deleteFlight(Long id) {
+    flightRepository.deleteFlight(id);
+  }
+
+  @Override
+  public List<Flight> getFlights(Long fromId, Long toId) {
+    return flightRepository.getFlights(fromId, toId);
   }
 
   @Override

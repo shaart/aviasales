@@ -9,7 +9,11 @@ public interface AirplaneService {
 
   List<Airplane> getAirplanes(int page, int count);
 
-  Airplane getByName(String name);
+  Airplane getAirplaneByName(String name);
 
-  Airplane getById(Long id);
+  Airplane getAirplaneById(Long id);
+
+  void addAirplane(Airplane airplane);
+
+  void deleteAirplane(Long id);
 }

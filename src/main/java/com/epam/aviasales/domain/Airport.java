@@ -8,6 +8,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @ToString
 public class Airport implements Serializable {
 

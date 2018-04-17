@@ -9,11 +9,9 @@ public interface AccountService {
 
   List<Account> getAccounts(int page, int count);
 
-  Account getByName(String name);
-
-  Account getById(Long id);
+  Account getAccountById(Long id);
 
   Account getAccountByLogin(String login);
 
-  void insert(Account account);
+  void addAccount(Account account);
 }
