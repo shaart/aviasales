@@ -37,6 +37,8 @@ public class RegisterServlet extends HttpServlet {
             .phone(request.getParameter("inputPhone"))
             .build();
 
+    //TODO it is not obvious what this method does. If I hadn't looked at `addAccount` implementation, I would have thought that it just adds an account,
+    //TODO then the following `if` check is useless. So, call methods more understandable.
     List<String> errorMessages = registerService.addAccount(account);
 
     if (errorMessages.isEmpty()) {

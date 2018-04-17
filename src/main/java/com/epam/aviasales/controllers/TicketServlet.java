@@ -33,6 +33,8 @@ public class TicketServlet extends HttpServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
     Long numberOfFlight = Long.parseLong(req.getParameter("selected_flight"));
+    //TODO why do you like to write redundant lines? :)
+    //TODO req.setAttribute("flight", flightsService.getFlightById(numberOfFlight));
     Flight flight = flightsService.getFlightById(numberOfFlight);
     req.setAttribute("flight", flight);
 

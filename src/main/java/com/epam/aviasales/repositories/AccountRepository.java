@@ -7,7 +7,7 @@ public interface AccountRepository {
 
   Account getAccountById(Long id);
 
-  List<Account> getAccountByLogin(String login);
+  List getAccountByLogin(String login);
 
   List<Account> getAccounts();
 

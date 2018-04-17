@@ -17,6 +17,7 @@ public class UserProfileServlet extends HttpServlet {
       throws ServletException, IOException {
 
     AccountService accountService = AccountServiceImpl.getInstance();
+    //TODO I see that is is mock, but anyway it is better to use normal names.
     Account account1 = accountService.getAccountByLogin("smartbob1");
 
     req.setAttribute("role", account1.getRole());

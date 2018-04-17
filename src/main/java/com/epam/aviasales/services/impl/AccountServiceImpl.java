@@ -47,6 +47,8 @@ public class AccountServiceImpl implements AccountService {
   @Override
   public Account getAccountByLogin(String login) {
     List<Account> accounts = accountRepository.getAccountByLogin(login);
+
+    //TODO if you want, you can use `?` operator. return (accounts == null || accounts.isEmpty()) ? null : accounts.get(0);
     if (accounts == null || accounts.isEmpty()) {
       return null;
     }

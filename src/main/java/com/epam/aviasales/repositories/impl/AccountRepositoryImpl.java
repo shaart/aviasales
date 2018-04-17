@@ -32,7 +32,9 @@ public class AccountRepositoryImpl implements AccountRepository {
   public void addAccount(Account account) {
     Session session = HibernateUtil.getSessionFactory().openSession();
     session.beginTransaction();
+
     session.save(account);
+
     session.getTransaction().commit();
     session.close();
   }
@@ -60,7 +62,7 @@ public class AccountRepositoryImpl implements AccountRepository {
     return null;
   }
 
-  /*ToDo there is no check for row. Add it!, This is a bad way to choose the row*/
+  /*TODO there is no check for row. Add it! This is a bad way to choose the row*/
   public boolean isExist(String rowValue, String rowName) {
     Session session = HibernateUtil.getSessionFactory().openSession();
     Query query = session.createQuery("from Account WHERE " + rowName + " = :parameter");

@@ -43,6 +43,7 @@ public class LoginServiceImpl implements LoginService {
     List<String> errorMessages = new ArrayList<>();
 
     List<Account> accounts = accountRepository.getAccountByLogin(login);
+
     if (accounts.isEmpty()) {
       errorMessages.add("login.error.doesNotExistMessage");
       return errorMessages;

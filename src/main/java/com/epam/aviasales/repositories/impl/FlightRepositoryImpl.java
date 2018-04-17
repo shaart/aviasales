@@ -35,7 +35,6 @@ public class FlightRepositoryImpl implements FlightRepository {
   @Override
   public void addFlight(Flight flight) {
     Session session = HibernateUtil.getSessionFactory().openSession();
-
     session.beginTransaction();
 
     session.save(flight);
@@ -102,11 +101,14 @@ public class FlightRepositoryImpl implements FlightRepository {
     query.setParameter("toAirport", airportIdTo);
     query.setParameter("minDepartureTime", LocalDateTime.of(date, LocalTime.of(0, 0)));
     query.setParameter("maxDepartureTime", LocalDateTime.of(date, LocalTime.of(23, 59)));
+    //TODO Remove this two lines.
     System.out.println(LocalDateTime.of(date, LocalTime.of(0, 0)));
     System.out.println(LocalDateTime.of(date, LocalTime.of(23, 59)));
     List list = query.list();
+    //TODO and this.
     System.out.println(list.size());
     List<Flight> flights = (List<Flight>) list;
+    //TODO and this. Use debugger))
     for(Flight flight : flights){
       System.out.println(flight.getDepartureTime());
     }
