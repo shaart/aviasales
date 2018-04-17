@@ -34,10 +34,40 @@
 
 
 <h2>
-    Name : ${account.name}<br>
-    LoginName : ${account.login}<br>
-    Email : ${account.email}<br>
-    Phone : ${account.phone}
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col">
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row"><fmt:message key="profile.label.name" bundle="${lang}"/></th>
+            <td>${account.name}</td>
+        </tr>
+        <tr>
+            <th scope="row"><fmt:message key="login.label.login" bundle="${lang}"/></th>
+            <td>${account.login}</td>
+        </tr>
+        <tr>
+            <th scope="row"><fmt:message key="profile.label.email" bundle="${lang}"/></th>
+            <td>${account.email}</td>
+        </tr>
+        <tr>
+            <th scope="row"><fmt:message key="profile.label.phone" bundle="${lang}"/></th>
+            <td>${account.phone}</td>
+            <td>
+                <button type="submit" class="btn btn-primary btn-sm"><fmt:message
+                        key="profile.label.edit"
+                        bundle="${lang}"/>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </h2>
 <c:choose>
     <c:when test="${noTickets == false}">
