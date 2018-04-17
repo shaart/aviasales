@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="com.epam.aviasales.domain.PersonalData" table="personal_data"
+    catalog="imshaart_aviasalesdemo">
+    <id name="id" type="java.lang.Long">
+      <column name="id"/>
+      <generator class="identity"/>
+    </id>
+    <property name="name" type="java.lang.String">
+      <column name="name" length="256" not-null="true"/>
+    </property>
+    <property name="passport" type="java.lang.String">
+      <column name="passport" length="50" not-null="true" unique="true"/>
+    </property>
+    <property name="dateOfBirth" type="com.epam.aviasales.util.LocalDateUserType">
+      <column name="date_of_birth" length="20" not-null="true"/>
+    </property>
+  </class>
+</hibernate-mapping>

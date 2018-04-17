@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="com.epam.aviasales.domain.Airplane" table="airplane"
+    catalog="imshaart_aviasalesdemo">
+    <id name="id" type="java.lang.Long" column="id">
+      <generator class="identity"/>
+    </id>
+    <property name="name" type="java.lang.String" column="name" length="45" not-null="true"
+      unique="true"/>
+    <property name="businessSeatsCount" type="java.lang.Integer" column="business_seats_count"
+      length="11"
+      not-null="true"/>
+    <property name="economySeatsCount" type="java.lang.Integer" column="economy_seats_count"
+      length="11"
+      not-null="true"/>
+  </class>
+</hibernate-mapping>

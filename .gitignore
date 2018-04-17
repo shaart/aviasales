@@ -3,6 +3,9 @@
 *.iml
 out/
 
+# Configuration
+credentials.properties
+
 # Maven
 target/
 
@@ -25,6 +28,8 @@ target/
 *.zip
 *.tar.gz
 *.rar
+
+credentials.properties
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
