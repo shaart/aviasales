@@ -9,10 +9,10 @@ import java.util.Map;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AirplaneRepositoryImplMock implements AirplaneRepository {
 
   private static volatile AirplaneRepository instance;
+  private static final Map<Long, Airplane> AIRPLANE_CACHE = new HashMap<>();
 
   public static AirplaneRepository getInstance() {
     AirplaneRepository localInstance = instance;
@@ -28,9 +28,7 @@ public class AirplaneRepositoryImplMock implements AirplaneRepository {
     return localInstance;
   }
 
-  private static final Map<Long, Airplane> AIRPLANE_CACHE = new HashMap<>();
-
-  static {
+  private AirplaneRepositoryImplMock() {
     final int CACHE_COUNT = 100;
 
     AIRPLANE_CACHE.put(1L, new Airplane(1L, "Boeing 747", 5, 5));

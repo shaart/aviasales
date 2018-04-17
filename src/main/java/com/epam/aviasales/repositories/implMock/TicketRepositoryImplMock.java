@@ -15,10 +15,14 @@ import java.util.Map;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TicketRepositoryImplMock implements TicketRepository {
 
   private static volatile TicketRepository instance;
+  private static final Map<Long, Ticket> TICKET_CACHE = new HashMap<>();
+  private static final PersonalDataService personalDataService = PersonalDataServiceImpl
+      .getInstance();
+  private static final AccountService accountService = AccountServiceImpl.getInstance();
+  private static final FlightService flightService = FlightServiceImpl.getInstance();
 
   public static TicketRepository getInstance() {
     TicketRepository localInstance = instance;
@@ -34,13 +38,7 @@ public class TicketRepositoryImplMock implements TicketRepository {
     return localInstance;
   }
 
-  private static final PersonalDataService personalDataService = PersonalDataServiceImpl
-      .getInstance();
-  private static final AccountService accountService = AccountServiceImpl.getInstance();
-  private static final FlightService flightService = FlightServiceImpl.getInstance();
-  private static final Map<Long, Ticket> TICKET_CACHE = new HashMap<>();
-
-  static {
+  private TicketRepositoryImplMock() {
     final int CACHE_COUNT = 100;
 
     for (int i = 1; i < CACHE_COUNT; i++) {

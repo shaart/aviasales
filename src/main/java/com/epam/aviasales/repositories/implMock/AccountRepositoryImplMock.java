@@ -12,10 +12,10 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 import org.apache.commons.codec.digest.DigestUtils;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AccountRepositoryImplMock implements AccountRepository {
 
   private static volatile AccountRepository instance;
+  private static final Map<Long, Account> ACCOUNTS_CACHE = new HashMap<>();
 
   public static AccountRepository getInstance() {
     AccountRepository localInstance = instance;
@@ -31,9 +31,7 @@ public class AccountRepositoryImplMock implements AccountRepository {
     return localInstance;
   }
 
-  private static final Map<Long, Account> ACCOUNTS_CACHE = new HashMap<>();
-
-  static {
+  private AccountRepositoryImplMock() {
     final int CACHE_COUNT = 100;
 
     for (int i = 1; i < CACHE_COUNT; i++) {

@@ -11,10 +11,10 @@ import java.util.Map;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PersonalDataRepositoryImplMock implements PersonalDataRepository {
 
   private static volatile PersonalDataRepository instance;
+  private static final Map<Long, PersonalData> PERSONAL_DATA_CACHE = new HashMap<>();
 
   public static PersonalDataRepository getInstance() {
     PersonalDataRepository localInstance = instance;
@@ -30,9 +30,7 @@ public class PersonalDataRepositoryImplMock implements PersonalDataRepository {
     return localInstance;
   }
 
-  private static final Map<Long, PersonalData> PERSONAL_DATA_CACHE = new HashMap<>();
-
-  static {
+  private PersonalDataRepositoryImplMock() {
     final int CACHE_COUNT = 100;
 
     LocalDate dateCounter = LocalDate.of(2000, Month.APRIL, 1);

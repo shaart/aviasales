@@ -9,10 +9,10 @@ import java.util.Map;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AirportRepositoryImplMock implements AirportRepository {
 
   private static volatile AirportRepository instance;
+  private static final Map<Long, Airport> AIRPORT_CACHE = new HashMap<>();
 
   public static AirportRepository getInstance() {
     AirportRepository localInstance = instance;
@@ -28,9 +28,7 @@ public class AirportRepositoryImplMock implements AirportRepository {
     return localInstance;
   }
 
-  private static final Map<Long, Airport> AIRPORT_CACHE = new HashMap<>();
-
-  static {
+  private AirportRepositoryImplMock() {
     final int CACHE_COUNT = 100;
 
     AIRPORT_CACHE.put(1L, new Airport(1L, "Moscow"));
