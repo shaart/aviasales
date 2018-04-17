@@ -19,11 +19,11 @@ public class LoginServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
+    //TODO JSP pages should be named in lowercase.
     req.getRequestDispatcher("Login.jsp").forward(req, resp);
   }
 
-  /*ToDo: add code for remembeMe checkbox,
-   * */
+  //TODO: add code for rememberMe checkbox,
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
@@ -33,6 +33,7 @@ public class LoginServlet extends HttpServlet {
 
     List<String> errorMessages = loginService.validate(login, password);
     if (errorMessages.isEmpty()) {
+      //TODO: session.setAttribute("account", loginService.getAccount());
       Account account = loginService.getAccount();
       HttpSession session = request.getSession(true);
       session.setAttribute("account", account);

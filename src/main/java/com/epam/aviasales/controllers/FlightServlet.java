@@ -31,6 +31,7 @@ public class FlightServlet extends HttpServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
 
+    //TODO please use camelCase: airportFromId, airportToId
     Long id_airport_from = Long.parseLong(req.getParameter("flight_from"));
     Long id_airport_to = Long.parseLong(req.getParameter("flight_to"));
     LocalDate date = LocalDate.parse(req.getParameter("departure"));
@@ -39,6 +40,7 @@ public class FlightServlet extends HttpServlet {
     req.setAttribute("to", id_airport_to);
     req.setAttribute("date", date);
 
+    //TODO check style! there are no spaces between fields below. A good habit is pressing ctrl+alt+L - code formatting
     List<Flight> flightList = flightsService.getFlights(id_airport_from,id_airport_to,date);
     req.setAttribute("flights", flightList);
     req.getRequestDispatcher("/").forward(req, resp);

@@ -47,7 +47,6 @@ public class AirplaneServiceImpl implements AirplaneService {
   @Override
   public void addAirplane(Airplane airplane) {
     airplaneRepository.addAirplane(airplane);
-
   }
 
   @Override
