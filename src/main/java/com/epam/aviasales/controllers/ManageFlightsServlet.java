@@ -6,13 +6,9 @@ import com.epam.aviasales.domain.Flight;
 import com.epam.aviasales.services.AirplaneService;
 import com.epam.aviasales.services.AirportService;
 import com.epam.aviasales.services.FlightService;
-import com.epam.aviasales.services.impMock.AirplaneServiceImplMock;
-import com.epam.aviasales.services.impMock.AirportServiceImplMock;
-import com.epam.aviasales.services.impMock.FlightServiceImplMock;
 import com.epam.aviasales.services.impl.AirplaneServiceImpl;
 import com.epam.aviasales.services.impl.AirportServiceImpl;
 import com.epam.aviasales.services.impl.FlightServiceImpl;
-import com.epam.aviasales.util.Dates;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -34,12 +30,9 @@ public class ManageFlightsServlet extends HttpServlet {
   @Override
   public void init() throws ServletException {
     try {
-//      flightService = FlightServiceImpl.getInstance();
-//      airportsService = AirportServiceImpl.getInstance();
-//      airplaneService = AirplaneServiceImpl.getInstance();
-      flightService = FlightServiceImplMock.getInstance();
-      airportsService = AirportServiceImplMock.getInstance();
-      airplaneService = AirplaneServiceImplMock.getInstance();
+      flightService = FlightServiceImpl.getInstance();
+      airportsService = AirportServiceImpl.getInstance();
+      airplaneService = AirplaneServiceImpl.getInstance();
     } catch (Exception e) {
       log.error(e);
     }
@@ -168,7 +161,7 @@ public class ManageFlightsServlet extends HttpServlet {
 
       req.getRequestDispatcher("manageFlights.jsp").forward(req, resp);
     } catch (Exception e) {
-      log.error(e);
+      log.error(e.getCause(), e);
       req.setAttribute("error", e.toString());
       req.getRequestDispatcher("../error.jsp").forward(req, resp);
     }

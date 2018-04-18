@@ -85,11 +85,23 @@ public class AirportRepositoryImpl implements AirportRepository {
 
   @Override
   public List<Airport> getAirports(int page, int count) {
-    return null;
+    throw new UnsupportedOperationException();
   }
 
   @Override
   public Airport getAirportByName(String name) {
-    return null;
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    session.beginTransaction();
+
+    Query query = session.createQuery("from Airport where name = :name");
+    query.setParameter("name", name);
+    List list = query.list();
+
+    Airport airport = list.isEmpty() ? null : (Airport) list.get(0);
+
+    session.getTransaction().commit();
+    session.close();
+
+    return airport;
   }
 }

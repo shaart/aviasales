@@ -85,11 +85,24 @@ public class AirplaneRepositoryImpl implements AirplaneRepository {
 
   @Override
   public List<Airplane> getAirplanes(int page, int count) {
-    return null;
+    throw new UnsupportedOperationException();
   }
 
   @Override
   public Airplane getAirplaneByName(String name) {
-    return null;
+
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    session.beginTransaction();
+
+    Query query = session.createQuery("from Airplane where name = :name");
+    query.setParameter("name", name);
+    List list = query.list();
+
+    Airplane airplane = list.isEmpty() ? null : (Airplane) list.get(0);
+
+    session.getTransaction().commit();
+    session.close();
+
+    return airplane;
   }
 }

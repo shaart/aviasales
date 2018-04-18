@@ -93,7 +93,16 @@ public class FlightRepositoryImpl implements FlightRepository {
 
   @Override
   public void updateFlight(Long id, Flight updatedFlight) {
-    throw new UnsupportedOperationException();
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    session.beginTransaction();
+
+    if (id != updatedFlight.getId()) {
+      updatedFlight.setId(id);
+    }
+    session.update(updatedFlight);
+
+    session.getTransaction().commit();
+    session.close();
   }
 
   @Override
