@@ -65,6 +65,11 @@ public class FlightServiceImplMock implements FlightService {
   }
 
   @Override
+  public List<Flight> getFlightsLike(Flight seekingFlight, int page, int size) {
+    return flightRepository.getFlightsLike(seekingFlight, page, size);
+  }
+
+  @Override
   public List<Flight> getFlights(Long fromId, Long toId) {
     return flightRepository.getFlights(fromId, toId);
   }

@@ -95,6 +95,50 @@ public class FlightRepositoryImplMock implements FlightRepository {
   }
 
   @Override
+  public List<Flight> getFlightsLike(Flight seekingFlight, int page, int size) {
+
+    List<Flight> flightList = new ArrayList<>();
+    if (size <= 0) {
+      return flightList;
+    }
+    if (page <= 0) {
+      page = 1;
+    }
+
+    final int startI = (page - 1) * size;
+    for (int i = startI; i < startI + size; i++) {
+      if (i >= FLIGHT_CACHE.size()) {
+        break;
+      }
+      Flight flight = FLIGHT_CACHE.get(Long.valueOf(i));
+      if (flight != null) {
+        if ((seekingFlight.getId() == null || seekingFlight.getId().equals(flight.getId()))
+            && (seekingFlight.getFromAirport() == null || seekingFlight.getFromAirport()
+            .equals(flight.getFromAirport()))
+            && (seekingFlight.getToAirport() == null || seekingFlight.getToAirport()
+            .equals(flight.getToAirport()))
+            && (seekingFlight.getAirplane() == null || seekingFlight.getAirplane()
+            .equals(flight.getAirplane()))
+            && (seekingFlight.getDepartureTime() == null || seekingFlight.getDepartureTime()
+            .equals(flight.getDepartureTime()))
+            && (seekingFlight.getArrivalTime() == null || seekingFlight.getArrivalTime()
+            .equals(flight.getArrivalTime()))
+            && (seekingFlight.getBaseTicketPrice() == null || seekingFlight.getBaseTicketPrice()
+            .equals(flight.getBaseTicketPrice()))
+            && (seekingFlight.getExtraBaggagePrice() == null || seekingFlight.getExtraBaggagePrice()
+            .equals(flight.getExtraBaggagePrice()))
+            && (seekingFlight.getFreeSeatEconomy() == null || seekingFlight.getFreeSeatEconomy()
+            .equals(flight.getFreeSeatEconomy()))
+            && (seekingFlight.getFreeSeatBusiness() == null || seekingFlight.getFreeSeatBusiness()
+            .equals(flight.getFreeSeatBusiness()))) {
+          flightList.add(flight);
+        }
+      }
+    }
+    return flightList;
+  }
+
+  @Override
   public List<Flight> getFlightsPage(int page, int count) {
 
     List<Flight> flightList = new ArrayList<>();
