@@ -20,4 +20,6 @@ public interface FlightService {
   void updateFlight(Long id, Flight updatedFlight);
 
   boolean isExist(Long id);
+
+  List<Flight> getFlightsLike(Flight seekingFlight, int page, int size);
 }

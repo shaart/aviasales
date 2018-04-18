@@ -20,4 +20,6 @@ public interface FlightRepository {
   List<Flight> getFlights(Long fromId, Long toId);
 
   void updateFlight(Long id, Flight updatedFlight);
+
+  List<Flight> getFlightsLike(Flight seekingFlight, int page, int size);
 }

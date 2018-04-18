@@ -95,6 +95,11 @@ public class FlightRepositoryImpl implements FlightRepository {
   }
 
   @Override
+  public List<Flight> getFlightsLike(Flight seekingFlight, int page, int size) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
   public List<Flight> getFlights() {
     Session session = HibernateUtil.getSessionFactory().openSession();
     session.beginTransaction();

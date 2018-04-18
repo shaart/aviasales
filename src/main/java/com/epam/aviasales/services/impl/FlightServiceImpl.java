@@ -68,4 +68,9 @@ public class FlightServiceImpl implements FlightService {
   public boolean isExist(Long id) {
     return flightRepository.isExist(id);
   }
+
+  @Override
+  public List<Flight> getFlightsLike(Flight seekingFlight, int page, int size) {
+    return flightRepository.getFlightsLike(seekingFlight, page, size);
+  }
 }
