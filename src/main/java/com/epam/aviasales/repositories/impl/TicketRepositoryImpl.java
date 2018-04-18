@@ -32,12 +32,11 @@ public class TicketRepositoryImpl implements TicketRepository {
   @Override
   public void addTicket(Ticket ticket) {
     Session session = HibernateUtil.getSessionFactory().openSession();
-
     session.beginTransaction();
 
     session.save(ticket);
-    session.getTransaction().commit();
 
+    session.getTransaction().commit();
     session.close();
   }
 

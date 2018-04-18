@@ -22,15 +22,23 @@
     <p><fmt:message key="from" bundle="${lang}"/>: ${flight.fromAirport.name}</p>
     <p><fmt:message key="to" bundle="${lang}"/>: ${flight.toAirport.name}</p>
     <p><fmt:message key="ticket.airplane.name" bundle="${lang}"/>: ${flight.airplane.name}</p>
-    <p><fmt:message key="ticket.departure.time" bundle="${lang}"/>: ${flight.departureTime}</p>
-    <p><fmt:message key="ticket.arrival.time" bundle="${lang}"/>: ${flight.arrivalTime}</p>
+    <fmt:parseDate value="${ flight.departureTime }"
+                   pattern="yyyy-MM-dd'T'HH:mm"
+                   var="parsedDateTime" type="both"/>
+    <p><fmt:message key="ticket.departure.time" bundle="${lang}"/>: <fmt:formatDate
+            pattern="yyyy-MM-dd HH:mm" value="${ parsedDateTime }"/></p>
+    <fmt:parseDate value="${ flight.arrivalTime }"
+                   pattern="yyyy-MM-dd'T'HH:mm"
+                   var="parsedDateTime" type="both"/>
+    <p><fmt:message key="ticket.arrival.time" bundle="${lang}"/>: <fmt:formatDate
+            pattern="yyyy-MM-dd HH:mm" value="${ parsedDateTime }"/></p>
     <p><fmt:message key="ticket.seats.free.economy" bundle="${lang}"/>: ${flight.freeSeatEconomy}</p>
     <p><fmt:message key="ticket.seats.free.business" bundle="${lang}"/>: ${flight.freeSeatBusiness}</p>
     <p><fmt:message key="ticket.baggage.price" bundle="${lang}"/>
         (1 <fmt:message key="ticket.baggage.kg" bundle="${lang}"/>): ${flight.extraBaggagePrice} €</p>
 </div>
 <h4><fmt:message key="ticket.personal_data.type" bundle="${lang}"/>:</h4>
-<form action="confirmation.jsp" method="post">
+<form action="/ticket" method="post">
     <div id="personalData" style="background-color: wheat">
         <table>
             <tr>
@@ -66,14 +74,21 @@
                 </th>
             </tr>
         </table>
-        <input name="isBusiness" type="radio" value="false"/>
-        <fmt:message key="flight.label.economy_class" bundle="${lang}"/>
-        <fmt:formatNumber value="${flight.baseTicketPrice}" minFractionDigits="2" maxFractionDigits="2"/> €
-        (<fmt:message key="ticket.baggage.weight" bundle="${lang}"/> 8 <fmt:message key="ticket.baggage.kg" bundle="${lang}"/>) <br>
-        <input name="isBusiness" type="radio" value="true"/>
-        <fmt:message key="flight.label.business_class" bundle="${lang}"/>
-        <fmt:formatNumber value="${flight.baseTicketPrice*1.4}" minFractionDigits="2" maxFractionDigits="2"/> €
-        (<fmt:message key="ticket.baggage.weight" bundle="${lang}"/> 20 <fmt:message key="ticket.baggage.kg" bundle="${lang}"/>) <br>
+        <c:if test="${flight.freeSeatEconomy > 0}">
+            <input name="isBusiness" type="radio" value="false" checked/>
+            <fmt:message key="flight.label.economy_class" bundle="${lang}"/>
+            <fmt:formatNumber value="${flight.baseTicketPrice}" minFractionDigits="2" maxFractionDigits="2"/> €
+            (<fmt:message key="ticket.baggage.weight" bundle="${lang}"/> 8 <fmt:message key="ticket.baggage.kg" bundle="${lang}"/>) <br>
+        </c:if>
+        <c:if test="${flight.freeSeatBusiness > 0}">
+            <input name="isBusiness" type="radio" value="true" checked/>
+            <fmt:message key="flight.label.business_class" bundle="${lang}"/>
+            <fmt:formatNumber value="${flight.baseTicketPrice*1.4}" minFractionDigits="2" maxFractionDigits="2"/> €
+            (<fmt:message key="ticket.baggage.weight" bundle="${lang}"/> 20 <fmt:message key="ticket.baggage.kg" bundle="${lang}"/>) <br>
+        </c:if>
+        <c:if test="${error != null}">
+            <h5 style="color: red"><fmt:message key="${error}" bundle="${lang}"/>!</h5>
+        </c:if>
     </div>
     <div align="right">
         <input type="submit" value="<fmt:message key="buy" bundle="${lang}"/>">

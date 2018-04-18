@@ -20,4 +20,6 @@ public interface FlightService {
   void deleteFlight(Long id);
 
   List<Flight> getFlights(Long airportIdFrom, Long airportIdTo, LocalDate date);
+
+  void updateFlight(Flight flight, Boolean isBusiness, Boolean increase);
 }

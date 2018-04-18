@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -67,8 +68,32 @@ public class FlightServiceImpl implements FlightService {
       return new ArrayList<>();
     }
     else{
-      return flightRepository.getFlights(airportIdFrom, airportIdTo, date);
+      List<Flight> list =  flightRepository.getFlights(airportIdFrom, airportIdTo, date);
+      return list.stream()
+          .filter(x -> x.getFreeSeatEconomy()>0 || x.getFreeSeatBusiness()>0)
+          .collect(Collectors.toList());
     }
+  }
+
+  @Override
+  public synchronized void updateFlight(Flight flight, Boolean isBusiness, Boolean increase) {
+    if(isBusiness){
+      if(increase){
+        flight.setFreeSeatBusiness(flight.getFreeSeatBusiness()+1);
+      }
+      else{
+        flight.setFreeSeatBusiness(flight.getFreeSeatBusiness()-1);
+      }
+    }
+    else{
+      if(increase){
+        flight.setFreeSeatEconomy(flight.getFreeSeatEconomy()+1);
+      }
+      else{
+        flight.setFreeSeatEconomy(flight.getFreeSeatEconomy()-1);
+      }
+    }
+    flightRepository.updateFlight(flight);
   }
 
   @Override

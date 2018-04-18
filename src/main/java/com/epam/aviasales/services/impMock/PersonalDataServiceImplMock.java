@@ -52,4 +52,14 @@ public class PersonalDataServiceImplMock implements PersonalDataService {
   public PersonalData getPersonalDataById(Long id) {
     return personalDataRepository.getPersonalDataById(id);
   }
+
+  @Override
+  public void addPersonalData(PersonalData personalData) {
+    personalDataRepository.addPersonalData(personalData);
+  }
+
+  @Override
+  public boolean isExist(PersonalData personalData) {
+    return personalDataRepository.isExist(personalData);
+  }
 }
