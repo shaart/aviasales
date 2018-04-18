@@ -335,7 +335,7 @@
     <br>
     <h2><fmt:message key="flight.header.result" bundle="${lang}"/></h2>
     <div class="text-center">
-        <nav aria-label="Page navigation example">
+        <nav aria-label="page navigation">
             <ul class="pagination">
                 <c:if test="${page > 1}">
                     <li class="page-item">
@@ -511,7 +511,7 @@
         </tbody>
     </table>
     <div class="text-center">
-        <nav aria-label="Page navigation example">
+        <nav aria-label="page navigation">
             <ul class="pagination">
                 <c:if test="${page > 1}">
                     <li class="page-item">
