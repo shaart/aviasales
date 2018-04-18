@@ -4,6 +4,8 @@ import com.epam.aviasales.domain.Flight;
 import com.epam.aviasales.repositories.FlightRepository;
 import com.epam.aviasales.repositories.implMock.FlightRepositoryImplMock;
 import com.epam.aviasales.services.FlightService;
+
+import java.time.LocalDate;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -31,7 +33,7 @@ public class FlightServiceImplMock implements FlightService {
 
   @Override
   public List<Flight> getFlights() {
-    return flightRepository.getFlightsPage(1, Integer.MAX_VALUE);
+    return flightRepository.getFlights(1L, Long.MAX_VALUE);
   }
 
   @Override
@@ -52,6 +54,11 @@ public class FlightServiceImplMock implements FlightService {
   @Override
   public void deleteFlight(Long id) {
     flightRepository.deleteFlight(id);
+  }
+
+  @Override
+  public List<Flight> getFlights(Long airportIdFrom, Long airportIdTo, LocalDate date) {
+    throw new UnsupportedOperationException();
   }
 
   @Override

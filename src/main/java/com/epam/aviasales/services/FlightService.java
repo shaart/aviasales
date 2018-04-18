@@ -1,6 +1,8 @@
 package com.epam.aviasales.services;
 
 import com.epam.aviasales.domain.Flight;
+
+import java.time.LocalDate;
 import java.util.List;
 
 public interface FlightService {
@@ -16,6 +18,8 @@ public interface FlightService {
   void addFlight(Flight flight);
 
   void deleteFlight(Long id);
+
+  List<Flight> getFlights(Long airportIdFrom, Long airportIdTo, LocalDate date);
 
   void updateFlight(Long id, Flight updatedFlight);
 

@@ -1,6 +1,8 @@
 package com.epam.aviasales.repositories;
 
 import com.epam.aviasales.domain.Flight;
+
+import java.time.LocalDate;
 import java.util.List;
 
 public interface FlightRepository {
@@ -18,6 +20,8 @@ public interface FlightRepository {
   boolean isExist(Long id);
 
   List<Flight> getFlights(Long fromId, Long toId);
+
+  List<Flight> getFlights(Long airportIdFrom, Long airportIdTo, LocalDate date);
 
   void updateFlight(Long id, Flight updatedFlight);
 

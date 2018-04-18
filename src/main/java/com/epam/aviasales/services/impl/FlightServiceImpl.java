@@ -4,7 +4,12 @@ import com.epam.aviasales.domain.Flight;
 import com.epam.aviasales.repositories.FlightRepository;
 import com.epam.aviasales.repositories.impl.FlightRepositoryImpl;
 import com.epam.aviasales.services.FlightService;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -52,6 +57,18 @@ public class FlightServiceImpl implements FlightService {
   @Override
   public void deleteFlight(Long id) {
     flightRepository.deleteFlight(id);
+  }
+
+  @Override
+  public List<Flight> getFlights(Long airportIdFrom, Long airportIdTo, LocalDate date) {
+    if (airportIdFrom == null || airportIdTo == null || date == null ||
+        Objects.equals(airportIdFrom, airportIdTo)
+        || date.toString().compareTo(LocalDate.now().toString()) < 0) {
+      return new ArrayList<>();
+    }
+    else{
+      return flightRepository.getFlights(airportIdFrom, airportIdTo, date);
+    }
   }
 
   @Override
