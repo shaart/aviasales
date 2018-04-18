@@ -3,13 +3,15 @@ package com.epam.aviasales.repositories.impl;
 import com.epam.aviasales.domain.Flight;
 import com.epam.aviasales.repositories.FlightRepository;
 import com.epam.aviasales.util.HibernateUtil;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
 import java.util.List;
+import org.hibernate.criterion.Restrictions;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FlightRepositoryImpl implements FlightRepository {
@@ -91,12 +93,64 @@ public class FlightRepositoryImpl implements FlightRepository {
 
   @Override
   public void updateFlight(Long id, Flight updatedFlight) {
-
+    throw new UnsupportedOperationException();
   }
 
   @Override
   public List<Flight> getFlightsLike(Flight seekingFlight, int page, int size) {
-    throw new UnsupportedOperationException();
+    if (size <= 0) {
+      return new ArrayList<>();
+    }
+    if (seekingFlight == null) {
+      return getFlightsPage(page, size);
+    }
+    if (page < 1) {
+      page = 1;
+    }
+    // pages start from 1
+    page -= 1;
+
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    session.beginTransaction();
+    Criteria criteria = session.createCriteria(Flight.class);
+    if (seekingFlight.getId() != null) {
+      criteria.add(Restrictions.eq("id", seekingFlight.getId()));
+    }
+    if (seekingFlight.getFromAirport() != null) {
+      criteria.add(Restrictions.eq("fromAirport", seekingFlight.getFromAirport()));
+    }
+    if (seekingFlight.getToAirport() != null) {
+      criteria.add(Restrictions.eq("toAirport", seekingFlight.getToAirport()));
+    }
+    if (seekingFlight.getAirplane() != null) {
+      criteria.add(Restrictions.eq("airplane", seekingFlight.getAirplane()));
+    }
+    if (seekingFlight.getDepartureTime() != null) {
+      criteria.add(Restrictions.eq("departureTime", seekingFlight.getDepartureTime()));
+    }
+    if (seekingFlight.getArrivalTime() != null) {
+      criteria.add(Restrictions.eq("arrivalTime", seekingFlight.getArrivalTime()));
+    }
+    if (seekingFlight.getBaseTicketPrice() != null) {
+      criteria.add(Restrictions.eq("baseTicketPrice", seekingFlight.getBaseTicketPrice()));
+    }
+    if (seekingFlight.getExtraBaggagePrice() != null) {
+      criteria.add(Restrictions.eq("extraBaggagePrice", seekingFlight.getExtraBaggagePrice()));
+    }
+    if (seekingFlight.getFreeSeatEconomy() != null) {
+      criteria.add(Restrictions.eq("freeSeatEconomy", seekingFlight.getFreeSeatEconomy()));
+    }
+    if (seekingFlight.getFreeSeatBusiness() != null) {
+      criteria.add(Restrictions.eq("freeSeatBusiness", seekingFlight.getFreeSeatBusiness()));
+    }
+    criteria.setFirstResult(page * size);
+    criteria.setMaxResults(size);
+
+    List<Flight> result = (List<Flight>) criteria.list();
+    session.getTransaction().commit();
+    session.close();
+
+    return result;
   }
 
   @Override
@@ -115,6 +169,6 @@ public class FlightRepositoryImpl implements FlightRepository {
 
   @Override
   public List<Flight> getFlightsPage(int page, int count) {
-    return null;
+    throw new UnsupportedOperationException();
   }
 }
