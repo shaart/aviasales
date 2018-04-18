@@ -45,34 +45,126 @@ public class ManageFlightsServlet extends HttpServlet {
     }
   }
 
+  private void setAttributeIfExistsParameter(HttpServletRequest request, String parameter) {
+    String parameterValue = request.getParameter(parameter);
+    if (parameterValue != null && !parameterValue.isEmpty()) {
+      request.setAttribute(parameter, parameterValue);
+    }
+  }
+
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
     try {
+      final int DEFAULT_PAGE_SIZE = 15;
+      final int DEFAULT_PAGE = 1;
+
       String pageStr = req.getParameter("page");
       int page;
       if (pageStr == null) {
-        page = 1;
+        page = DEFAULT_PAGE;
       } else {
         page = Integer.parseInt(pageStr);
       }
       String sizeStr = req.getParameter("size");
       int size;
       if (sizeStr == null) {
-        size = 15;
+        size = DEFAULT_PAGE_SIZE;
       } else {
         size = Integer.parseInt(sizeStr);
       }
 
-      List<Flight> flights = flightService.getFlightsPage(page, size);
+      req.setAttribute("page", page);
+      req.setAttribute("size", size);
+
+      setAttributeIfExistsParameter(req, "id");
+      setAttributeIfExistsParameter(req, "fromAirport");
+      setAttributeIfExistsParameter(req, "toAirport");
+      setAttributeIfExistsParameter(req, "airplane");
+      setAttributeIfExistsParameter(req, "departureTime");
+      setAttributeIfExistsParameter(req, "arrivalTime");
+      setAttributeIfExistsParameter(req, "baseTicketPrice");
+      setAttributeIfExistsParameter(req, "extraBaggagePrice");
+      setAttributeIfExistsParameter(req, "freeSeatEconomy");
+      setAttributeIfExistsParameter(req, "freeSeatBusiness");
+
+      String reqParameters = req.getQueryString();
+      if (reqParameters == null) {
+        reqParameters = "?";
+      } else {
+        reqParameters = "?" + reqParameters;
+      }
+      String prevPage;
+      String currPage;
+      String nextPage;
+      if (reqParameters.contains("page")) {
+        prevPage = reqParameters.replaceFirst("page=[^&]*", "page=" + (page - 1));
+        currPage = reqParameters;
+        nextPage = reqParameters.replaceFirst("page=[^&]*", "page=" + (page + 1));
+      } else {
+        prevPage = reqParameters + "&page=" + (page - 1);
+        currPage = reqParameters + "&page=" + (page);
+        nextPage = reqParameters + "&page=" + (page + 1);
+      }
+
+      req.setAttribute("prevPageURL", prevPage);
+      req.setAttribute("currPageURL", currPage);
+      req.setAttribute("nextPageURL", nextPage);
+
+      String idParameter = req.getParameter("id");
+      Long id = isNullOrEmpty(idParameter) ? null : Long.valueOf(idParameter);
+
+      String fromAirportParameter = req.getParameter("fromAirport");
+
+      Airport fromAirport = isNullOrEmpty(fromAirportParameter) ? null
+          : airportsService.getAirportByName(fromAirportParameter);
+      String toAirportParameter = req.getParameter("toAirport");
+
+      Airport toAirport = isNullOrEmpty(toAirportParameter) ? null
+          : airportsService.getAirportByName(toAirportParameter);
+
+      String airplaneParameter = req.getParameter("airplane");
+      Airplane airplane =
+          isNullOrEmpty(airplaneParameter) ? null
+              : airplaneService.getAirplaneByName(airplaneParameter);
+
+      String departureTimeParameter = req.getParameter("departureTime");
+      LocalDateTime departureTime =
+          isNullOrEmpty(departureTimeParameter) ? null
+              : LocalDateTime.parse(departureTimeParameter);
+
+      String arrivalTimeParameter = req.getParameter("arrivalTime");
+      LocalDateTime arrivalTime =
+          isNullOrEmpty(arrivalTimeParameter) ? null : LocalDateTime.parse(arrivalTimeParameter);
+
+      String baseTicketPriceParameter = req.getParameter("baseTicketPrice");
+      Integer baseTicketPrice = isNullOrEmpty(baseTicketPriceParameter) ? null
+          : Integer.parseInt(baseTicketPriceParameter);
+
+      String extraBaggagePriceParameter = req.getParameter("extraBaggagePrice");
+      Integer extraBaggagePrice = isNullOrEmpty(extraBaggagePriceParameter) ? null
+          : Integer.parseInt(extraBaggagePriceParameter);
+
+      String freeSeatEconomyParameter = req.getParameter("freeSeatEconomy");
+      Integer freeSeatEconomy = isNullOrEmpty(freeSeatEconomyParameter) ? null
+          : Integer.parseInt(freeSeatEconomyParameter);
+
+      String freeSeatBusinessParameter = req.getParameter("freeSeatBusiness");
+      Integer freeSeatBusiness = isNullOrEmpty(freeSeatBusinessParameter) ? null
+          : Integer.parseInt(freeSeatBusinessParameter);
+
+      Flight seekingFlight = Flight.builder().id(id).fromAirport(fromAirport)
+          .toAirport(toAirport)
+          .airplane(airplane).departureTime(departureTime).arrivalTime(arrivalTime)
+          .baseTicketPrice(baseTicketPrice).extraBaggagePrice(extraBaggagePrice)
+          .freeSeatEconomy(freeSeatEconomy).freeSeatBusiness(freeSeatBusiness).build();
+
+      List<Flight> flights = flightService.getFlightsLike(seekingFlight, page, size);
       req.setAttribute("flights", flights);
       List<Airport> airports = airportsService.getAirports();
       req.setAttribute("airports", airports);
       List<Airplane> airplanes = airplaneService.getAirplanes();
       req.setAttribute("airplanes", airplanes);
-
-      req.setAttribute("page", page);
-      req.setAttribute("size", size);
 
       req.getRequestDispatcher("manageFlights.jsp").forward(req, resp);
     } catch (Exception e) {
@@ -80,6 +172,10 @@ public class ManageFlightsServlet extends HttpServlet {
       req.setAttribute("error", e.toString());
       req.getRequestDispatcher("../error.jsp").forward(req, resp);
     }
+  }
+
+  private boolean isNullOrEmpty(String parameter) {
+    return parameter == null || parameter.isEmpty();
   }
 
   @Override
@@ -119,7 +215,8 @@ public class ManageFlightsServlet extends HttpServlet {
       Integer freeSeatEconomy = Integer.parseInt(req.getParameter("freeSeatEconomy"));
       Integer freeSeatBusiness = Integer.parseInt(req.getParameter("freeSeatBusiness"));
 
-      Flight receivedFlight = Flight.builder().id(id).fromAirport(fromAirport).toAirport(toAirport)
+      Flight receivedFlight = Flight.builder().id(id).fromAirport(fromAirport)
+          .toAirport(toAirport)
           .airplane(airplane).departureTime(departureTime).arrivalTime(arrivalTime)
           .baseTicketPrice(baseTicketPrice).extraBaggagePrice(extraBaggagePrice)
           .freeSeatEconomy(freeSeatEconomy).freeSeatBusiness(freeSeatBusiness).build();
