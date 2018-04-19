@@ -63,7 +63,7 @@ public class ParserServiceImpl implements ParserService {
   public Flight parseFlight(HttpServletRequest req) {
     Long id = (Long) parseParameter(req.getParameter("id"), Long.class);
     Airport fromAirport = (Airport) parseParameter(req.getParameter("fromAirport"), Airport.class);
-    Airport toAirport = (Airport) parseParameter(req.getParameter("toAirport "), Airport.class);
+    Airport toAirport = (Airport) parseParameter(req.getParameter("toAirport"), Airport.class);
     Airplane airplane = (Airplane) parseParameter(req.getParameter("airplane"), Airplane.class);
     LocalDateTime departureTime = (LocalDateTime) parseParameter(req.getParameter("departureTime"),
         LocalDateTime.class);

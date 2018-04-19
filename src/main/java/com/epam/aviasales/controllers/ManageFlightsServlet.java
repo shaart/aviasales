@@ -102,7 +102,7 @@ public class ManageFlightsServlet extends HttpServlet {
           break;
       }
     } catch (Exception e) {
-      log.error(e);
+      log.error(e.getCause(), e);
       resp.sendError(400);
       return;
     }

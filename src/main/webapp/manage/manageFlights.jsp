@@ -283,22 +283,93 @@
         </thead>
         <tbody>
         <tr id="adding-row">
-            <form action="/manage/flights" method="post">
+            <form id="addForm" action="/manage/flights" method="post">
                 <td><input readonly type="text" disabled class="form-control" width="10" name="id"
                            value="-"
                            placeholder="<fmt:message key="flight.label.id" bundle="${lang}"/>">
                 </td>
-                <td><input type="text" class="form-control" name="fromAirport" value=""
-                           placeholder="<fmt:message key="flight.label.from" bundle="${lang}"/>"
-                           required>
+                <td>
+                    <select required class="form-control" name="fromAirport" size="1">
+                        <c:choose>
+                            <c:when test="${not empty fromAirport}">
+                                <option selected value="">
+                                    <fmt:message key="flight.label.choose" bundle="${lang}"/>
+                                </option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="">
+                                    <fmt:message key="flight.label.choose" bundle="${lang}"/>
+                                </option>
+                            </c:otherwise>
+                        </c:choose>
+                        <c:forEach var="airport" items="${airports}">
+                            <c:choose>
+                                <c:when test="${airport.name.equals(fromAirport)}">
+                                    <option selected
+                                            value="${airport.name}">${airport.name}</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${airport.name}">${airport.name}</option>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </select>
                 </td>
-                <td><input type="text" class="form-control" name="toAirport" value=""
-                           placeholder="<fmt:message key="flight.label.to" bundle="${lang}"/>"
-                           required>
+                <td>
+                    <select required class="form-control" data-live-search="true" name="toAirport"
+                            size="1">
+                        <c:choose>
+                            <c:when test="${not empty toAirport}">
+                                <option selected value="">
+                                    <fmt:message key="flight.label.choose" bundle="${lang}"/>
+                                </option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="">
+                                    <fmt:message key="flight.label.choose" bundle="${lang}"/>
+                                </option>
+                            </c:otherwise>
+                        </c:choose>
+                        <c:forEach var="airport" items="${airports}">
+                            <c:choose>
+                                <c:when test="${airport.name.equals(toAirport)}">
+                                    <option selected
+                                            value="${airport.name}">${airport.name}</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${airport.name}">${airport.name}</option>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </select>
                 </td>
-                <td><input type="text" class="form-control" name="airplane" value=""
-                           placeholder="<fmt:message key="flight.label.airplane" bundle="${lang}"/>"
-                           required>
+                <td>
+                    <select required class="form-control" data-live-search="true" name="airplane"
+                            size="1">
+                        <c:choose>
+                            <c:when test="${not empty airplane}">
+                                <option selected value="">
+                                    <fmt:message key="flight.label.choose" bundle="${lang}"/>
+                                </option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="">
+                                    <fmt:message key="flight.label.choose" bundle="${lang}"/>
+                                </option>
+                            </c:otherwise>
+                        </c:choose>
+                        <c:forEach var="curAirplane" items="${airplanes}">
+                            <c:choose>
+                                <c:when test="${curAirplane.name.equals(airplane)}">
+                                    <option selected
+                                            value="${curAirplane.name}">${curAirplane.name}</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${curAirplane.name}">${curAirplane.name}</option>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </select>
                 </td>
                 <td><input type="datetime-local" class="form-control" name="departureTime" value=""
                            placeholder="<fmt:message key="flight.label.departure" bundle="${lang}"/>"
@@ -308,22 +379,27 @@
                            placeholder="<fmt:message key="flight.label.arrival" bundle="${lang}"/>"
                            pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" required>
                 </td>
-                <td><input type="number" class="form-control" name="baseTicketPrice" value=""
+                <td><input required type="number" class="form-control" name="baseTicketPrice"
+                           value=""
                            placeholder="<fmt:message key="flight.label.base_ticket_price" bundle="${lang}"/>">
                 </td>
-                <td><input type="number" class="form-control" name="extraBaggagePrice" value=""
+                <td><input required type="number" class="form-control" name="extraBaggagePrice"
+                           value=""
                            placeholder="<fmt:message key="flight.label.extra_baggage_price" bundle="${lang}"/>">
                 </td>
-                <td><input type="number" class="form-control" name="freeSeatEconomy" value=""
+                <td><input required type="number" class="form-control" name="freeSeatEconomy"
+                           value=""
                            placeholder="<fmt:message key="flight.label.free_seat_economy" bundle="${lang}"/>">
                 </td>
-                <td><input type="number" class="form-control" name="freeSeatBusiness" value=""
+                <td><input required type="number" class="form-control" name="freeSeatBusiness"
+                           value=""
                            placeholder="<fmt:message key="flight.label.free_seat_business" bundle="${lang}"/>">
                 </td>
                 <td>
                     <div class="btn-group btn-group-justified">
                         <div class="btn-group">
-                            <input type="submit" class="btn btn-primary" name="actionAdd"
+                            <input id="add-button" type="submit" class="btn btn-primary"
+                                   name="actionAdd"
                                    value="<fmt:message key="flight.label.control.add" bundle="${lang}"/>">
                         </div>
                     </div>
