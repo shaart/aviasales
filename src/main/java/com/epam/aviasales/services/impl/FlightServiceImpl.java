@@ -1,6 +1,7 @@
 package com.epam.aviasales.services.impl;
 
 import com.epam.aviasales.domain.Flight;
+import com.epam.aviasales.exceptions.NoAvailableSeatsForTheFlight;
 import com.epam.aviasales.repositories.FlightRepository;
 import com.epam.aviasales.repositories.impl.FlightRepositoryImpl;
 import com.epam.aviasales.services.FlightService;
@@ -76,7 +77,7 @@ public class FlightServiceImpl implements FlightService {
 
   @Override
   public synchronized void updateFlight(Flight flight, Boolean isBusiness,
-      Boolean increaseNumberOfSeats) {
+      Boolean increaseNumberOfSeats) throws NoAvailableSeatsForTheFlight {
     flight = flightRepository.getFlightById(flight.getId());
     flight = increaseNumberOfSeats ? localIncreaseNumberOfSeats(flight, isBusiness)
         : localDecreaseNumberOfSeats(flight, isBusiness);
@@ -92,15 +93,16 @@ public class FlightServiceImpl implements FlightService {
     return flight;
   }
 
-  private Flight localDecreaseNumberOfSeats(Flight flight, Boolean isBusiness) {
+  private Flight localDecreaseNumberOfSeats(Flight flight, Boolean isBusiness)
+      throws NoAvailableSeatsForTheFlight {
     if (isBusiness) {
       if (flight.getFreeSeatBusiness() < 1) {
-        throw new UnsupportedOperationException();
+        throw new NoAvailableSeatsForTheFlight();
       }
       flight.setFreeSeatBusiness(flight.getFreeSeatBusiness() - 1);
     } else {
       if (flight.getFreeSeatEconomy() < 1) {
-        throw new UnsupportedOperationException();
+        throw new NoAvailableSeatsForTheFlight();
       }
       flight.setFreeSeatEconomy(flight.getFreeSeatEconomy() - 1);
     }

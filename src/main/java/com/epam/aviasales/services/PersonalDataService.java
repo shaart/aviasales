@@ -1,6 +1,8 @@
 package com.epam.aviasales.services;
 
 import com.epam.aviasales.domain.PersonalData;
+import com.epam.aviasales.exceptions.PersonalDataHasAlreadyExist;
+
 import java.util.List;
 
 public interface PersonalDataService {
@@ -13,7 +15,7 @@ public interface PersonalDataService {
 
   PersonalData getPersonalDataById(Long id);
 
-  void addPersonalData(PersonalData personalData);
+  void addPersonalData(PersonalData personalData) throws PersonalDataHasAlreadyExist;
 
   boolean isExist(PersonalData personalData);
 }

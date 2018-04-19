@@ -1,6 +1,7 @@
 package com.epam.aviasales.services;
 
 import com.epam.aviasales.domain.Flight;
+import com.epam.aviasales.exceptions.NoAvailableSeatsForTheFlight;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -27,5 +28,6 @@ public interface FlightService {
 
   List<Flight> getFlightsLike(Flight seekingFlight, int page, int size);
 
-  void updateFlight(Flight flight, Boolean isBusiness, Boolean increaseNumberOfSeats);
+  void updateFlight(Flight flight, Boolean isBusiness, Boolean increaseNumberOfSeats)
+      throws NoAvailableSeatsForTheFlight;
 }

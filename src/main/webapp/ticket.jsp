@@ -92,7 +92,7 @@
             <h5 style="color: red"><fmt:message key="${error}" bundle="${lang}"/>!</h5>
         </c:if>
     </div>
-    <c:if test="${flight.freeSeatBusiness != 0 || flight.freeSeatEconomy != 0}">
+    <c:if test="${flight.freeSeatBusiness > 0 || flight.freeSeatEconomy > 0}">
         <div align="right">
             <input type="submit" value="<fmt:message key="buy" bundle="${lang}"/>">
         </div>

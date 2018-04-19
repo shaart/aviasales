@@ -28,8 +28,8 @@ public class MainServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
-
     clearData(req);
+
     List<Airport> airportList = airportService.getAirports();
     req.getSession().setAttribute("airports", airportList);
     req.getSession().setAttribute("currentDate", currentDate);

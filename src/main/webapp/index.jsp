@@ -54,7 +54,7 @@
             <fmt:message key="departure" bundle="${lang}"/>
         </label>
         <label>
-            <input type="date" name="departure" value=${date.equals("") ? currentDate : date}>
+            <input type="date" name="date" value=${date.equals("") ? currentDate : date}>
         </label><br>
         <label>
             <input type="submit" value="<fmt:message key="find" bundle="${lang}"/>"/>

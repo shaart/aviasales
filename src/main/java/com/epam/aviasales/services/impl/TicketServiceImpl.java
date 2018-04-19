@@ -3,6 +3,7 @@ package com.epam.aviasales.services.impl;
 import com.epam.aviasales.domain.Account;
 import com.epam.aviasales.domain.Flight;
 import com.epam.aviasales.domain.Ticket;
+import com.epam.aviasales.exceptions.NoAvailableSeatsForTheFlight;
 import com.epam.aviasales.repositories.TicketRepository;
 import com.epam.aviasales.repositories.impl.FlightRepositoryImpl;
 import com.epam.aviasales.repositories.impl.TicketRepositoryImpl;
@@ -49,7 +50,7 @@ public class TicketServiceImpl implements TicketService {
   }
 
   @Override
-  public void addTicket(Ticket ticket) {
+  public void addTicket(Ticket ticket) throws NoAvailableSeatsForTheFlight {
     FlightServiceImpl.getInstance().updateFlight(ticket.getFlight(), ticket.getIsBusiness(), false);
     Account account = AccountServiceImpl.getInstance()
         .getAccountById(ticket.getAccount().getId());

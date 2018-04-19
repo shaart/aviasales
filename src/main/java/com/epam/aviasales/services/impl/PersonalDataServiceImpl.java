@@ -1,6 +1,7 @@
 package com.epam.aviasales.services.impl;
 
 import com.epam.aviasales.domain.PersonalData;
+import com.epam.aviasales.exceptions.PersonalDataHasAlreadyExist;
 import com.epam.aviasales.repositories.PersonalDataRepository;
 import com.epam.aviasales.repositories.impl.PersonalDataRepositoryImpl;
 import com.epam.aviasales.services.PersonalDataService;
@@ -53,7 +54,7 @@ public class PersonalDataServiceImpl implements PersonalDataService {
   }
 
   @Override
-  public void addPersonalData(PersonalData personalData) {
+  public void addPersonalData(PersonalData personalData) throws PersonalDataHasAlreadyExist {
     PersonalData personalDataInsideDB = personalDataRepository
         .getPersonalDataByPassport(personalData.getPassport());
     if (personalDataInsideDB == null) {
@@ -61,7 +62,7 @@ public class PersonalDataServiceImpl implements PersonalDataService {
     } else {
       if (!personalDataInsideDB.getName().equals(personalData.getName()) ||
           !personalDataInsideDB.getDateOfBirth().equals(personalData.getDateOfBirth())) {
-        throw new UnsupportedOperationException();
+        throw new PersonalDataHasAlreadyExist();
       }
     }
   }

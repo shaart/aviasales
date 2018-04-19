@@ -43,10 +43,10 @@ public class FlightServlet extends HttpServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
 
-    if (req.getParameter("departure").equals("")) {
+    if (req.getParameter("date").equals("")) {
       date = LocalDate.now();
     } else {
-      date = LocalDate.parse(req.getParameter("departure"));
+      date = LocalDate.parse(req.getParameter("date"));
     }
     idAirportFrom = Long.parseLong(req.getParameter("flight_from"));
     idAirportTo = Long.parseLong(req.getParameter("flight_to"));
