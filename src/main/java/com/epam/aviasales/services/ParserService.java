@@ -1,6 +1,8 @@
 package com.epam.aviasales.services;
 
+import com.epam.aviasales.domain.Airport;
 import com.epam.aviasales.domain.Flight;
+import com.epam.aviasales.util.CastType;
 import javax.servlet.http.HttpServletRequest;
 
 public interface ParserService {
@@ -15,5 +17,9 @@ public interface ParserService {
    */
   Object parseParameter(String parameter, Class type);
 
+  <T> T parseParameter(String parameter, CastType type);
+
   Flight parseFlight(HttpServletRequest req);
+
+  Airport parseAirport(HttpServletRequest req);
 }

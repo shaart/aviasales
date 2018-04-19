@@ -7,12 +7,12 @@ import com.epam.aviasales.services.AirplaneService;
 import com.epam.aviasales.services.AirportService;
 import com.epam.aviasales.services.FlightService;
 import com.epam.aviasales.services.ParserService;
+import com.epam.aviasales.util.CastType;
 import java.time.LocalDateTime;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.extern.log4j.Log4j;
 
+@Log4j
 public class ParserServiceImpl implements ParserService {
 
   private static volatile ParserService instance;
@@ -41,6 +41,15 @@ public class ParserServiceImpl implements ParserService {
     airplaneService = AirplaneServiceImpl.getInstance();
   }
 
+  public static void main(String[] args) {
+    ParserServiceImpl parserService = new ParserServiceImpl();
+
+    Airport airport = parserService.parseParameter("Moscow", CastType.AIRPORT);
+    System.out.println(airport);
+    Airplane airplane = parserService.parseParameter("SU-2", CastType.AIRPLANE);
+    System.out.println(airplane);
+  }
+
   public Object parseParameter(String parameter, Class type) {
     if (parameter == null || parameter.trim().isEmpty()) {
       return null;
@@ -56,6 +65,31 @@ public class ParserServiceImpl implements ParserService {
       return airplaneService.getAirplaneByName(parameter);
     } else if (type == Airport.class) {
       return airportsService.getAirportByName(parameter);
+    }
+    return null;
+  }
+
+  public <T> T parseParameter(String parameter, CastType type) {
+    if (parameter == null || parameter.trim().isEmpty()) {
+      return null;
+    }
+
+    try {
+      switch (type) {
+        case LONG:
+          return (T) Long.valueOf(parameter);
+        case INTEGER:
+          return (T) Integer.valueOf(parameter);
+        case LOCAL_DATE_TIME:
+          return (T) LocalDateTime.parse(parameter);
+        case AIRPLANE:
+          return (T) airplaneService.getAirplaneByName(parameter);
+        case AIRPORT:
+          return (T) airportsService.getAirportByName(parameter);
+      }
+    } catch (ClassCastException e) {
+      log.error(e.getCause(), e);
+      return null;
     }
     return null;
   }
@@ -85,13 +119,11 @@ public class ParserServiceImpl implements ParserService {
         .freeSeatEconomy(freeSeatEconomy).freeSeatBusiness(freeSeatBusiness).build();
   }
 
-  public static void main(String[] args) {
-    ParserServiceImpl parserService = new ParserServiceImpl();
-//    Long id = (Long)
-    Long id = (Long) parserService.parseParameter("5", Long.class);
-    System.out.println(id);
-    Airport airport = (Airport) parserService.parseParameter("Moscow", Airport.class);
-    System.out.println(airport);
+  @Override
+  public Airport parseAirport(HttpServletRequest req) {
+    Long id = (Long) parseParameter(req.getParameter("id"), Long.class);
+    String name = (String) parseParameter(req.getParameter("name"), String.class);
 
+    return Airport.builder().id(id).name(name).build();
   }
 }
