@@ -1,4 +1,5 @@
 package com.epam.aviasales.exceptions;
 
-public class NoAvailableSeatsForTheFlight extends Exception{
+public class NoAvailableSeatsForTheFlight extends Exception {
+
 }

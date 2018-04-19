@@ -5,7 +5,7 @@ import com.epam.aviasales.domain.Flight;
 import com.epam.aviasales.domain.PersonalData;
 import com.epam.aviasales.domain.Ticket;
 import com.epam.aviasales.exceptions.NoAvailableSeatsForTheFlight;
-import com.epam.aviasales.exceptions.PersonalDataHasAlreadyExist;
+import com.epam.aviasales.exceptions.PersonalDataAlreadyExists;
 import com.epam.aviasales.services.PersonalDataService;
 import com.epam.aviasales.services.TicketService;
 import com.epam.aviasales.services.FlightService;
@@ -85,7 +85,7 @@ public class TicketServlet extends HttpServlet {
         .passport(passport).dateOfBirth(birthday).build();
     try {
       personalDataService.addPersonalData(personalData);
-    } catch (PersonalDataHasAlreadyExist e) {
+    } catch (PersonalDataAlreadyExists e) {
       req.setAttribute("error", "error.such_person_is_exist");
       req.getRequestDispatcher("ticket.jsp").forward(req, resp);
     }
