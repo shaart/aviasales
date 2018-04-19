@@ -9,6 +9,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Builder
+@ToString
 public class Airport implements Serializable {
 
   private Long id;

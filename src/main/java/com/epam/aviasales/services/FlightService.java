@@ -21,5 +21,11 @@ public interface FlightService {
 
   List<Flight> getFlights(Long airportIdFrom, Long airportIdTo, LocalDate date);
 
+  void updateFlight(Long id, Flight updatedFlight);
+
+  boolean isExist(Long id);
+
+  List<Flight> getFlightsLike(Flight seekingFlight, int page, int size);
+
   void updateFlight(Flight flight, Boolean isBusiness, Boolean increaseNumberOfSeats);
 }

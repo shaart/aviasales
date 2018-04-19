@@ -101,7 +101,22 @@ public class FlightServiceImpl implements FlightService {
   }
 
   @Override
+  public void updateFlight(Long id, Flight updatedFlight) {
+    flightRepository.updateFlight(id, updatedFlight);
+  }
+
+  @Override
   public List<Flight> getFlights(Long fromId, Long toId) {
     return flightRepository.getFlights(fromId, toId);
+  }
+
+  @Override
+  public boolean isExist(Long id) {
+    return flightRepository.isExist(id);
+  }
+
+  @Override
+  public List<Flight> getFlightsLike(Flight seekingFlight, int page, int size) {
+    return flightRepository.getFlightsLike(seekingFlight, page, size);
   }
 }

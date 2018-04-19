@@ -63,7 +63,10 @@ public class AccountRepositoryImplMock implements AccountRepository {
       if (i >= ACCOUNTS_CACHE.size()) {
         break;
       }
-      accountList.add(ACCOUNTS_CACHE.get(Long.valueOf(i)));
+      Account account = ACCOUNTS_CACHE.get(Long.valueOf(i));
+      if (account != null) {
+        accountList.add(account);
+      }
     }
     return accountList;
   }
@@ -87,7 +90,7 @@ public class AccountRepositoryImplMock implements AccountRepository {
   public List<Account> getAccountByLogin(String login) {
     List<Account> accounts = new ArrayList<>();
     for (Account account : ACCOUNTS_CACHE.values()) {
-      if (account.getLogin().equals(login)) {
+      if (account != null && account.getLogin().equals(login)) {
         accounts.add(account);
         return accounts;
       }

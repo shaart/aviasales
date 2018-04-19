@@ -5,6 +5,9 @@ import com.epam.aviasales.repositories.TicketRepository;
 import com.epam.aviasales.services.AccountService;
 import com.epam.aviasales.services.FlightService;
 import com.epam.aviasales.services.PersonalDataService;
+import com.epam.aviasales.services.impMock.AccountServiceImplMock;
+import com.epam.aviasales.services.impMock.FlightServiceImplMock;
+import com.epam.aviasales.services.impMock.PersonalDataServiceImplMock;
 import com.epam.aviasales.services.impl.AccountServiceImpl;
 import com.epam.aviasales.services.impl.FlightServiceImpl;
 import com.epam.aviasales.services.impl.PersonalDataServiceImpl;
@@ -19,10 +22,10 @@ public class TicketRepositoryImplMock implements TicketRepository {
 
   private static volatile TicketRepository instance;
   private static final Map<Long, Ticket> TICKET_CACHE = new HashMap<>();
-  private static final PersonalDataService personalDataService = PersonalDataServiceImpl
+  private static final PersonalDataService personalDataService = PersonalDataServiceImplMock
       .getInstance();
-  private static final AccountService accountService = AccountServiceImpl.getInstance();
-  private static final FlightService flightService = FlightServiceImpl.getInstance();
+  private static final AccountService accountService = AccountServiceImplMock.getInstance();
+  private static final FlightService flightService = FlightServiceImplMock.getInstance();
 
   public static TicketRepository getInstance() {
     TicketRepository localInstance = instance;
@@ -69,7 +72,10 @@ public class TicketRepositoryImplMock implements TicketRepository {
       if (i >= TICKET_CACHE.size()) {
         break;
       }
-      ticketList.add(TICKET_CACHE.get(Long.valueOf(i)));
+      Ticket ticket = TICKET_CACHE.get(Long.valueOf(i));
+      if (ticket != null) {
+        ticketList.add(ticket);
+      }
     }
     return ticketList;
   }

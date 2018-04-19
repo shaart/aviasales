@@ -58,16 +58,19 @@ public class PersonalDataRepositoryImplMock implements PersonalDataRepository {
       if (i >= PERSONAL_DATA_CACHE.size()) {
         break;
       }
-      PersonalDataList.add(PERSONAL_DATA_CACHE.get(Long.valueOf(i)));
+      PersonalData personalData = PERSONAL_DATA_CACHE.get(Long.valueOf(i));
+      if (personalData != null) {
+        PersonalDataList.add(personalData);
+      }
     }
     return PersonalDataList;
   }
 
   @Override
   public PersonalData getPersonalDataByPassport(String passport) {
-    for (PersonalData PersonalData : PERSONAL_DATA_CACHE.values()) {
-      if (PersonalData.getPassport().equals(passport)) {
-        return PersonalData;
+    for (PersonalData personalData : PERSONAL_DATA_CACHE.values()) {
+      if (personalData != null && personalData.getPassport().equals(passport)) {
+        return personalData;
       }
     }
     return null;
