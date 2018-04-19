@@ -27,7 +27,8 @@ public class AirportServiceImplMock implements AirportService {
     return localInstance;
   }
 
-  private static final AirportRepository airportRepository = AirportRepositoryImplMock.getInstance();
+  private static final AirportRepository airportRepository = AirportRepositoryImplMock
+      .getInstance();
 
   @Override
   public List<Airport> getAirports() {
@@ -57,5 +58,15 @@ public class AirportServiceImplMock implements AirportService {
   @Override
   public void deleteAirport(Long id) {
     airportRepository.deleteAirport(id);
+  }
+
+  @Override
+  public List<Airport> getAirportsLike(Airport seekingAirport, int page, int size) {
+    return airportRepository.getAirportsLike(seekingAirport, page, size);
+  }
+
+  @Override
+  public void updateAirport(Long id, Airport receivedAirport) {
+    airportRepository.updateAirport(id, receivedAirport);
   }
 }

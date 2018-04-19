@@ -16,4 +16,8 @@ public interface AirportService {
   void addAirport(Airport airport);
 
   void deleteAirport(Long id);
+
+  List<Airport> getAirportsLike(Airport seekingAirport, int page, int size);
+
+  void updateAirport(Long id, Airport receivedAirport);
 }
