@@ -46,14 +46,15 @@ public class TicketServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
-    if (req.getParameter("selected_flight") != null) {
-      Long numberOfFlight = Long.parseLong(req.getParameter("selected_flight"));
-      Flight flight = flightsService.getFlightById(numberOfFlight);
-      req.setAttribute("flight", flight);
-      req.getSession().setAttribute("flight", flight);
-    } else if (req.getSession().getAttribute("flight") != null) {
-      req.setAttribute("flight", req.getSession().getAttribute("flight"));
-      req.setAttribute("error", "error.type_personal_data");
+    if (req.getSession().getAttribute("flight").equals("")) {
+      if (req.getParameter("selected_flight") == null) {
+        resp.sendRedirect("/flights");
+        return;
+      } else {
+        Long flightNumber = Long.parseLong(req.getParameter("selected_flight"));
+        Flight flight = flightsService.getFlightById(flightNumber);
+        req.getSession().setAttribute("flight", flight);
+      }
     }
 
     if (req.getParameter("first_name") != null) {
@@ -62,11 +63,16 @@ public class TicketServlet extends HttpServlet {
       String passport = req.getParameter("passport").trim();
       if (firstName.equals("") || lastName.equals("") || passport.equals("") ||
           req.getParameter("birthday").trim().equals("")) {
+        req.setAttribute("error", "error.type_personal_data");
         req.getRequestDispatcher("ticket.jsp").forward(req, resp);
       }
       LocalDate birthday = LocalDate.parse(req.getParameter("birthday"));
-      if(birthday.toString().compareTo(LocalDate.now().toString()) >= 0){
+      if (birthday.toString().compareTo(LocalDate.now().toString()) >= 0) {
         req.setAttribute("error", "error.birthday_after_now");
+        req.getRequestDispatcher("ticket.jsp").forward(req, resp);
+      }
+      if ((req.getParameter("isBusiness") == null)) {
+        req.setAttribute("error", "error.choose_class");
         req.getRequestDispatcher("ticket.jsp").forward(req, resp);
       }
       Boolean isBusiness = Boolean.parseBoolean(req.getParameter("isBusiness"));
@@ -81,12 +87,20 @@ public class TicketServlet extends HttpServlet {
       personalData = personalDataService.getPersonalDataByPassport(passport);
       Flight flight = (Flight) req.getSession().getAttribute("flight");
       Integer price =
-          isBusiness ? flight.getBaseTicketPrice() * ECONOMY_PRICE_AS_CENTS
-              : flight.getBaseTicketPrice() * BUSINESS_PRICE_AS_CENTS;
+          isBusiness ? flight.getBaseTicketPrice() * BUSINESS_PRICE_AS_CENTS
+              : flight.getBaseTicketPrice() * ECONOMY_PRICE_AS_CENTS;
       Account account = (Account) req.getSession().getAttribute("account");
       Ticket ticket = new Ticket(1L, personalData, flight,
           account, price, isBusiness);
-      ticketService.addTicket(ticket);
+      try {
+        ticketService.addTicket(ticket);
+      } catch (UnsupportedOperationException e) {
+        req.setAttribute("error", "error.bought");
+        flight = flightsService
+            .getFlightById(((Flight) req.getSession().getAttribute("flight")).getId());
+        req.getSession().setAttribute("flight", flight);
+        req.getRequestDispatcher("ticket.jsp").forward(req, resp);
+      }
       req.getSession().setAttribute("ticket", ticket);
       req.getRequestDispatcher("/confirm").forward(req, resp);
     }

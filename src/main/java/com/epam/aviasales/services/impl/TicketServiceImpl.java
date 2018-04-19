@@ -1,8 +1,10 @@
 package com.epam.aviasales.services.impl;
 
 import com.epam.aviasales.domain.Account;
+import com.epam.aviasales.domain.Flight;
 import com.epam.aviasales.domain.Ticket;
 import com.epam.aviasales.repositories.TicketRepository;
+import com.epam.aviasales.repositories.impl.FlightRepositoryImpl;
 import com.epam.aviasales.repositories.impl.TicketRepositoryImpl;
 import com.epam.aviasales.services.TicketService;
 
@@ -52,6 +54,9 @@ public class TicketServiceImpl implements TicketService {
     Account account = AccountServiceImpl.getInstance()
         .getAccountById(ticket.getAccount().getId());
     ticket.setAccount(account);
+    Flight flight = FlightRepositoryImpl.getInstance()
+        .getFlightById(ticket.getFlight().getId());
+    ticket.setFlight(flight);
     ticketRepository.addTicket(ticket);
   }
 

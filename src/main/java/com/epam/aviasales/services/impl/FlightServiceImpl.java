@@ -6,7 +6,7 @@ import com.epam.aviasales.repositories.impl.FlightRepositoryImpl;
 import com.epam.aviasales.services.FlightService;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -65,7 +65,7 @@ public class FlightServiceImpl implements FlightService {
     if (airportIdFrom == null || airportIdTo == null || date == null ||
         Objects.equals(airportIdFrom, airportIdTo)
         || date.toString().compareTo(LocalDate.now().toString()) < 0) {
-      return new ArrayList<>();
+      return Collections.emptyList();
     } else {
       List<Flight> list = flightRepository.getFlights(airportIdFrom, airportIdTo, date);
       return list.stream()
@@ -77,6 +77,7 @@ public class FlightServiceImpl implements FlightService {
   @Override
   public synchronized void updateFlight(Flight flight, Boolean isBusiness,
       Boolean increaseNumberOfSeats) {
+    flight = flightRepository.getFlightById(flight.getId());
     flight = increaseNumberOfSeats ? localIncreaseNumberOfSeats(flight, isBusiness)
         : localDecreaseNumberOfSeats(flight, isBusiness);
     flightRepository.updateFlight(flight);
@@ -93,8 +94,14 @@ public class FlightServiceImpl implements FlightService {
 
   private Flight localDecreaseNumberOfSeats(Flight flight, Boolean isBusiness) {
     if (isBusiness) {
+      if (flight.getFreeSeatBusiness() < 1) {
+        throw new UnsupportedOperationException();
+      }
       flight.setFreeSeatBusiness(flight.getFreeSeatBusiness() - 1);
     } else {
+      if (flight.getFreeSeatEconomy() < 1) {
+        throw new UnsupportedOperationException();
+      }
       flight.setFreeSeatEconomy(flight.getFreeSeatEconomy() - 1);
     }
     return flight;

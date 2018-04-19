@@ -15,6 +15,9 @@ import java.util.List;
 public class FlightServlet extends HttpServlet {
 
   private FlightService flightsService;
+  private Long idAirportFrom;
+  private Long idAirportTo;
+  private LocalDate date;
 
   @Override
   public void init() throws ServletException {
@@ -24,23 +27,36 @@ public class FlightServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
-    req.getRequestDispatcher("/").forward(req, resp);
+    if (!req.getSession().getAttribute("from").equals("")) {
+      idAirportFrom = Long.parseLong(req.getSession().getAttribute("from").toString());
+      idAirportTo = Long.parseLong(req.getSession().getAttribute("to").toString());
+      date = LocalDate.parse(req.getSession().getAttribute("date").toString());
+
+      List<Flight> flightList = flightsService.getFlights(idAirportFrom, idAirportTo, date);
+      req.setAttribute("flights", flightList);
+    }
+
+    req.getRequestDispatcher("index.jsp").forward(req, resp);
   }
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
 
-    Long id_airport_from = Long.parseLong(req.getParameter("flight_from"));
-    Long id_airport_to = Long.parseLong(req.getParameter("flight_to"));
-    LocalDate date = LocalDate.parse(req.getParameter("departure"));
+    if (req.getParameter("departure").equals("")) {
+      date = LocalDate.now();
+    } else {
+      date = LocalDate.parse(req.getParameter("departure"));
+    }
+    idAirportFrom = Long.parseLong(req.getParameter("flight_from"));
+    idAirportTo = Long.parseLong(req.getParameter("flight_to"));
 
-    req.setAttribute("from", id_airport_from);
-    req.setAttribute("to", id_airport_to);
-    req.setAttribute("date", date);
+    req.getSession().setAttribute("from", idAirportFrom);
+    req.getSession().setAttribute("to", idAirportTo);
+    req.getSession().setAttribute("date", date);
 
-    List<Flight> flightList = flightsService.getFlights(id_airport_from, id_airport_to, date);
+    List<Flight> flightList = flightsService.getFlights(idAirportFrom, idAirportTo, date);
     req.setAttribute("flights", flightList);
-    req.getRequestDispatcher("/").forward(req, resp);
+    req.getRequestDispatcher("index.jsp").forward(req, resp);
   }
 }
