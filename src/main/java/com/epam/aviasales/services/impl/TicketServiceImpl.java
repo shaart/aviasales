@@ -5,7 +5,9 @@ import com.epam.aviasales.domain.Ticket;
 import com.epam.aviasales.repositories.TicketRepository;
 import com.epam.aviasales.repositories.impl.TicketRepositoryImpl;
 import com.epam.aviasales.services.TicketService;
+
 import java.util.List;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -46,8 +48,9 @@ public class TicketServiceImpl implements TicketService {
 
   @Override
   public void addTicket(Ticket ticket) {
-    FlightServiceImpl.getInstance().updateFlight(ticket.getFlight(),ticket.getIsBusiness(),false);
-    Account account = AccountServiceImpl.getInstance().getAccountById(ticket.getAccount().getId());
+    FlightServiceImpl.getInstance().updateFlight(ticket.getFlight(), ticket.getIsBusiness(), false);
+    Account account = AccountServiceImpl.getInstance()
+        .getAccountById(ticket.getAccount().getId());
     ticket.setAccount(account);
     ticketRepository.addTicket(ticket);
   }

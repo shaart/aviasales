@@ -66,34 +66,38 @@ public class FlightServiceImpl implements FlightService {
         Objects.equals(airportIdFrom, airportIdTo)
         || date.toString().compareTo(LocalDate.now().toString()) < 0) {
       return new ArrayList<>();
-    }
-    else{
-      List<Flight> list =  flightRepository.getFlights(airportIdFrom, airportIdTo, date);
+    } else {
+      List<Flight> list = flightRepository.getFlights(airportIdFrom, airportIdTo, date);
       return list.stream()
-          .filter(x -> x.getFreeSeatEconomy()>0 || x.getFreeSeatBusiness()>0)
+          .filter(x -> x.getFreeSeatEconomy() > 0 || x.getFreeSeatBusiness() > 0)
           .collect(Collectors.toList());
     }
   }
 
   @Override
-  public synchronized void updateFlight(Flight flight, Boolean isBusiness, Boolean increase) {
-    if(isBusiness){
-      if(increase){
-        flight.setFreeSeatBusiness(flight.getFreeSeatBusiness()+1);
-      }
-      else{
-        flight.setFreeSeatBusiness(flight.getFreeSeatBusiness()-1);
-      }
-    }
-    else{
-      if(increase){
-        flight.setFreeSeatEconomy(flight.getFreeSeatEconomy()+1);
-      }
-      else{
-        flight.setFreeSeatEconomy(flight.getFreeSeatEconomy()-1);
-      }
-    }
+  public synchronized void updateFlight(Flight flight, Boolean isBusiness,
+      Boolean increaseNumberOfSeats) {
+    flight = increaseNumberOfSeats ? localIncreaseNumberOfSeats(flight, isBusiness)
+        : localDecreaseNumberOfSeats(flight, isBusiness);
     flightRepository.updateFlight(flight);
+  }
+
+  private Flight localIncreaseNumberOfSeats(Flight flight, Boolean isBusiness) {
+    if (isBusiness) {
+      flight.setFreeSeatBusiness(flight.getFreeSeatBusiness() + 1);
+    } else {
+      flight.setFreeSeatEconomy(flight.getFreeSeatEconomy() + 1);
+    }
+    return flight;
+  }
+
+  private Flight localDecreaseNumberOfSeats(Flight flight, Boolean isBusiness) {
+    if (isBusiness) {
+      flight.setFreeSeatBusiness(flight.getFreeSeatBusiness() - 1);
+    } else {
+      flight.setFreeSeatEconomy(flight.getFreeSeatEconomy() - 1);
+    }
+    return flight;
   }
 
   @Override
