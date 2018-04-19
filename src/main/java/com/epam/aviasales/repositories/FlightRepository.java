@@ -22,4 +22,6 @@ public interface FlightRepository {
   List<Flight> getFlights(Long fromId, Long toId);
 
   List<Flight> getFlights(Long airportIdFrom, Long airportIdTo, LocalDate date);
+
+  void updateFlight(Flight flight);
 }

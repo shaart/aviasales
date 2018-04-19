@@ -12,4 +12,8 @@ public interface PersonalDataService {
   PersonalData getPersonalDataByPassport(String passport);
 
   PersonalData getPersonalDataById(Long id);
+
+  void addPersonalData(PersonalData personalData);
+
+  boolean isExist(PersonalData personalData);
 }

@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -65,10 +66,38 @@ public class FlightServiceImpl implements FlightService {
         Objects.equals(airportIdFrom, airportIdTo)
         || date.toString().compareTo(LocalDate.now().toString()) < 0) {
       return new ArrayList<>();
+    } else {
+      List<Flight> list = flightRepository.getFlights(airportIdFrom, airportIdTo, date);
+      return list.stream()
+          .filter(x -> x.getFreeSeatEconomy() > 0 || x.getFreeSeatBusiness() > 0)
+          .collect(Collectors.toList());
     }
-    else{
-      return flightRepository.getFlights(airportIdFrom, airportIdTo, date);
+  }
+
+  @Override
+  public synchronized void updateFlight(Flight flight, Boolean isBusiness,
+      Boolean increaseNumberOfSeats) {
+    flight = increaseNumberOfSeats ? localIncreaseNumberOfSeats(flight, isBusiness)
+        : localDecreaseNumberOfSeats(flight, isBusiness);
+    flightRepository.updateFlight(flight);
+  }
+
+  private Flight localIncreaseNumberOfSeats(Flight flight, Boolean isBusiness) {
+    if (isBusiness) {
+      flight.setFreeSeatBusiness(flight.getFreeSeatBusiness() + 1);
+    } else {
+      flight.setFreeSeatEconomy(flight.getFreeSeatEconomy() + 1);
     }
+    return flight;
+  }
+
+  private Flight localDecreaseNumberOfSeats(Flight flight, Boolean isBusiness) {
+    if (isBusiness) {
+      flight.setFreeSeatBusiness(flight.getFreeSeatBusiness() - 1);
+    } else {
+      flight.setFreeSeatEconomy(flight.getFreeSeatEconomy() - 1);
+    }
+    return flight;
   }
 
   @Override

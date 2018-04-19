@@ -2,10 +2,11 @@ package com.epam.aviasales.services.impl;
 
 import com.epam.aviasales.domain.PersonalData;
 import com.epam.aviasales.repositories.PersonalDataRepository;
-// TODO: CREATE IMPLEMENTATION AND CHANGE THIS ON
-import com.epam.aviasales.repositories.implMock.PersonalDataRepositoryImplMock;
+import com.epam.aviasales.repositories.impl.PersonalDataRepositoryImpl;
 import com.epam.aviasales.services.PersonalDataService;
+
 import java.util.List;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -28,13 +29,12 @@ public class PersonalDataServiceImpl implements PersonalDataService {
     return localInstance;
   }
 
-  // TODO: CREATE IMPLEMENTATION AND CHANGE THIS ON
-  private static final PersonalDataRepository personalDataRepository = PersonalDataRepositoryImplMock
+  private static final PersonalDataRepository personalDataRepository = PersonalDataRepositoryImpl
       .getInstance();
 
   @Override
   public List<PersonalData> getPersonalDatas() {
-    return personalDataRepository.getPersonalDatas(1, 20);
+    return personalDataRepository.getPersonalDatas();
   }
 
   @Override
@@ -43,12 +43,31 @@ public class PersonalDataServiceImpl implements PersonalDataService {
   }
 
   @Override
-  public PersonalData getPersonalDataByPassport(String name) {
-    return personalDataRepository.getPersonalDataByPassport(name);
+  public PersonalData getPersonalDataByPassport(String passport) {
+    return personalDataRepository.getPersonalDataByPassport(passport);
   }
 
   @Override
   public PersonalData getPersonalDataById(Long id) {
     return personalDataRepository.getPersonalDataById(id);
+  }
+
+  @Override
+  public void addPersonalData(PersonalData personalData) {
+    PersonalData personalDataInsideDB = personalDataRepository
+        .getPersonalDataByPassport(personalData.getPassport());
+    if (personalDataInsideDB == null) {
+      personalDataRepository.addPersonalData(personalData);
+    } else {
+      if (!personalDataInsideDB.getName().equals(personalData.getName()) ||
+          !personalDataInsideDB.getDateOfBirth().equals(personalData.getDateOfBirth())) {
+        throw new UnsupportedOperationException();
+      }
+    }
+  }
+
+  @Override
+  public boolean isExist(PersonalData personalData) {
+    return personalDataRepository.isExist(personalData);
   }
 }

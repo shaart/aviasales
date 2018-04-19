@@ -39,7 +39,11 @@ public class AccountRepositoryImpl implements AccountRepository {
 
   @Override
   public Account getAccountById(Long id) {
-    return null;
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    Query query = session.createQuery("from Account WHERE id = :id");
+    List list = query.setParameter("id", id).list();
+    session.close();
+    return list.size()>0? (Account) list.get(0) : null;
   }
 
   @Override
