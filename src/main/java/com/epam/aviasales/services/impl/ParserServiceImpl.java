@@ -50,25 +50,6 @@ public class ParserServiceImpl implements ParserService {
     System.out.println(airplane);
   }
 
-  public Object parseParameter(String parameter, Class type) {
-    if (parameter == null || parameter.trim().isEmpty()) {
-      return null;
-    }
-
-    if (type == Long.class) {
-      return Long.valueOf(parameter);
-    } else if (type == Integer.class) {
-      return Integer.valueOf(parameter);
-    } else if (type == LocalDateTime.class) {
-      return LocalDateTime.parse(parameter);
-    } else if (type == Airplane.class) {
-      return airplaneService.getAirplaneByName(parameter);
-    } else if (type == Airport.class) {
-      return airportsService.getAirportByName(parameter);
-    }
-    return null;
-  }
-
   public <T> T parseParameter(String parameter, CastType type) {
     if (parameter == null || parameter.trim().isEmpty()) {
       return null;
@@ -99,22 +80,20 @@ public class ParserServiceImpl implements ParserService {
   }
 
   public Flight parseFlight(HttpServletRequest req) {
-    Long id = (Long) parseParameter(req.getParameter("id"), Long.class);
-    Airport fromAirport = (Airport) parseParameter(req.getParameter("fromAirport"), Airport.class);
-    Airport toAirport = (Airport) parseParameter(req.getParameter("toAirport"), Airport.class);
-    Airplane airplane = (Airplane) parseParameter(req.getParameter("airplane"), Airplane.class);
-    LocalDateTime departureTime = (LocalDateTime) parseParameter(req.getParameter("departureTime"),
-        LocalDateTime.class);
-    LocalDateTime arrivalTime = (LocalDateTime) parseParameter(req.getParameter("arrivalTime"),
-        LocalDateTime.class);
-    Integer baseTicketPrice = (Integer) parseParameter(req.getParameter("baseTicketPrice"),
-        Integer.class);
-    Integer extraBaggagePrice = (Integer) parseParameter(req.getParameter("extraBaggagePrice"),
-        Integer.class);
-    Integer freeSeatEconomy = (Integer) parseParameter(req.getParameter("freeSeatEconomy"),
-        Integer.class);
-    Integer freeSeatBusiness = (Integer) parseParameter(req.getParameter("freeSeatBusiness"),
-        Integer.class);
+    Long id = parseParameter(req.getParameter("id"), CastType.LONG);
+    Airport fromAirport = parseParameter(req.getParameter("fromAirport"), CastType.AIRPORT);
+    Airport toAirport = parseParameter(req.getParameter("toAirport"), CastType.AIRPORT);
+    Airplane airplane = parseParameter(req.getParameter("airplane"), CastType.AIRPLANE);
+    LocalDateTime departureTime = parseParameter(req.getParameter("departureTime"),
+        CastType.LOCAL_DATE_TIME);
+    LocalDateTime arrivalTime = parseParameter(req.getParameter("arrivalTime"),
+        CastType.LOCAL_DATE_TIME);
+    Integer baseTicketPrice = parseParameter(req.getParameter("baseTicketPrice"), CastType.INTEGER);
+    Integer extraBaggagePrice = parseParameter(req.getParameter("extraBaggagePrice"),
+        CastType.INTEGER);
+    Integer freeSeatEconomy = parseParameter(req.getParameter("freeSeatEconomy"), CastType.INTEGER);
+    Integer freeSeatBusiness = parseParameter(req.getParameter("freeSeatBusiness"),
+        CastType.INTEGER);
 
     return Flight.builder().id(id).fromAirport(fromAirport)
         .toAirport(toAirport)
