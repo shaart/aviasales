@@ -80,4 +80,14 @@ public class PersonalDataRepositoryImplMock implements PersonalDataRepository {
   public PersonalData getPersonalDataById(Long id) {
     return PERSONAL_DATA_CACHE.get(id);
   }
+
+  @Override
+  public void addPersonalData(PersonalData personalData) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public boolean isExist(PersonalData personalData) {
+    throw new UnsupportedOperationException();
+  }
 }

@@ -144,6 +144,11 @@ public class FlightRepositoryImplMock implements FlightRepository {
   }
 
   @Override
+  public void updateFlight(Flight flight) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
   public List<Flight> getFlightsPage(int page, int count) {
 
     List<Flight> flightList = new ArrayList<>();

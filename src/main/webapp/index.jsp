@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="language" value="${not empty param.language ?
     param.language : not empty language ? language : pageContext.request.locale}" scope="session"/>
+<c:set var="MULTIPLIER_PRICE_FOR_BUSINESS_TICKETS" value="1.4"/>
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="com.epam.aviasales.bundles.global" var="lang"/>
 <!DOCTYPE html>
@@ -20,11 +21,11 @@
 
         #tickets {
             background-color: azure;
-            overflow: scroll; /* Добавляем полосы прокрутки */
-            width: 100%; /* Ширина блока */
-            height: 300px; /* Высота блока */
-            padding: 10px; /* Поля вокруг текста */
-            border: dashed 1px whitesmoke; /* Параметры рамки */
+            overflow: scroll;
+            width: 100%;
+            height: 300px;
+            padding: 10px;
+            border: dashed 1px whitesmoke;
         }
     </style>
 </head>
@@ -107,10 +108,10 @@
                         <fmt:message key="flight.label.free_seats"
                                      bundle="${lang}"/> ${flight.freeSeatEconomy}</h5>
                     <h5><fmt:message key="flight.label.business_class" bundle="${lang}"/>
-                        <fmt:formatNumber value="${flight.baseTicketPrice*1.4}"
+                        <fmt:formatNumber value="${flight.baseTicketPrice * MULTIPLIER_PRICE_FOR_BUSINESS_TICKETS}"
                                           minFractionDigits="2" maxFractionDigits="2"/> €,
                         <fmt:message key="flight.label.free_seats"
-                                     bundle="${lang}"/> ${flight.freeSeatEconomy}</h5>
+                                     bundle="${lang}"/> ${flight.freeSeatBusiness}</h5>
                 </label>
             </c:forEach>
         </div>

@@ -105,10 +105,7 @@ public class FlightRepositoryImpl implements FlightRepository {
     query.setParameter("toAirport", airportIdTo);
     query.setParameter("minDepartureTime", LocalDateTime.of(date, LocalTime.of(0, 0)));
     query.setParameter("maxDepartureTime", LocalDateTime.of(date, LocalTime.of(23, 59)));
-    System.out.println(LocalDateTime.of(date, LocalTime.of(0, 0)));
-    System.out.println(LocalDateTime.of(date, LocalTime.of(23, 59)));
     List list = query.list();
-    System.out.println(list.size());
     List<Flight> flights = (List<Flight>) list;
     for (Flight flight : flights) {
       System.out.println(flight.getDepartureTime());
@@ -118,6 +115,22 @@ public class FlightRepositoryImpl implements FlightRepository {
     session.close();
 
     return (List<Flight>) list;
+  }
+
+  @Override
+  public void updateFlight(Flight flight) {
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    session.beginTransaction();
+    Query query =
+        session.createQuery(
+            "update Flight set freeSeatEconomy = :economySeats, freeSeatBusiness = :businessSeats where id = :id");
+    query.setParameter("economySeats", flight.getFreeSeatEconomy());
+    query.setParameter("businessSeats", flight.getFreeSeatBusiness());
+    query.setParameter("id", flight.getId());
+    query.executeUpdate();
+
+    session.getTransaction().commit();
+    session.close();
   }
 
   @Override

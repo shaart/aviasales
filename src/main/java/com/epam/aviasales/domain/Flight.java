@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,7 +30,8 @@ public class Flight implements Serializable {
 
   @Override
   public String toString() {
-    return fromAirport.getName() + " (" + departureTime + ") -> " + toAirport.getName() + " ("
-        + arrivalTime + ")";
+    return fromAirport.getName() + " (" + departureTime
+        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) + ") -> " + toAirport.getName()
+        + " (" + arrivalTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) + ")";
   }
 }

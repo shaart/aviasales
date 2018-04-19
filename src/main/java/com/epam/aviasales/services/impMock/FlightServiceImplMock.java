@@ -62,6 +62,11 @@ public class FlightServiceImplMock implements FlightService {
   }
 
   @Override
+  public void updateFlight(Flight flight, Boolean isBusiness, Boolean increase) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
   public void updateFlight(Long id, Flight updatedFlight) {
     flightRepository.updateFlight(id, updatedFlight);
   }

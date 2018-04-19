@@ -26,4 +26,6 @@ public interface FlightService {
   boolean isExist(Long id);
 
   List<Flight> getFlightsLike(Flight seekingFlight, int page, int size);
+
+  void updateFlight(Flight flight, Boolean isBusiness, Boolean increaseNumberOfSeats);
 }
