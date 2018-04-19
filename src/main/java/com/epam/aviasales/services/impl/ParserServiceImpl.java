@@ -86,12 +86,16 @@ public class ParserServiceImpl implements ParserService {
           return (T) airplaneService.getAirplaneByName(parameter);
         case AIRPORT:
           return (T) airportsService.getAirportByName(parameter);
+        case STRING:
+          return (T) parameter;
+        default:
+          log.error("Received not implemented (unknown) CastType");
+          return null;
       }
     } catch (ClassCastException e) {
       log.error(e.getCause(), e);
       return null;
     }
-    return null;
   }
 
   public Flight parseFlight(HttpServletRequest req) {
@@ -121,8 +125,8 @@ public class ParserServiceImpl implements ParserService {
 
   @Override
   public Airport parseAirport(HttpServletRequest req) {
-    Long id = (Long) parseParameter(req.getParameter("id"), Long.class);
-    String name = (String) parseParameter(req.getParameter("name"), String.class);
+    Long id = parseParameter(req.getParameter("id"), CastType.LONG);
+    String name = parseParameter(req.getParameter("name"), CastType.STRING);
 
     return Airport.builder().id(id).name(name).build();
   }
