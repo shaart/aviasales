@@ -43,15 +43,6 @@ public class ParserServiceImpl implements ParserService {
     airplaneService = AirplaneServiceImpl.getInstance();
   }
 
-  public static void main(String[] args) {
-    ParserServiceImpl parserService = new ParserServiceImpl();
-
-    Airport airport = parserService.parseParameter("Moscow", CastType.AIRPORT);
-    System.out.println(airport);
-    Airplane airplane = parserService.parseParameter("SU-2", CastType.AIRPLANE);
-    System.out.println(airplane);
-  }
-
   public <T> T parseParameter(String parameter, CastType type) {
     if (parameter == null || parameter.trim().isEmpty()) {
       return null;
