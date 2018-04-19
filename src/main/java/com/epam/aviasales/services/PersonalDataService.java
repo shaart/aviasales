@@ -16,4 +16,10 @@ public interface PersonalDataService {
   void addPersonalData(PersonalData personalData);
 
   boolean isExist(PersonalData personalData);
+
+  void updatePersonalData(Long id, PersonalData updatedPersonalData);
+
+  void deletePersonalData(Long id);
+
+  List<PersonalData> getPersonalDatasLike(PersonalData seekingPersonalData, int page, int size);
 }

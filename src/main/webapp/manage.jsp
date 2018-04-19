@@ -14,29 +14,51 @@
 <body>
 <%@include file="layout/header.jsp" %>
 <div class="container">
-    <div class="container">
-        <a href="/manage/flights">
-            <div class="text">Flights</div>
-            <img class="img-responsive" src="resources/manage/flights.png" width="300" height="auto">
-        </a>
+    <div class="row">
+        <div class="col-sm-6 col-md-4">
+            <a href="/manage/flights">
+                <div class="text">Flights</div>
+                <img class="img-responsive" src="resources/manage/flights.png" width="300"
+                     height="auto">
+            </a>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <a href="/manage/airplanes">
+                <div class="text">Airplanes</div>
+                <img class="img-responsive" src="resources/manage/airplanes.png" width="300"
+                     height="auto">
+            </a>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <a href="/manage/airports">
+                <div class="text">Airports</div>
+                <img class="img-responsive" src="resources/manage/airports.png" width="300"
+                     height="auto">
+            </a>
+        </div>
     </div>
-    <div class="container">
-        <a href="/manage/airplanes">
-            <div class="text">Airplanes</div>
-            <img class="img-responsive" src="resources/manage/airplanes.png"  width="300" height="auto">
-        </a>
-    </div>
-    <div class="container">
-        <a href="/manage/airports">
-            <div class="text">Airports</div>
-            <img class="img-responsive" src="resources/manage/airports.png"  width="300" height="auto">
-        </a>
-    </div>
-    <div class="container">
-        <a href="/manage/users">
-            <div class="text">Users</div>
-            <img class="img-responsive" src="resources/manage/users.png"  width="300" height="auto">
-        </a>
+    <div class="row">
+        <div class="col-sm-6 col-md-4">
+            <a href="/manage/accounts">
+                <div class="text">Accounts</div>
+                <img class="img-responsive" src="resources/manage/accounts.png" width="300"
+                     height="auto">
+            </a>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <a href="/manage/personals">
+                <div class="text">Personal data</div>
+                <img class="img-responsive" src="resources/manage/personals.png" width="300"
+                     height="auto">
+            </a>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <a href="/manage/tickets">
+                <div class="text">Tickets</div>
+                <img class="img-responsive" src="resources/manage/tickets.png" width="300"
+                     height="auto">
+            </a>
+        </div>
     </div>
 </div>
 <%@include file="layout/footer.jsp" %>

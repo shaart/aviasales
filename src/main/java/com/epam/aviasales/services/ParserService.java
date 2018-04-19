@@ -3,6 +3,7 @@ package com.epam.aviasales.services;
 import com.epam.aviasales.domain.Airplane;
 import com.epam.aviasales.domain.Airport;
 import com.epam.aviasales.domain.Flight;
+import com.epam.aviasales.domain.PersonalData;
 import com.epam.aviasales.util.CastType;
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,4 +23,6 @@ public interface ParserService {
   Airport parseAirport(HttpServletRequest req);
 
   Airplane parseAirplane(HttpServletRequest req);
+
+  PersonalData parsePersonalData(HttpServletRequest req);
 }

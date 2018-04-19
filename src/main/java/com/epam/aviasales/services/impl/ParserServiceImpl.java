@@ -3,11 +3,13 @@ package com.epam.aviasales.services.impl;
 import com.epam.aviasales.domain.Airplane;
 import com.epam.aviasales.domain.Airport;
 import com.epam.aviasales.domain.Flight;
+import com.epam.aviasales.domain.PersonalData;
 import com.epam.aviasales.services.AirplaneService;
 import com.epam.aviasales.services.AirportService;
 import com.epam.aviasales.services.FlightService;
 import com.epam.aviasales.services.ParserService;
 import com.epam.aviasales.util.CastType;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.log4j.Log4j;
@@ -69,6 +71,8 @@ public class ParserServiceImpl implements ParserService {
           return (T) airportsService.getAirportByName(parameter);
         case STRING:
           return (T) parameter;
+        case LOCAL_DATE:
+          return (T) LocalDate.parse(parameter);
         default:
           log.error("Received not implemented (unknown) CastType");
           return null;
@@ -114,10 +118,23 @@ public class ParserServiceImpl implements ParserService {
   public Airplane parseAirplane(HttpServletRequest req) {
     Long id = parseParameter(req.getParameter("id"), CastType.LONG);
     String name = parseParameter(req.getParameter("name"), CastType.STRING);
-    Integer economySeatsCount = parseParameter(req.getParameter("economySeatsCount"), CastType.INTEGER);
-    Integer businessSeatsCount = parseParameter(req.getParameter("businessSeatsCount"), CastType.INTEGER);
+    Integer economySeatsCount = parseParameter(req.getParameter("economySeatsCount"),
+        CastType.INTEGER);
+    Integer businessSeatsCount = parseParameter(req.getParameter("businessSeatsCount"),
+        CastType.INTEGER);
 
     return Airplane.builder().id(id).name(name).economySeatsCount(economySeatsCount)
         .businessSeatsCount(businessSeatsCount).build();
+  }
+
+  @Override
+  public PersonalData parsePersonalData(HttpServletRequest req) {
+    Long id = parseParameter(req.getParameter("id"), CastType.LONG);
+    String name = parseParameter(req.getParameter("name"), CastType.STRING);
+    String passport = parseParameter(req.getParameter("passport"), CastType.STRING);
+    LocalDate dateOfBirth = parseParameter(req.getParameter("dateOfBirth"), CastType.LOCAL_DATE);
+
+    return PersonalData.builder().id(id).name(name).passport(passport).dateOfBirth(dateOfBirth)
+        .build();
   }
 }

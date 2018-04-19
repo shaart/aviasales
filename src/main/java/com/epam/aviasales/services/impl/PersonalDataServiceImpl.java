@@ -70,4 +70,20 @@ public class PersonalDataServiceImpl implements PersonalDataService {
   public boolean isExist(PersonalData personalData) {
     return personalDataRepository.isExist(personalData);
   }
+
+  @Override
+  public void updatePersonalData(Long id, PersonalData updatedPersonalData) {
+    personalDataRepository.updatePersonalData(id, updatedPersonalData);
+  }
+
+  @Override
+  public void deletePersonalData(Long id) {
+    personalDataRepository.deletePersonalData(id);
+  }
+
+  @Override
+  public List<PersonalData> getPersonalDatasLike(PersonalData seekingPersonalData, int page,
+      int size) {
+    return personalDataRepository.getPersonalDatasLike(seekingPersonalData, page, size);
+  }
 }

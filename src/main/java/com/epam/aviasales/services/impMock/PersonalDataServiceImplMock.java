@@ -8,8 +8,6 @@ import java.util.List;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-// TODO: CREATE IMPLEMENTATION AND CHANGE THIS ON
-
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PersonalDataServiceImplMock implements PersonalDataService {
 
@@ -29,37 +27,52 @@ public class PersonalDataServiceImplMock implements PersonalDataService {
     return localInstance;
   }
 
-  // TODO: CREATE IMPLEMENTATION AND CHANGE THIS ON
-  private static final PersonalDataRepository personalDataRepository = PersonalDataRepositoryImplMock
+  private static final PersonalDataRepository personalDataRepositoryMock = PersonalDataRepositoryImplMock
       .getInstance();
 
   @Override
   public List<PersonalData> getPersonalDatas() {
-    return personalDataRepository.getPersonalDatas(1, 20);
+    return personalDataRepositoryMock.getPersonalDatas(1, 20);
   }
 
   @Override
   public List<PersonalData> getPersonalDatas(int page, int count) {
-    return personalDataRepository.getPersonalDatas(page, count);
+    return personalDataRepositoryMock.getPersonalDatas(page, count);
   }
 
   @Override
   public PersonalData getPersonalDataByPassport(String name) {
-    return personalDataRepository.getPersonalDataByPassport(name);
+    return personalDataRepositoryMock.getPersonalDataByPassport(name);
   }
 
   @Override
   public PersonalData getPersonalDataById(Long id) {
-    return personalDataRepository.getPersonalDataById(id);
+    return personalDataRepositoryMock.getPersonalDataById(id);
   }
 
   @Override
   public void addPersonalData(PersonalData personalData) {
-    personalDataRepository.addPersonalData(personalData);
+    personalDataRepositoryMock.addPersonalData(personalData);
   }
 
   @Override
   public boolean isExist(PersonalData personalData) {
-    return personalDataRepository.isExist(personalData);
+    return personalDataRepositoryMock.isExist(personalData);
+  }
+
+  @Override
+  public void updatePersonalData(Long id, PersonalData updatedPersonalData) {
+    personalDataRepositoryMock.updatePersonalData(id, updatedPersonalData);
+  }
+
+  @Override
+  public void deletePersonalData(Long id) {
+    personalDataRepositoryMock.deletePersonalData(id);
+  }
+
+  @Override
+  public List<PersonalData> getPersonalDatasLike(PersonalData seekingPersonalData, int page,
+      int size) {
+    return personalDataRepositoryMock.getPersonalDatasLike(seekingPersonalData, page, size);
   }
 }
