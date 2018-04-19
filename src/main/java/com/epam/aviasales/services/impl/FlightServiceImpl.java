@@ -1,12 +1,13 @@
 package com.epam.aviasales.services.impl;
 
 import com.epam.aviasales.domain.Flight;
+import com.epam.aviasales.exceptions.NoAvailableSeatsForTheFlight;
 import com.epam.aviasales.repositories.FlightRepository;
 import com.epam.aviasales.repositories.impl.FlightRepositoryImpl;
 import com.epam.aviasales.services.FlightService;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -65,7 +66,7 @@ public class FlightServiceImpl implements FlightService {
     if (airportIdFrom == null || airportIdTo == null || date == null ||
         Objects.equals(airportIdFrom, airportIdTo)
         || date.toString().compareTo(LocalDate.now().toString()) < 0) {
-      return new ArrayList<>();
+      return Collections.emptyList();
     } else {
       List<Flight> list = flightRepository.getFlights(airportIdFrom, airportIdTo, date);
       return list.stream()
@@ -76,7 +77,8 @@ public class FlightServiceImpl implements FlightService {
 
   @Override
   public synchronized void updateFlight(Flight flight, Boolean isBusiness,
-      Boolean increaseNumberOfSeats) {
+      Boolean increaseNumberOfSeats) throws NoAvailableSeatsForTheFlight {
+    flight = flightRepository.getFlightById(flight.getId());
     flight = increaseNumberOfSeats ? localIncreaseNumberOfSeats(flight, isBusiness)
         : localDecreaseNumberOfSeats(flight, isBusiness);
     flightRepository.updateFlight(flight);
@@ -91,10 +93,17 @@ public class FlightServiceImpl implements FlightService {
     return flight;
   }
 
-  private Flight localDecreaseNumberOfSeats(Flight flight, Boolean isBusiness) {
+  private Flight localDecreaseNumberOfSeats(Flight flight, Boolean isBusiness)
+      throws NoAvailableSeatsForTheFlight {
     if (isBusiness) {
+      if (flight.getFreeSeatBusiness() < 1) {
+        throw new NoAvailableSeatsForTheFlight();
+      }
       flight.setFreeSeatBusiness(flight.getFreeSeatBusiness() - 1);
     } else {
+      if (flight.getFreeSeatEconomy() < 1) {
+        throw new NoAvailableSeatsForTheFlight();
+      }
       flight.setFreeSeatEconomy(flight.getFreeSeatEconomy() - 1);
     }
     return flight;

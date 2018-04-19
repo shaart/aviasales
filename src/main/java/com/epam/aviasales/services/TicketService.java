@@ -1,6 +1,8 @@
 package com.epam.aviasales.services;
 
 import com.epam.aviasales.domain.Ticket;
+import com.epam.aviasales.exceptions.NoAvailableSeatsForTheFlight;
+
 import java.util.List;
 
 public interface TicketService {
@@ -11,7 +13,7 @@ public interface TicketService {
 
   Ticket getTicketById(Long id);
 
-  void addTicket(Ticket ticket);
+  void addTicket(Ticket ticket) throws NoAvailableSeatsForTheFlight;
 
   void deleteTicket(Long id);
 

@@ -28,10 +28,11 @@ public class MainServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
+    clearData(req);
 
     List<Airport> airportList = airportService.getAirports();
-    req.setAttribute("airports", airportList);
-    req.setAttribute("currentDate", currentDate);
+    req.getSession().setAttribute("airports", airportList);
+    req.getSession().setAttribute("currentDate", currentDate);
 
     req.getRequestDispatcher("index.jsp").forward(req, resp);
   }
@@ -40,5 +41,13 @@ public class MainServlet extends HttpServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
     doGet(req, resp);
+  }
+
+  private void clearData(HttpServletRequest req) {
+    req.getSession().setAttribute("from", "");
+    req.getSession().setAttribute("to", "");
+    req.getSession().setAttribute("date", "");
+    req.getSession().setAttribute("flight", "");
+    req.getSession().setAttribute("ticket", "");
   }
 }

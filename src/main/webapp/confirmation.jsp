@@ -18,18 +18,21 @@
 
 <h4 align="center"><fmt:message key="buy.successfully" bundle="${lang}"/></h4>
 <hr/>
+
 <h4><fmt:message key="ticket.description" bundle="${lang}"/>:</h4>
+
 <div id="dataOfFlight" style="background-color: gainsboro">
-    <p><fmt:message key="ticket.flight.id" bundle="${lang}"/>: ${flight.id}</p>
-    <p><fmt:message key="from" bundle="${lang}"/>: ${flight.fromAirport.name}</p>
-    <p><fmt:message key="to" bundle="${lang}"/>: ${flight.toAirport.name}</p>
-    <p><fmt:message key="ticket.airplane.name" bundle="${lang}"/>: ${flight.airplane.name}</p>
-    <fmt:parseDate value="${ flight.departureTime }"
+    <p><fmt:message key="ticket.flight.id" bundle="${lang}"/>: ${ticket.flight.id}</p>
+    <p><fmt:message key="from" bundle="${lang}"/>: ${ticket.flight.fromAirport.name}</p>
+    <p><fmt:message key="to" bundle="${lang}"/>: ${ticket.flight.toAirport.name}</p>
+    <p><fmt:message key="ticket.airplane.name"
+                    bundle="${lang}"/>: ${ticket.flight.airplane.name}</p>
+    <fmt:parseDate value="${ticket.flight.departureTime }"
                    pattern="yyyy-MM-dd'T'HH:mm"
                    var="parsedDateTime" type="both"/>
     <p><fmt:message key="ticket.departure.time" bundle="${lang}"/>: <fmt:formatDate
             pattern="yyyy-MM-dd HH:mm" value="${ parsedDateTime }"/></p>
-    <fmt:parseDate value="${ flight.arrivalTime }"
+    <fmt:parseDate value="${ticket.flight.arrivalTime }"
                    pattern="yyyy-MM-dd'T'HH:mm"
                    var="parsedDateTime" type="both"/>
     <p><fmt:message key="ticket.arrival.time" bundle="${lang}"/>: <fmt:formatDate
@@ -49,18 +52,11 @@
     <p><fmt:message key="personal_data.birthday"
                     bundle="${lang}"/>: ${ticket.personalData.dateOfBirth}</p>
     <p><fmt:message key="ticket.price" bundle="${lang}"/>:
-        <fmt:formatNumber value="${ticket.price/100}" minFractionDigits="2" maxFractionDigits="2"/> €</p>
+        <fmt:formatNumber value="${ticket.price/100}" minFractionDigits="2" maxFractionDigits="2"/>
+        €</p>
 </div>
-
-<footer>
-    <br>
-    <div align="center">
-        <a href="/"><fmt:message key="home" bundle="${lang}"/></a>
-    </div>
-</footer>
-
-<script type="text/javascript" src="webjars/jquery/2.1.1/jquery.min.js"></script>
-<script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
 </body>
+
+<%@include file="layout/footer.jsp" %>
+
 </html>
