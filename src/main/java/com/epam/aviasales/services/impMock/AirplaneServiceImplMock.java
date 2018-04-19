@@ -13,7 +13,7 @@ public class AirplaneServiceImplMock implements AirplaneService {
 
   private static volatile AirplaneService instance;
 
-  private final AirplaneRepository airplaneRepository = AirplaneRepositoryImplMock.getInstance();
+  private final AirplaneRepository airplaneRepositoryMock = AirplaneRepositoryImplMock.getInstance();
 
   public static AirplaneService getInstance() {
     AirplaneService localInstance = instance;
@@ -31,32 +31,42 @@ public class AirplaneServiceImplMock implements AirplaneService {
 
   @Override
   public List<Airplane> getAirplanes() {
-    return airplaneRepository.getAirplanes(1, 20);
+    return airplaneRepositoryMock.getAirplanes(1, 20);
   }
 
   @Override
   public List<Airplane> getAirplanes(int page, int count) {
-    return airplaneRepository.getAirplanes(page, count);
+    return airplaneRepositoryMock.getAirplanes(page, count);
   }
 
   @Override
   public Airplane getAirplaneById(Long id) {
-    return airplaneRepository.getAirplaneById(id);
+    return airplaneRepositoryMock.getAirplaneById(id);
   }
 
   @Override
   public void addAirplane(Airplane airplane) {
-    airplaneRepository.addAirplane(airplane);
+    airplaneRepositoryMock.addAirplane(airplane);
 
   }
 
   @Override
   public Airplane getAirplaneByName(String name) {
-    return airplaneRepository.getAirplaneByName(name);
+    return airplaneRepositoryMock.getAirplaneByName(name);
   }
 
   @Override
   public void deleteAirplane(Long id) {
-    airplaneRepository.deleteAirplane(id);
+    airplaneRepositoryMock.deleteAirplane(id);
+  }
+
+  @Override
+  public List<Airplane> getAirplanesLike(Airplane seekingAirplane, int page, int size) {
+    return airplaneRepositoryMock.getAirplanesLike(seekingAirplane, page, size);
+  }
+
+  @Override
+  public void updateAirplane(Long id, Airplane updatedAirplane) {
+    airplaneRepositoryMock.updateAirplane(id, updatedAirplane);
   }
 }

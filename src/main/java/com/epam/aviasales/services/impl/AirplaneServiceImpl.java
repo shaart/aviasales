@@ -59,4 +59,14 @@ public class AirplaneServiceImpl implements AirplaneService {
   public void deleteAirplane(Long id) {
     airplaneRepository.deleteAirplane(id);
   }
+
+  @Override
+  public List<Airplane> getAirplanesLike(Airplane seekingAirplane, int page, int size) {
+    return airplaneRepository.getAirplanesLike(seekingAirplane, page, size);
+  }
+
+  @Override
+  public void updateAirplane(Long id, Airplane updatedAirplane) {
+    airplaneRepository.updateAirplane(id, updatedAirplane);
+  }
 }

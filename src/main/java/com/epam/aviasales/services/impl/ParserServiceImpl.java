@@ -109,4 +109,15 @@ public class ParserServiceImpl implements ParserService {
 
     return Airport.builder().id(id).name(name).build();
   }
+
+  @Override
+  public Airplane parseAirplane(HttpServletRequest req) {
+    Long id = parseParameter(req.getParameter("id"), CastType.LONG);
+    String name = parseParameter(req.getParameter("name"), CastType.STRING);
+    Integer economySeatsCount = parseParameter(req.getParameter("economySeatsCount"), CastType.INTEGER);
+    Integer businessSeatsCount = parseParameter(req.getParameter("businessSeatsCount"), CastType.INTEGER);
+
+    return Airplane.builder().id(id).name(name).economySeatsCount(economySeatsCount)
+        .businessSeatsCount(businessSeatsCount).build();
+  }
 }

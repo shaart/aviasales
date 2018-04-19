@@ -18,4 +18,8 @@ public interface AirplaneRepository {
   void addAirplane(Airplane airplane);
 
   boolean isExist(Long id);
+
+  List<Airplane> getAirplanesLike(Airplane seekingAirplane, int page, int size);
+
+  void updateAirplane(Long id, Airplane updatedAirplane);
 }

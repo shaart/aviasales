@@ -1,5 +1,6 @@
 package com.epam.aviasales.services;
 
+import com.epam.aviasales.domain.Airplane;
 import com.epam.aviasales.domain.Airport;
 import com.epam.aviasales.domain.Flight;
 import com.epam.aviasales.util.CastType;
@@ -19,4 +20,6 @@ public interface ParserService {
   Flight parseFlight(HttpServletRequest req);
 
   Airport parseAirport(HttpServletRequest req);
+
+  Airplane parseAirplane(HttpServletRequest req);
 }
