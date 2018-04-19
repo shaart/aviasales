@@ -6,8 +6,6 @@ import com.epam.aviasales.services.AirplaneService;
 import com.epam.aviasales.services.AirportService;
 import com.epam.aviasales.services.impMock.AirplaneServiceImplMock;
 import com.epam.aviasales.services.impMock.AirportServiceImplMock;
-import com.epam.aviasales.services.impl.AirplaneServiceImpl;
-import com.epam.aviasales.services.impl.AirportServiceImpl;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

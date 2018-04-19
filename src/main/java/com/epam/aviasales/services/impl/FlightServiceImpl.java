@@ -65,8 +65,7 @@ public class FlightServiceImpl implements FlightService {
         Objects.equals(airportIdFrom, airportIdTo)
         || date.toString().compareTo(LocalDate.now().toString()) < 0) {
       return new ArrayList<>();
-    }
-    else{
+    } else {
       return flightRepository.getFlights(airportIdFrom, airportIdTo, date);
     }
   }

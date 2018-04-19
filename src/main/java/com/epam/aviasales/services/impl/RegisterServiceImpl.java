@@ -9,11 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RegisterServiceImpl implements RegisterService {
+
   private static volatile RegisterServiceImpl instance;
   private static final AccountRepository accountRepository =
       AccountRepositoryImpl.getInstance();
 
-  private RegisterServiceImpl() {}
+  private RegisterServiceImpl() {
+  }
 
   public static RegisterServiceImpl getInstance() {
     RegisterServiceImpl localInstance = instance;

@@ -39,7 +39,7 @@ public class FlightServlet extends HttpServlet {
     req.setAttribute("to", id_airport_to);
     req.setAttribute("date", date);
 
-    List<Flight> flightList = flightsService.getFlights(id_airport_from,id_airport_to,date);
+    List<Flight> flightList = flightsService.getFlights(id_airport_from, id_airport_to, date);
     req.setAttribute("flights", flightList);
     req.getRequestDispatcher("/").forward(req, resp);
   }

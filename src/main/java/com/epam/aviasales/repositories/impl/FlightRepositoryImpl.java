@@ -110,7 +110,7 @@ public class FlightRepositoryImpl implements FlightRepository {
     List list = query.list();
     System.out.println(list.size());
     List<Flight> flights = (List<Flight>) list;
-    for(Flight flight : flights){
+    for (Flight flight : flights) {
       System.out.println(flight.getDepartureTime());
     }
 

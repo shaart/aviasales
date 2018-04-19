@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class RegisterServlet extends HttpServlet {
+
   private RegisterService registerService;
 
   @Override
