@@ -90,4 +90,48 @@ public class PersonalDataRepositoryImplMock implements PersonalDataRepository {
   public boolean isExist(PersonalData personalData) {
     throw new UnsupportedOperationException();
   }
+
+  @Override
+  public void updatePersonalData(Long id, PersonalData updatedPersonalData) {
+    PERSONAL_DATA_CACHE.put(id, updatedPersonalData);
+  }
+
+  @Override
+  public void deletePersonalData(Long id) {
+    PERSONAL_DATA_CACHE.remove(id);
+  }
+
+  @Override
+  public List<PersonalData> getPersonalDatasLike(PersonalData seekingPersonalData, int page,
+      int size) {
+
+    List<PersonalData> personalDataList = new ArrayList<>();
+    if (size <= 0) {
+      return personalDataList;
+    }
+    if (page <= 0) {
+      page = 1;
+    }
+
+    final int startI = (page - 1) * size;
+    for (int i = startI; i < startI + size; i++) {
+      if (i >= PERSONAL_DATA_CACHE.size()) {
+        break;
+      }
+      PersonalData personalData = PERSONAL_DATA_CACHE.get(Long.valueOf(i));
+      if (personalData != null) {
+        if ((seekingPersonalData.getId() == null || seekingPersonalData.getId()
+            .equals(personalData.getId()))
+            && (seekingPersonalData.getName() == null || seekingPersonalData.getName()
+            .equals(personalData.getName()))
+            && (seekingPersonalData.getPassport() == null || seekingPersonalData.getPassport()
+            .equals(personalData.getPassport()))
+            && (seekingPersonalData.getDateOfBirth() == null || seekingPersonalData.getDateOfBirth()
+            .equals(personalData.getDateOfBirth()))) {
+          personalDataList.add(personalData);
+        }
+      }
+    }
+    return personalDataList;
+  }
 }
