@@ -7,6 +7,7 @@ import com.epam.aviasales.repositories.impl.FlightRepositoryImpl;
 import com.epam.aviasales.services.FlightService;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -71,6 +72,7 @@ public class FlightServiceImpl implements FlightService {
       List<Flight> list = flightRepository.getFlights(airportIdFrom, airportIdTo, date);
       return list.stream()
           .filter(x -> x.getFreeSeatEconomy() > 0 || x.getFreeSeatBusiness() > 0)
+          .filter(x -> x.getDepartureTime().isAfter(LocalDateTime.now()))
           .collect(Collectors.toList());
     }
   }
