@@ -19,6 +19,8 @@ public interface AccountRepository {
 
   void updateAccount(Account account);
 
+  void updateAccountPasswordById(Long id, String password);
+
   List<Account> getAccountsLike(Account seekingAccount, int page, int size);
 
   void updateAccount(Long id, Account receivedAccount);

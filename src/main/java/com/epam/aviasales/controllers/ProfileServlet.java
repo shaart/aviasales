@@ -54,9 +54,27 @@ public class ProfileServlet extends HttpServlet {
       String ticketId = request.getParameter("ticketId");
       profileService.deleteAccountTicketById(Long.valueOf(ticketId));
     }
+    if (request.getParameter("changePasswordButton") != null) {
+      request.setAttribute("autoChangePassword", true);
+    }
+    if (request.getParameter("savePassword") != null) {
+      String oldPassword = request.getParameter("inputOldPassword");
+      String newPassword = request.getParameter("inputNewPassword");
+      String confirmNewPassword = request.getParameter("inputConfirmNewPassword");
+      if (profileService.validatePasswords(account.getId(), oldPassword, newPassword, confirmNewPassword)) {
+        profileService.updateAccountPassword(account, newPassword);
+        response.sendRedirect("/profile");
+        return;
+      }
+      else{
+        request.setAttribute("errorMessage3", "profile.error.wrongPassword");
+        request.setAttribute("autoChangePassword", true);
+      }
+    }
     if (request.getParameter("editButton") != null) {
       request.setAttribute("autoOpenEditAccount", true);
     }
+
     if (request.getParameter("saveButton") != null) {
       List<Ticket> tickets = (List<Ticket>) session.getAttribute("tickets");
 
@@ -82,14 +100,14 @@ public class ProfileServlet extends HttpServlet {
       }
     }
 
-    if(request.getParameter("editPersonalDataButton") != null){
+    if (request.getParameter("editPersonalDataButton") != null) {
       request.setAttribute("autoOpenEditPersonalData", true);
       String personalDataId = request.getParameter("personalDataId");
       PersonalData personalData = profileService.getPersonalDataById(Long.valueOf(personalDataId));
       request.setAttribute("modalPersonalData", personalData);
     }
 
-    //ToDo onsave personal data button*/
+    // ToDo onsave personal data button*/
     String personalDataName = request.getParameter("inputPersonalDataName");
     if (personalDataName != null) {
       String inputPersonalDataPassport = request.getParameter("inputPersonalDataPassport");
@@ -105,12 +123,11 @@ public class ProfileServlet extends HttpServlet {
               .build();
 
       List<String> errorMessages = profileService.updatePersonalData(personalData);
-      if(!errorMessages.isEmpty()){
+      if (!errorMessages.isEmpty()) {
         request.setAttribute("errorMessage2", errorMessages.get(0));
         request.setAttribute("autoOpenEditPersonalData", true);
         request.setAttribute("modalPersonalData", personalData);
-      }
-      else{
+      } else {
         /*ToDo Show information about successful purchase*/
         response.sendRedirect("/profile");
         return;

@@ -92,6 +92,19 @@ public class AccountRepositoryImpl implements AccountRepository {
     return !list.isEmpty();
   }
 
+  public void updateAccountPasswordById(Long id, String password) {
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    Transaction transaction = session.beginTransaction();
+    Query query =
+        session.createQuery(
+            "update Account set password = :password where id = :id");
+    query.setParameter("password", password);
+    query.setParameter("id", id);
+    query.executeUpdate();
+    transaction.commit();
+    session.close();
+  }
+
   public void updateAccount(Account account) {
     Session session = HibernateUtil.getSessionFactory().openSession();
     Transaction transaction = session.beginTransaction();

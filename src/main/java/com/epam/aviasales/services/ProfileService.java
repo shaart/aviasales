@@ -17,4 +17,8 @@ public interface ProfileService {
   List<String> updatePersonalData(PersonalData personalData);
 
   PersonalData getPersonalDataById(Long id);
+
+  boolean validatePasswords(Long id, String oldPassword, String newPassword, String confirmNewPassword);
+
+  void updateAccountPassword(Account account, String newPassword);
 }

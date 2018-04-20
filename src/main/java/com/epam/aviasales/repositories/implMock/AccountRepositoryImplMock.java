@@ -157,4 +157,9 @@ public class AccountRepositoryImplMock implements AccountRepository {
       }
     }
   }
+
+  @Override
+  public void updateAccountPasswordById(Long c, String password){
+
+  }
 }

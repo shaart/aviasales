@@ -13,6 +13,7 @@ import com.epam.aviasales.repositories.impl.TicketRepositoryImpl;
 import com.epam.aviasales.services.ProfileService;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.codec.digest.DigestUtils;
 
 public class ProfileServiceImpl implements ProfileService {
   private static volatile ProfileServiceImpl instance;
@@ -74,6 +75,25 @@ public class ProfileServiceImpl implements ProfileService {
     }
     return errorMessages;
   }
+
+  private boolean validateOldPassword(Long id, String oldPassword){
+    Account account = accountRepository.getAccountById(id);
+    String sha256hex = DigestUtils.sha256Hex(oldPassword);
+
+    if (sha256hex.equals(account.getPassword())) {
+      return true;
+    }
+    return false;
+  }
+
+  public boolean validatePasswords(Long id, String oldPassword, String newPassword, String confirmNewPassword){
+    return newPassword.equals(confirmNewPassword) && validateOldPassword(id, oldPassword);
+  }
+
+  public void updateAccountPassword(Account account, String newPassword){
+    accountRepository.updateAccountPasswordById(account.getId(), DigestUtils.sha256Hex(newPassword));
+  }
+
   /*Todo Exception if null*/
   public PersonalData getPersonalDataById(Long id){
     PersonalData personalData = personalDataRepository.getPersonalDataById(id);

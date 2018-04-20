@@ -40,8 +40,7 @@
     <tr>
         <th scope="col" style="width: 50px"></th>
         <th scope="col" style="width: 300px"></th>
-        <th scope="col" style="width: 50px">
-        </th>
+        <th scope="col" style="width: 50px"></th>
     </tr>
     </thead>
     <tbody>
@@ -56,6 +55,15 @@
     <tr>
         <th scope="row"><fmt:message key="profile.label.email" bundle="${lang}"/></th>
         <td>${account.email}</td>
+        <td>
+            <form action="/profile" method="post">
+                <button type="submit" class="btn btn-primary btn-sm" name="changePasswordButton">
+                    <fmt:message
+                            key="profile.label.changePassword"
+                            bundle="${lang}"/>
+                </button>
+            </form>
+        </td>
     </tr>
     <tr>
         <th scope="row"><fmt:message key="profile.label.phone" bundle="${lang}"/></th>
@@ -365,6 +373,71 @@
                 </div>
             </div>
         </form>
+        <form action="/profile" method="post">
+            <div id="modalChangePassword" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button class="close" type="button"
+                                    data-dismiss="modal">×
+                            </button>
+                            <h4 class="modal-title"><fmt:message
+                                    key="profile.label.edit"
+                                    bundle="${lang}"/></h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="inputOldPassword"
+                                       class="control-label"><fmt:message
+                                        key="profile.label.current_password"
+                                        bundle="${lang}"/></label>
+                                <input type="password" class="form-control"
+                                       name="inputOldPassword"
+                                       id="inputOldPassword"
+                                       required></div>
+                            <div class="form-group">
+                                <label for="inputNewPassword"
+                                       class="control-label"><fmt:message
+                                        key="profile.label.new_password"
+                                        bundle="${lang}"/></label>
+                                <input type="password" class="form-control"
+                                       name="inputNewPassword"
+                                       id="inputNewPassword"
+                                       required></div>
+                            <div class="form-group">
+                                <label for="inputConfirmNewPassword"
+                                       class="control-label"><fmt:message
+                                        key="profile.label.confirm_new_password"
+                                        bundle="${lang}"/></label>
+                                <input type="password" class="form-control"
+                                       name="inputConfirmNewPassword"
+                                       id="inputConfirmNewPassword"
+                                       required></div>
+                        </div>
+                        <c:if test="${errorMessage3 != null}">
+                            <p>
+                                <font color="red"><fmt:message
+                                        key="${errorMessage3}"
+                                        bundle="${lang}"/></font>
+                            </p>
+                        </c:if>
+
+                        <div class="modal-footer">
+
+                            <button class="btn btn-sm" type="submit" name="savePassword">
+                                <fmt:message
+                                        key="register.label.save"
+                                        bundle="${lang}"/></button>
+
+                            <button class="btn btn-default"
+                                    type="button" data-dismiss="modal">
+                                <fmt:message key="profile.label.close"
+                                             bundle="${lang}"/></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
         <c:if test="${autoOpenEditPersonalData == true}">
             <script type="text/javascript">
               $('#profileTab a[href="#personal_data_tab"]').tab('show');
@@ -374,6 +447,11 @@
         <c:if test="${autoOpenEditAccount == true}">
             <script type="text/javascript">
               $("#modalEditAccount").modal()
+            </script>
+        </c:if>
+        <c:if test="${autoChangePassword == true}">
+            <script type="text/javascript">
+              $("#modalChangePassword").modal()
             </script>
         </c:if>
     </div>
