@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css">
 </head>
 
-<div class="container">
+<div class="container font-weight-normal">
     <header class="blog-header py-2">
         <div class="row flex-nowrap ">
             <div class="col-4 pt-1 justify-content-start" align="left">
@@ -21,11 +21,10 @@
                            name="language" onclick="submit()">
                 </form>
             </div>
-            <div class="col-4 pt-2 text-center">
+            <div class="col-4 pt-2 align-items-center">
                 <h3 class="masthead-brand">Avialsales</h3>
             </div>
             <div class="col-4 pt-4 d-flex align-items-center">
-                <%--<a class="nav-link active" href="/"><fmt:message key="home" bundle="${lang}"/></a>--%>
                 <a class="btn btn-sm btn-outline-secondary" href="/"><fmt:message
                         key="home" bundle="${lang}"/></a>
                     <c:choose>
@@ -36,10 +35,14 @@
                                     key="sign_in" bundle="${lang}"/></a>
                         </c:when>
                         <c:otherwise>
+                            <c:if test="${account.role != 'USER'}">
+                                <a class="btn btn-sm btn-outline-secondary" href="/manage"><fmt:message
+                                        key="manage.title" bundle="${lang}"/></a>
+                            </c:if>
                             <a class="btn btn-sm btn-outline-success" href="/profile"><fmt:message
                                     key="profile" bundle="${lang}"/></a>
                             <a class="btn btn-sm btn-outline-danger"
-                               href="${account = null}/"><fmt:message key="sign_out" bundle="${lang}"/></a>
+                               href="/singout"><fmt:message key="sign_out" bundle="${lang}"/></a>
                         </c:otherwise>
                     </c:choose>
             </div>
