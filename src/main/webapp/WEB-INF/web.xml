@@ -75,6 +75,15 @@
     <servlet-name>manageAirportsServlet</servlet-name>
     <url-pattern>/manage/airports</url-pattern>
   </servlet-mapping>
+  <!-- MANAGE AIRPLANES -->
+  <servlet>
+    <servlet-name>manageAirplanesServlet</servlet-name>
+    <servlet-class>com.epam.aviasales.controllers.ManageAirplanesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>manageAirplanesServlet</servlet-name>
+    <url-pattern>/manage/airplanes</url-pattern>
+  </servlet-mapping>
   <!-- MANAGE -->
   <servlet>
     <servlet-name>manageServlet</servlet-name>

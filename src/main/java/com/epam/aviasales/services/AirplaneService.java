@@ -16,4 +16,8 @@ public interface AirplaneService {
   void addAirplane(Airplane airplane);
 
   void deleteAirplane(Long id);
+
+  List<Airplane> getAirplanesLike(Airplane seekingAirplane, int page, int size);
+
+  void updateAirplane(Long id, Airplane updatedAirplane);
 }

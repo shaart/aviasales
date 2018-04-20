@@ -93,4 +93,37 @@ public class AirplaneRepositoryImplMock implements AirplaneRepository {
   public boolean isExist(Long id) {
     return AIRPLANE_CACHE.containsKey(id);
   }
+
+  @Override
+  public List<Airplane> getAirplanesLike(Airplane seekingAirplane, int page, int size) {
+
+    List<Airplane> airplaneList = new ArrayList<>();
+    if (size <= 0) {
+      return airplaneList;
+    }
+    if (page <= 0) {
+      page = 1;
+    }
+
+    final int startI = (page - 1) * size;
+    for (int i = startI; i < startI + size; i++) {
+      if (i >= AIRPLANE_CACHE.size()) {
+        break;
+      }
+      Airplane flight = AIRPLANE_CACHE.get(Long.valueOf(i));
+      if (flight != null) {
+        if ((seekingAirplane.getId() == null || seekingAirplane.getId().equals(flight.getId()))
+            && (seekingAirplane.getName() == null || seekingAirplane.getName()
+            .equals(flight.getName()))) {
+          airplaneList.add(flight);
+        }
+      }
+    }
+    return airplaneList;
+  }
+
+  @Override
+  public void updateAirplane(Long id, Airplane updatedAirplane) {
+    AIRPLANE_CACHE.put(id, updatedAirplane);
+  }
 }
