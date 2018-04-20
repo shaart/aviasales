@@ -15,8 +15,6 @@ public interface PersonalDataRepository {
 
   void updatePersonalDataById(PersonalData personalData);
 
-  boolean isExist(String rowName, String rowValue);
-
   void addPersonalData(PersonalData personalData);
 
   boolean isExist(PersonalData personalData);

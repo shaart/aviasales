@@ -1,6 +1,4 @@
 <%@ page import="java.time.LocalDateTime" %>
-<%@ page import="com.epam.aviasales.repositories.PersonalDataRepository" %>
-<%@ page import="com.epam.aviasales.repositories.impl.PersonalDataReposioryImpl" %>
 <%@ page import="com.epam.aviasales.domain.PersonalData" %>
 <%--
   Created by IntelliJ IDEA.

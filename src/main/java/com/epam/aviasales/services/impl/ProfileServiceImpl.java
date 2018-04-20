@@ -7,7 +7,7 @@ import com.epam.aviasales.repositories.AccountRepository;
 import com.epam.aviasales.repositories.PersonalDataRepository;
 import com.epam.aviasales.repositories.TicketRepository;
 import com.epam.aviasales.repositories.impl.AccountRepositoryImpl;
-import com.epam.aviasales.repositories.impl.PersonalDataReposioryImpl;
+import com.epam.aviasales.repositories.impl.PersonalDataRepositoryImpl;
 import com.epam.aviasales.repositories.impl.TicketRepositoryImpl;
 
 import com.epam.aviasales.services.ProfileService;
@@ -18,7 +18,7 @@ public class ProfileServiceImpl implements ProfileService {
   private static volatile ProfileServiceImpl instance;
   private static final TicketRepository ticketRepository = TicketRepositoryImpl.getInstance();
   private static final AccountRepository accountRepository = AccountRepositoryImpl.getInstance();
-  private static final PersonalDataRepository personalDataRepository = PersonalDataReposioryImpl.getInstance();
+  private static final PersonalDataRepository personalDataRepository = PersonalDataRepositoryImpl.getInstance();
 
   private ProfileServiceImpl() {}
 
@@ -41,8 +41,7 @@ public class ProfileServiceImpl implements ProfileService {
 
   public List<String> updateAccount(Account newAccount) {
     List<String> errorMessages = new ArrayList<>();
-    List<Account> accounts = accountRepository.getAccountById(newAccount.getId());
-    Account account = accounts.get(0);
+    Account account = accountRepository.getAccountById(newAccount.getId());
 
     if (!account.getLogin().equals(newAccount.getLogin())
         && accountRepository.isExist("login", newAccount.getLogin())) {

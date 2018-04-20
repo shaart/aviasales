@@ -75,11 +75,6 @@ public class PersonalDataRepositoryImplMock implements PersonalDataRepository {
   }
 
   @Override
-  public boolean isExist(String rowName, String rowValue) {
-    return true;
-  }
-
-  @Override
   public PersonalData getPersonalDataByPassport(String passport) {
     for (PersonalData personalData : PERSONAL_DATA_CACHE.values()) {
       if (personalData != null && personalData.getPassport().equals(passport)) {

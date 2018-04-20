@@ -40,7 +40,7 @@ public class AccountServiceImplMock implements AccountService {
   }
 
   @Override
-  public List<Account> getAccountById(Long id) {
+  public Account getAccountById(Long id) {
     return accountRepository.getAccountById(id);
   }
 

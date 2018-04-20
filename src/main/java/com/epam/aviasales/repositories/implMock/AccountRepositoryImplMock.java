@@ -72,10 +72,10 @@ public class AccountRepositoryImplMock implements AccountRepository {
   }
 
   @Override
-  public List<Account> getAccountById(Long id) {
+  public Account getAccountById(Long id) {
     List<Account> list = new ArrayList<>();
     list.add(ACCOUNTS_CACHE.get(id));
-    return list;
+    return list.get(0);
   }
 
   @Override
