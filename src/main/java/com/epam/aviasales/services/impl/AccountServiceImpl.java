@@ -31,7 +31,7 @@ public class AccountServiceImpl implements AccountService {
 
   @Override
   public List<Account> getAccounts() {
-    return accountRepository.getAccounts(1, 20);
+    return accountRepository.getAccounts();
   }
 
   @Override

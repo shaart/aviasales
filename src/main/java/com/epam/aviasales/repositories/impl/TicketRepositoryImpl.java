@@ -3,12 +3,17 @@ package com.epam.aviasales.repositories.impl;
 import com.epam.aviasales.domain.Ticket;
 import com.epam.aviasales.repositories.TicketRepository;
 import com.epam.aviasales.util.HibernateUtil;
+import java.util.ArrayList;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
 import java.util.List;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TicketRepositoryImpl implements TicketRepository {
@@ -43,6 +48,67 @@ public class TicketRepositoryImpl implements TicketRepository {
   @Override
   public boolean isExist(Long id) {
     return getTicketById(id) != null;
+  }
+
+  @Override
+  public List<Ticket> getTicketsLike(Ticket seekingTicket, int page, int size) {
+    if (size <= 0) {
+      return new ArrayList<>();
+    }
+    if (seekingTicket == null) {
+      return getTickets(page, size);
+    }
+    if (page < 1) {
+      page = 1;
+    }
+    // pages start from 1
+    page -= 1;
+
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    session.beginTransaction();
+    Criteria criteria = session.createCriteria(Ticket.class);
+    if (seekingTicket.getId() != null) {
+      criteria.add(Restrictions.eq("id", seekingTicket.getId()));
+    }
+    if (seekingTicket.getPersonalData() != null) {
+      criteria.add(Restrictions.eq("personalData", seekingTicket.getPersonalData()));
+    }
+    if (seekingTicket.getFlight() != null) {
+      criteria.add(Restrictions.eq("flight", seekingTicket.getFlight()));
+    }
+    if (seekingTicket.getAccount() != null) {
+      criteria.add(Restrictions.eq("account", seekingTicket.getAccount()));
+    }
+    if (seekingTicket.getPrice() != null) {
+      criteria.add(Restrictions.eq("price", seekingTicket.getPrice()));
+    }
+    if (seekingTicket.getIsBusiness() != null) {
+      criteria.add(Restrictions.eq("isBusiness", seekingTicket.getIsBusiness()));
+    }
+
+    criteria.addOrder(Order.asc("id"));
+    criteria.setFirstResult(page * size);
+    criteria.setMaxResults(size);
+
+    List<Ticket> result = (List<Ticket>) criteria.list();
+    session.getTransaction().commit();
+    session.close();
+
+    return result;
+  }
+
+  @Override
+  public void updateTicket(Long id, Ticket receivedTicket) {
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    session.beginTransaction();
+
+    if (id != null && id != receivedTicket.getId()) {
+      receivedTicket.setId(id);
+    }
+    session.update(receivedTicket);
+
+    session.getTransaction().commit();
+    session.close();
   }
 
   @Override

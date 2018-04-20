@@ -26,35 +26,46 @@ public class TicketServiceImplMock implements TicketService {
     return localInstance;
   }
 
-  private static final TicketRepository ticketRepository = TicketRepositoryImplMock.getInstance();
+  private static final TicketRepository ticketRepositoryMock = TicketRepositoryImplMock
+      .getInstance();
 
   @Override
   public List<Ticket> getTickets() {
-    return ticketRepository.getTickets(1, 20);
+    return ticketRepositoryMock.getTickets(1, 20);
   }
 
   @Override
   public List<Ticket> getTickets(int page, int count) {
-    return ticketRepository.getTickets(page, count);
+    return ticketRepositoryMock.getTickets(page, count);
   }
 
   @Override
   public Ticket getTicketById(Long id) {
-    return ticketRepository.getTicketById(id);
+    return ticketRepositoryMock.getTicketById(id);
   }
 
   @Override
   public void addTicket(Ticket ticket) {
-    ticketRepository.addTicket(ticket);
+    ticketRepositoryMock.addTicket(ticket);
   }
 
   @Override
   public void deleteTicket(Long id) {
-    ticketRepository.deleteTicket(id);
+    ticketRepositoryMock.deleteTicket(id);
   }
 
   @Override
   public boolean isValid(Ticket ticket) {
-    return false;
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public List<Ticket> getTicketsLike(Ticket seekingTicket, int page, int size) {
+    return ticketRepositoryMock.getTicketsLike(seekingTicket, page, size);
+  }
+
+  @Override
+  public void updateTicket(Long id, Ticket receivedTicket) {
+    ticketRepositoryMock.updateTicket(id, receivedTicket);
   }
 }
