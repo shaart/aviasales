@@ -16,4 +16,8 @@ public interface TicketRepository {
   void deleteTicket(Long id);
 
   boolean isExist(Long id);
+
+  List<Ticket> getTicketsLike(Ticket seekingTicket, int page, int size);
+
+  void updateTicket(Long id, Ticket receivedTicket);
 }

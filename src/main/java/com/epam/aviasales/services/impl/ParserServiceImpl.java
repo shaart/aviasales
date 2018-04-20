@@ -1,13 +1,17 @@
 package com.epam.aviasales.services.impl;
 
+import com.epam.aviasales.domain.Account;
 import com.epam.aviasales.domain.Airplane;
 import com.epam.aviasales.domain.Airport;
 import com.epam.aviasales.domain.Flight;
 import com.epam.aviasales.domain.PersonalData;
+import com.epam.aviasales.domain.Ticket;
+import com.epam.aviasales.services.AccountService;
 import com.epam.aviasales.services.AirplaneService;
 import com.epam.aviasales.services.AirportService;
 import com.epam.aviasales.services.FlightService;
 import com.epam.aviasales.services.ParserService;
+import com.epam.aviasales.services.PersonalDataService;
 import com.epam.aviasales.util.CastType;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,6 +26,8 @@ public class ParserServiceImpl implements ParserService {
   private FlightService flightService;
   private AirportService airportsService;
   private AirplaneService airplaneService;
+  private AccountService accountService;
+  private PersonalDataService personalDataService;
 
   public static ParserService getInstance() {
     ParserService localInstance = instance;
@@ -41,9 +47,11 @@ public class ParserServiceImpl implements ParserService {
     flightService = FlightServiceImpl.getInstance();
     airportsService = AirportServiceImpl.getInstance();
     airplaneService = AirplaneServiceImpl.getInstance();
+    accountService = AccountServiceImpl.getInstance();
+    personalDataService = PersonalDataServiceImpl.getInstance();
   }
 
-  public <T> T parseParameter(String parameter, CastType type) {
+  public <T> T parseParameter(final String parameter, CastType type) {
     if (parameter == null || parameter.trim().isEmpty()) {
       return null;
     }
@@ -64,6 +72,23 @@ public class ParserServiceImpl implements ParserService {
           return (T) parameter;
         case LOCAL_DATE:
           return (T) LocalDate.parse(parameter);
+        case FLIGHT:
+          return (T) flightService.getFlightById(Long.valueOf(parameter));
+        case ACCOUNT:
+          return (T) accountService.getAccountByLogin(parameter);
+        case BOOLEAN:
+          switch (parameter) {
+            case "on":
+            case "1":
+              return (T) Boolean.TRUE;
+            case "off":
+            case "0":
+              return (T) Boolean.FALSE;
+            default:
+              return (T) Boolean.valueOf(parameter);
+          }
+        case PERSONAL_DATA:
+          return (T) personalDataService.getPersonalDataByPassport(parameter);
         default:
           log.error("Received not implemented (unknown) CastType");
           return null;
@@ -127,5 +152,19 @@ public class ParserServiceImpl implements ParserService {
 
     return PersonalData.builder().id(id).name(name).passport(passport).dateOfBirth(dateOfBirth)
         .build();
+  }
+
+  @Override
+  public Ticket parseTicket(HttpServletRequest req) {
+    Long id = parseParameter(req.getParameter("id"), CastType.LONG);
+    PersonalData personalData = parseParameter(req.getParameter("personalDataPassport"),
+        CastType.PERSONAL_DATA);
+    Flight flight = parseParameter(req.getParameter("flightId"), CastType.FLIGHT);
+    Account account = parseParameter(req.getParameter("accountName"), CastType.ACCOUNT);
+    Integer price = parseParameter(req.getParameter("price"), CastType.INTEGER);
+    Boolean isBusiness = parseParameter(req.getParameter("isBusiness"), CastType.BOOLEAN);
+
+    return Ticket.builder().id(id).personalData(personalData).flight(flight).account(account)
+        .price(price).isBusiness(isBusiness).build();
   }
 }

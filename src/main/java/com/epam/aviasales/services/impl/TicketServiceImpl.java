@@ -8,6 +8,7 @@ import com.epam.aviasales.services.TicketService;
 
 import java.util.List;
 
+import javax.naming.ldap.UnsolicitedNotification;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -62,6 +63,16 @@ public class TicketServiceImpl implements TicketService {
 
   @Override
   public boolean isValid(Ticket ticket) {
-    return false;
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public List<Ticket> getTicketsLike(Ticket seekingTicket, int page, int size) {
+    return ticketRepository.getTicketsLike(seekingTicket, page, size);
+  }
+
+  @Override
+  public void updateTicket(Long id, Ticket receivedTicket) {
+    ticketRepository.updateTicket(id, receivedTicket);
   }
 }

@@ -43,7 +43,7 @@ public class AccountRepositoryImpl implements AccountRepository {
     Query query = session.createQuery("from Account WHERE id = :id");
     List list = query.setParameter("id", id).list();
     session.close();
-    return list.size()>0? (Account) list.get(0) : null;
+    return list.size() > 0 ? (Account) list.get(0) : null;
   }
 
   @Override
@@ -56,12 +56,22 @@ public class AccountRepositoryImpl implements AccountRepository {
 
   @Override
   public List<Account> getAccounts() {
-    return null;
+
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    session.beginTransaction();
+
+    Query query = session.createQuery("from Account");
+    List list = query.list();
+
+    session.getTransaction().commit();
+    session.close();
+
+    return (List<Account>) list;
   }
 
   @Override
   public List<Account> getAccounts(int page, int count) {
-    return null;
+    throw new UnsupportedOperationException();
   }
 
   /*ToDo there is no check for row. Add it!, This is a bad way to choose the row*/

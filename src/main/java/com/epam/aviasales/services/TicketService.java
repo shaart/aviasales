@@ -16,4 +16,8 @@ public interface TicketService {
   void deleteTicket(Long id);
 
   boolean isValid(Ticket ticket);
+
+  List<Ticket> getTicketsLike(Ticket seekingTicket, int page, int size);
+
+  void updateTicket(Long id, Ticket receivedTicket);
 }

@@ -84,6 +84,15 @@
     <servlet-name>manageAirplanesServlet</servlet-name>
     <url-pattern>/manage/airplanes</url-pattern>
   </servlet-mapping>
+  <!-- MANAGE TICKETS -->
+  <servlet>
+    <servlet-name>manageTicketsServlet</servlet-name>
+    <servlet-class>com.epam.aviasales.controllers.ManageTicketsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>manageTicketsServlet</servlet-name>
+    <url-pattern>/manage/tickets</url-pattern>
+  </servlet-mapping>
   <!-- MANAGE PERSONAL DATA -->
   <servlet>
     <servlet-name>managePersonalDataServlet</servlet-name>
