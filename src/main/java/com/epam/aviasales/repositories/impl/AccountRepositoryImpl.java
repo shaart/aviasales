@@ -1,7 +1,6 @@
 package com.epam.aviasales.repositories.impl;
 
 import com.epam.aviasales.domain.Account;
-import com.epam.aviasales.domain.PersonalData;
 import com.epam.aviasales.repositories.AccountRepository;
 import com.epam.aviasales.util.HibernateUtil;
 import java.util.ArrayList;
@@ -189,7 +188,12 @@ public class AccountRepositoryImpl implements AccountRepository {
     Session session = HibernateUtil.getSessionFactory().openSession();
     session.beginTransaction();
 
-    session.delete(getAccountById(id));
+    Query query = session.createQuery("delete Ticket where account.id = :id");
+    query.setParameter("id", id);
+    int result = query.executeUpdate();
+    query = session.createQuery("delete Account where id = :id");
+    query.setParameter("id", id);
+    result = query.executeUpdate();
 
     session.getTransaction().commit();
     session.close();
