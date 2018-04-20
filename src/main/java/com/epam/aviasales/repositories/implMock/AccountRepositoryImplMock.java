@@ -73,7 +73,9 @@ public class AccountRepositoryImplMock implements AccountRepository {
 
   @Override
   public Account getAccountById(Long id) {
-    return ACCOUNTS_CACHE.get(id);
+    List<Account> list = new ArrayList<>();
+    list.add(ACCOUNTS_CACHE.get(id));
+    return list.get(0);
   }
 
   @Override
@@ -142,5 +144,22 @@ public class AccountRepositoryImplMock implements AccountRepository {
       }
     }
     return accounts;
+  }
+
+  @Override
+  public void updateAccount(Account newAccount){
+    for (Account account : ACCOUNTS_CACHE.values()) {
+      if (account.getId().equals(newAccount.getId())) {
+        account.setLogin(newAccount.getLogin());
+        account.setName(newAccount.getName());
+        account.setEmail(newAccount.getEmail());
+        account.setLogin(newAccount.getLogin());
+      }
+    }
+  }
+
+  @Override
+  public void updateAccountPasswordById(Long c, String password){
+
   }
 }

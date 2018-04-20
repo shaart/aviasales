@@ -9,6 +9,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import java.util.List;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -95,6 +96,22 @@ public class PersonalDataRepositoryImpl implements PersonalDataRepository {
   @Override
   public boolean isExist(PersonalData personalData) {
     return getPersonalDataById(personalData.getId()) != null;
+  }
+
+  @Override
+  public void updatePersonalDataById(PersonalData personalData) {
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    Transaction transaction = session.beginTransaction();
+    Query query =
+        session.createQuery(
+            "update PersonalData set name = :name, passport = :passport, dateOfBirth = :dateOfBirth where id = :id");
+    query.setParameter("name", personalData.getName());
+    query.setParameter("passport", personalData.getPassport());
+    query.setParameter("dateOfBirth", personalData.getDateOfBirth());
+    query.setParameter("id", personalData.getId());
+    query.executeUpdate();
+    transaction.commit();
+    session.close();
   }
 
   @Override

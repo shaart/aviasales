@@ -24,13 +24,13 @@
 <script type="text/javascript" src="webjars/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-
-<form>
+<%@include file="layout/header.jsp" %>
+<%--<form>
     <select id="language" name="language" onchange="submit()">
         <option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
         <option value="ru" ${language == 'ru' ? 'selected' : ''}>Русский</option>
     </select>
-</form>
+</form>--%>
 
 <div class="container">
 
@@ -94,5 +94,6 @@
         </p>
     </c:if>
 </div>
+<%@include file="layout/footer.jsp" %>
 </body>
 </html>

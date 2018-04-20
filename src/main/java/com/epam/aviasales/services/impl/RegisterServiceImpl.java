@@ -33,10 +33,10 @@ public class RegisterServiceImpl implements RegisterService {
   public List<String> addAccount(Account account) {
     List<String> errorMessages = new ArrayList<>();
 
-    if (accountRepository.isExist(account.getLogin(), "login")) {
+    if (accountRepository.isExist("login", account.getLogin())) {
       errorMessages.add("register.error.login_exist");
     }
-    if (accountRepository.isExist(account.getEmail(), "email")) {
+    if (accountRepository.isExist("email", account.getEmail())) {
       errorMessages.add("register.error.email_exist");
     }
     if (errorMessages.isEmpty()) {

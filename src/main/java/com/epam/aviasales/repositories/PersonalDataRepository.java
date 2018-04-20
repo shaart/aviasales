@@ -13,6 +13,8 @@ public interface PersonalDataRepository {
 
   PersonalData getPersonalDataById(Long id);
 
+  void updatePersonalDataById(PersonalData personalData);
+
   void addPersonalData(PersonalData personalData);
 
   boolean isExist(PersonalData personalData);

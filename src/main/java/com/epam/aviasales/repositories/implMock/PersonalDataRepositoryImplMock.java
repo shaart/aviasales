@@ -35,9 +35,14 @@ public class PersonalDataRepositoryImplMock implements PersonalDataRepository {
 
     LocalDate dateCounter = LocalDate.of(2000, Month.APRIL, 1);
     for (int i = 1; i < CACHE_COUNT; i++) {
-      PERSONAL_DATA_CACHE.put(Long.valueOf(i),
-          PersonalData.builder().id(Long.valueOf(i)).name("R-" + i).passport("PASS" + (i * 13))
-              .dateOfBirth(dateCounter.plusMonths(i)).build());
+      PERSONAL_DATA_CACHE.put(
+          Long.valueOf(i),
+          PersonalData.builder()
+              .id(Long.valueOf(i))
+              .name("R-" + i)
+              .passport("PASS" + (i * 13))
+              .dateOfBirth(dateCounter.plusMonths(i))
+              .build());
     }
   }
 
@@ -45,6 +50,9 @@ public class PersonalDataRepositoryImplMock implements PersonalDataRepository {
   public List<PersonalData> getPersonalDatas() {
     return getPersonalDatas(1, Integer.MAX_VALUE);
   }
+
+  @Override
+  public void updatePersonalDataById(PersonalData personalData){}
 
   @Override
   public List<PersonalData> getPersonalDatas(int page, int count) {

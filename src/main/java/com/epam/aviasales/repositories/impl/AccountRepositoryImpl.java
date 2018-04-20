@@ -1,6 +1,7 @@
 package com.epam.aviasales.repositories.impl;
 
 import com.epam.aviasales.domain.Account;
+import com.epam.aviasales.domain.PersonalData;
 import com.epam.aviasales.repositories.AccountRepository;
 import com.epam.aviasales.util.HibernateUtil;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import java.util.List;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -55,8 +57,9 @@ public class AccountRepositoryImpl implements AccountRepository {
   public List<Account> getAccountByLogin(String login) {
     Session session = HibernateUtil.getSessionFactory().openSession();
     Query query = session.createQuery("from Account WHERE login = :login");
-    query.setParameter("login", login);
-    return query.list();
+    List list = query.setParameter("login", login).list();
+    session.close();
+    return list;
   }
 
   @Override
@@ -80,13 +83,42 @@ public class AccountRepositoryImpl implements AccountRepository {
   }
 
   /*ToDo there is no check for row. Add it!, This is a bad way to choose the row*/
-  public boolean isExist(String rowValue, String rowName) {
+  public boolean isExist(String rowName, String rowValue) {
     Session session = HibernateUtil.getSessionFactory().openSession();
     Query query = session.createQuery("from Account WHERE " + rowName + " = :parameter");
     query.setParameter("parameter", rowValue);
     List list = query.list();
-
+    session.close();
     return !list.isEmpty();
+  }
+
+  public void updateAccountPasswordById(Long id, String password) {
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    Transaction transaction = session.beginTransaction();
+    Query query =
+        session.createQuery(
+            "update Account set password = :password where id = :id");
+    query.setParameter("password", password);
+    query.setParameter("id", id);
+    query.executeUpdate();
+    transaction.commit();
+    session.close();
+  }
+
+  public void updateAccount(Account account) {
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    Transaction transaction = session.beginTransaction();
+    Query query =
+        session.createQuery(
+            "update Account set login = :login, name = :name, email = :email, phone = :phone where id = :id");
+    query.setParameter("login", account.getLogin());
+    query.setParameter("name", account.getName());
+    query.setParameter("email", account.getEmail());
+    query.setParameter("phone", account.getPhone());
+    query.setParameter("id", account.getId());
+    query.executeUpdate();
+    transaction.commit();
+    session.close();
   }
 
   @Override
