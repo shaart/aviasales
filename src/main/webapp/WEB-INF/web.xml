@@ -93,6 +93,15 @@
     <servlet-name>manageTicketsServlet</servlet-name>
     <url-pattern>/manage/tickets</url-pattern>
   </servlet-mapping>
+  <!-- MANAGE ACCOUNTS -->
+  <servlet>
+    <servlet-name>manageAccountsServlet</servlet-name>
+    <servlet-class>com.epam.aviasales.controllers.ManageAccountsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>manageAccountsServlet</servlet-name>
+    <url-pattern>/manage/accounts</url-pattern>
+  </servlet-mapping>
   <!-- MANAGE PERSONAL DATA -->
   <servlet>
     <servlet-name>managePersonalDataServlet</servlet-name>

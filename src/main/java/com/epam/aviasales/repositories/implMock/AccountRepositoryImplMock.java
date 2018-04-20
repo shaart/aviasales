@@ -87,6 +87,52 @@ public class AccountRepositoryImplMock implements AccountRepository {
   }
 
   @Override
+  public List<Account> getAccountsLike(Account seekingAccount, int page, int size) {
+
+    List<Account> accountList = new ArrayList<>();
+    if (size <= 0) {
+      return accountList;
+    }
+    if (page <= 0) {
+      page = 1;
+    }
+
+    final int startI = (page - 1) * size;
+    for (int i = startI; i < startI + size; i++) {
+      if (i >= ACCOUNTS_CACHE.size()) {
+        break;
+      }
+      Account account = ACCOUNTS_CACHE.get(Long.valueOf(i));
+      if (account != null) {
+        if ((seekingAccount.getId() == null || seekingAccount.getId().equals(account.getId()))
+            && (seekingAccount.getRole() == null || seekingAccount.getRole()
+            .equals(account.getRole()))
+            && (seekingAccount.getName() == null || seekingAccount.getName()
+            .equals(account.getName()))
+            && (seekingAccount.getLogin() == null || seekingAccount.getLogin()
+            .equals(account.getLogin()))
+            && (seekingAccount.getEmail() == null || seekingAccount.getEmail()
+            .equals(account.getEmail()))
+            && (seekingAccount.getPhone() == null || seekingAccount.getPhone()
+            .equals(account.getPhone()))) {
+          accountList.add(account);
+        }
+      }
+    }
+    return accountList;
+  }
+
+  @Override
+  public void updateAccount(Long id, Account receivedAccount) {
+    ACCOUNTS_CACHE.put(id, receivedAccount);
+  }
+
+  @Override
+  public void deleteAccount(Long id) {
+    ACCOUNTS_CACHE.remove(id);
+  }
+
+  @Override
   public List<Account> getAccountByLogin(String login) {
     List<Account> accounts = new ArrayList<>();
     for (Account account : ACCOUNTS_CACHE.values()) {

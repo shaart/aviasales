@@ -57,4 +57,19 @@ public class AccountServiceImpl implements AccountService {
   public void addAccount(Account account) {
     accountRepository.addAccount(account);
   }
+
+  @Override
+  public List<Account> getAccountsLike(Account seekingAccount, int page, int size) {
+    return accountRepository.getAccountsLike(seekingAccount, page, size);
+  }
+
+  @Override
+  public void updateAccount(Long id, Account receivedAccount) {
+    accountRepository.updateAccount(id, receivedAccount);
+  }
+
+  @Override
+  public void deleteAccount(Long id) {
+    accountRepository.deleteAccount(id);
+  }
 }

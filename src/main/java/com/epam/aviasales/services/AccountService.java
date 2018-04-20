@@ -14,4 +14,10 @@ public interface AccountService {
   Account getAccountByLogin(String login);
 
   void addAccount(Account account);
+
+  List<Account> getAccountsLike(Account seekingAccount, int page, int size);
+
+  void updateAccount(Long id, Account receivedAccount);
+
+  void deleteAccount(Long id);
 }
