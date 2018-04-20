@@ -51,11 +51,11 @@ public class ManageAirplanesServlet extends HttpServlet {
       List<Airplane> airplanes = airplaneService.getAirplanesLike(seekingAirplane, page, size);
       req.setAttribute("airplanes", airplanes);
 
-      req.getRequestDispatcher("manageAirplanes.jsp").forward(req, resp);
+      req.getRequestDispatcher("/WEB-INF/manageAirplanes.jsp").forward(req, resp);
     } catch (Exception e) {
       log.error(e.getCause(), e);
       req.setAttribute("error", e.toString());
-      req.getRequestDispatcher("../error.jsp").forward(req, resp);
+      req.getRequestDispatcher("/WEB-INF/error.jsp").forward(req, resp);
     }
   }
 

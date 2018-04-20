@@ -76,11 +76,11 @@ public class ManageTicketsServlet extends HttpServlet {
       List<PersonalData> personalDatas = personalDataService.getPersonalDatas();
       req.setAttribute("personalDatas", personalDatas);
 
-      req.getRequestDispatcher("manageTickets.jsp").forward(req, resp);
+      req.getRequestDispatcher("/WEB-INF/manageTickets.jsp").forward(req, resp);
     } catch (Exception e) {
       log.error(e.getCause(), e);
       req.setAttribute("error", e.toString());
-      req.getRequestDispatcher("../error.jsp").forward(req, resp);
+      req.getRequestDispatcher("/WEB-INF/error.jsp").forward(req, resp);
     }
   }
 

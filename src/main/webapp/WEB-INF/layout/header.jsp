@@ -15,9 +15,9 @@
         <div class="row flex-nowrap ">
             <div class="col-4 pt-1 justify-content-start" align="left">
                 <form class="nav-link active">
-                    <input type="image" src="resources/header/russian.png" value="ru"
+                    <input type="image" src="../resources/header/russian.png" value="ru"
                            name="language" onclick="submit()">
-                    <input type="image" src="resources/header/english.png" value="en"
+                    <input type="image" src="../resources/header/english.png" value="en"
                            name="language" onclick="submit()">
                 </form>
             </div>

@@ -19,7 +19,7 @@ public class LoginServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
-    req.getRequestDispatcher("Login.jsp").forward(req, resp);
+    req.getRequestDispatcher("/WEB-INF/login.jsp").forward(req, resp);
   }
 
   /*ToDo: add code for remembeMe checkbox,
@@ -39,7 +39,7 @@ public class LoginServlet extends HttpServlet {
       response.sendRedirect("/");
     } else {
       request.setAttribute("errorMessage", errorMessages.get(0));
-      request.getRequestDispatcher("Login.jsp").forward(request, response);
+      request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
     }
   }
 

@@ -89,7 +89,7 @@
   }
 </script>
 <body>
-<%@include file="../layout/header.jsp" %>
+<%@include file="layout/header.jsp" %>
 <div class="container" style="width: 100%">
     <h2><fmt:message key="page.header.search" bundle="${lang}"/></h2>
     <table id="searchTable" class="table-bordered">
@@ -354,7 +354,7 @@
         <c:forEach var="ticket" items="${tickets}">
             <tr>
                 <form action="/manage/tickets" method="post">
-                    <td><input readonly type="text" disabled class="form-control" width="10"
+                    <td><input readonly type="text" class="form-control" width="10"
                                name="id"
                                value="${ticket.id}"
                                placeholder="<fmt:message key="ticket.label.id" bundle="${lang}"/>">
@@ -444,5 +444,5 @@
         </nav>
     </div>
 </div>
-<%@include file="../layout/footer.jsp" %>
+<%@include file="layout/footer.jsp" %>
 </body>

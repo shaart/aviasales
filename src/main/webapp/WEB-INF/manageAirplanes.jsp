@@ -8,12 +8,12 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="com.epam.aviasales.bundles.global" var="lang"/>
 <c:set var="COLUMNS_FIRST_NUM" value="0"/>
-<c:set var="COLUMNS_COUNT" value="6"/>
+<c:set var="COLUMNS_COUNT" value="4"/>
 <c:set var="page" value="${page == null || page < 1 ? 1 : page}"/>
 <!DOCTYPE html>
 <html lang="${language}">
 <head>
-    <title><fmt:message key="manage.accounts.title" bundle="${lang}"/></title>
+    <title><fmt:message key="manage.airplanes.title" bundle="${lang}"/></title>
 </head>
 <script type="text/javascript">
   var COLUMNS_START_FROM = ${COLUMNS_FIRST_NUM};
@@ -89,57 +89,42 @@
   }
 </script>
 <body>
-<%@include file="../layout/header.jsp" %>
+<%@include file="layout/header.jsp" %>
 <div class="container" style="width: 100%">
     <h2><fmt:message key="page.header.search" bundle="${lang}"/></h2>
     <table id="searchTable" class="table-bordered">
         <thead>
         <tr>
             <th class="text-center" style="width: 3%;">
-                <fmt:message key="account.label.id" bundle="${lang}"/></th>
+                <fmt:message key="airplane.label.id" bundle="${lang}"/></th>
             <th class="text-center" style="width: 20%;">
-                <fmt:message key="account.label.role" bundle="${lang}"/></th>
+                <fmt:message key="airplane.label.name" bundle="${lang}"/></th>
             <th class="text-center" style="width: 20%;">
-                <fmt:message key="account.label.name" bundle="${lang}"/></th>
+                <fmt:message key="airplane.label.economySeatsCount" bundle="${lang}"/></th>
             <th class="text-center" style="width: 20%;">
-                <fmt:message key="account.label.login" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%;">
-                <fmt:message key="account.label.email" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%;">
-                <fmt:message key="account.label.phone" bundle="${lang}"/></th>
+                <fmt:message key="airplane.label.businessSeatsCount" bundle="${lang}"/></th>
             <th class="text-center" style="width: 10%;">
                 <fmt:message key="page.label.control" bundle="${lang}"/></th>
         </tr>
         </thead>
         <tbody>
         <tr id="searching-row">
-            <form id="search-form" action="/manage/accounts" method="get">
+            <form id="search-form" action="/manage/airplanes" method="get">
                 <td><input type="text" class="form-control" width="10" name="id"
                            value="${id}"
-                           placeholder="<fmt:message key="account.label.id" bundle="${lang}"/>">
+                           placeholder="<fmt:message key="airplane.label.id" bundle="${lang}"/>">
                 </td>
-                <td>
-                    <select class="form-control" name="role">
-                        <option value="">
-                            <fmt:message key="page.label.choose" bundle="${lang}"/>
-                        </option>
-                        <c:forEach var="cRole" items="${roles}">
-                            <option ${cRole.equals(role) ? "selected" : ""}
-                                    value="${cRole}">${cRole}</option>
-                        </c:forEach>
-                    </select>
+                <td><input type="text" class="form-control" name="name"
+                           value="${name}"
+                           placeholder="<fmt:message key="airplane.label.name" bundle="${lang}"/>">
                 </td>
-                <td><input type="text" class="form-control" name="name" value="${name}"
-                           placeholder="<fmt:message key="account.label.name" bundle="${lang}"/>">
+                <td><input type="text" class="form-control" name="economySeatsCount"
+                           value="${economySeatsCount}"
+                           placeholder="<fmt:message key="airplane.label.economySeatsCount" bundle="${lang}"/>">
                 </td>
-                <td><input type="text" class="form-control" name="login" value="${login}"
-                           placeholder="<fmt:message key="account.label.login" bundle="${lang}"/>">
-                </td>
-                <td><input type="text" class="form-control" name="email" value="${email}"
-                           placeholder="<fmt:message key="account.label.email" bundle="${lang}"/>">
-                </td>
-                <td><input type="text" class="form-control" name="phone" value="${phone}"
-                           placeholder="<fmt:message key="account.label.phone" bundle="${lang}"/>">
+                <td><input type="text" class="form-control" name="businessSeatsCount"
+                           value="${businessSeatsCount}"
+                           placeholder="<fmt:message key="airplane.label.businessSeatsCount" bundle="${lang}"/>">
                 </td>
                 <td>
                     <div class="btn-group btn-group-justified">
@@ -164,48 +149,35 @@
         <thead>
         <tr>
             <th class="text-center" style="width: 3%;">
-                <fmt:message key="account.label.id" bundle="${lang}"/></th>
+                <fmt:message key="airplane.label.id" bundle="${lang}"/></th>
             <th class="text-center" style="width: 20%;">
-                <fmt:message key="account.label.role" bundle="${lang}"/></th>
+                <fmt:message key="airplane.label.name" bundle="${lang}"/></th>
             <th class="text-center" style="width: 20%;">
-                <fmt:message key="account.label.name" bundle="${lang}"/></th>
+                <fmt:message key="airplane.label.economySeatsCount" bundle="${lang}"/></th>
             <th class="text-center" style="width: 20%;">
-                <fmt:message key="account.label.login" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%;">
-                <fmt:message key="account.label.email" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%;">
-                <fmt:message key="account.label.phone" bundle="${lang}"/></th>
+                <fmt:message key="airplane.label.businessSeatsCount" bundle="${lang}"/></th>
             <th class="text-center" style="width: 10%;">
                 <fmt:message key="page.label.control" bundle="${lang}"/></th>
         </tr>
         </thead>
         <tbody>
         <tr id="adding-row">
-            <form id="addForm" action="/manage/accounts" method="post">
+            <form id="addForm" action="/manage/airplanes" method="post">
                 <td><input readonly type="text" disabled class="form-control" width="10" name="id"
                            value="-"
-                           placeholder="<fmt:message key="account.label.id" bundle="${lang}"/>">
+                           placeholder="<fmt:message key="airplane.label.id" bundle="${lang}"/>">
                 </td>
-                <td>
-                    <select required class="form-control" name="role">
-                        <option value=""><fmt:message key="page.label.choose"
-                                                      bundle="${lang}"/></option>
-                        <c:forEach var="role" items="${roles}">
-                            <option value="${role}">${role}</option>
-                        </c:forEach>
-                    </select>
+                <td><input required type="text" class="form-control" name="name"
+                           value=""
+                           placeholder="<fmt:message key="airplane.label.name" bundle="${lang}"/>">
                 </td>
-                <td><input required type="text" class="form-control" name="name" value=""
-                           placeholder="<fmt:message key="account.label.name" bundle="${lang}"/>">
+                <td><input required type="text" class="form-control" name="economySeatsCount"
+                           value=""
+                           placeholder="<fmt:message key="airplane.label.economySeatsCount" bundle="${lang}"/>">
                 </td>
-                <td><input required type="text" class="form-control" name="login" value=""
-                           placeholder="<fmt:message key="account.label.login" bundle="${lang}"/>">
-                </td>
-                <td><input required type="text" class="form-control" name="email" value=""
-                           placeholder="<fmt:message key="account.label.email" bundle="${lang}"/>">
-                </td>
-                <td><input required type="text" class="form-control" name="phone" value=""
-                           placeholder="<fmt:message key="account.label.phone" bundle="${lang}"/>">
+                <td><input required type="text" class="form-control" name="businessSeatsCount"
+                           value=""
+                           placeholder="<fmt:message key="airplane.label.businessSeatsCount" bundle="${lang}"/>">
                 </td>
                 <td>
                     <div class="btn-group btn-group-justified">
@@ -260,17 +232,13 @@
         <thead>
         <tr>
             <th class="text-center" style="width: 3%;">
-                <fmt:message key="account.label.id" bundle="${lang}"/></th>
+                <fmt:message key="airplane.label.id" bundle="${lang}"/></th>
             <th class="text-center" style="width: 20%;">
-                <fmt:message key="account.label.role" bundle="${lang}"/></th>
+                <fmt:message key="airplane.label.name" bundle="${lang}"/></th>
             <th class="text-center" style="width: 20%;">
-                <fmt:message key="account.label.name" bundle="${lang}"/></th>
+                <fmt:message key="airplane.label.economySeatsCount" bundle="${lang}"/></th>
             <th class="text-center" style="width: 20%;">
-                <fmt:message key="account.label.login" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%;">
-                <fmt:message key="account.label.email" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%;">
-                <fmt:message key="account.label.phone" bundle="${lang}"/></th>
+                <fmt:message key="airplane.label.businessSeatsCount" bundle="${lang}"/></th>
             <th class="text-center" style="width: 10%;">
                 <fmt:message key="page.label.control" bundle="${lang}"/></th>
         </tr>
@@ -298,38 +266,22 @@
             </td>
         </tr>
         </tr>
-        <c:forEach var="account" items="${accounts}">
+        <c:forEach var="airplane" items="${airplanes}">
             <tr>
-                <form action="/manage/accounts" method="post">
+                <form action="/manage/airplanes" method="post">
                     <td><input readonly type="text" class="form-control" width="10" name="id"
-                               value="${account.id}"></td>
-                    <td>
-                        <select required class="form-control" name="role">
-                            <option value="">
-                                <fmt:message key="page.label.choose" bundle="${lang}"/>
-                            </option>
-                            <c:forEach var="cRole" items="${roles}">
-                                <option ${account.role.name().equals(cRole) ? "selected" : ""}
-                                        value="${cRole}">${cRole}
-                                </option>
-                            </c:forEach>
-                        </select>
-                    </td>
+                               value="${airplane.id}"></td>
                     <td><input required type="text" class="form-control" name="name"
-                               value="${account.name}"
-                               placeholder="<fmt:message key="account.label.name" bundle="${lang}"/>">
+                               value="${airplane.name}"
+                               placeholder="<fmt:message key="airplane.label.name" bundle="${lang}"/>">
                     </td>
-                    <td><input required type="text" class="form-control" name="login"
-                               value="${account.login}"
-                               placeholder="<fmt:message key="account.label.login" bundle="${lang}"/>">
+                    <td><input required type="text" class="form-control" name="economySeatsCount"
+                               value="${airplane.economySeatsCount}"
+                               placeholder="<fmt:message key="airplane.label.economySeatsCount" bundle="${lang}"/>">
                     </td>
-                    <td><input required type="text" class="form-control" name="email"
-                               value="${account.email}"
-                               placeholder="<fmt:message key="account.label.email" bundle="${lang}"/>">
-                    </td>
-                    <td><input required type="text" class="form-control" name="phone"
-                               value="${account.phone}"
-                               placeholder="<fmt:message key="account.label.phone" bundle="${lang}"/>">
+                    <td><input required type="text" class="form-control" name="businessSeatsCount"
+                               value="${airplane.businessSeatsCount}"
+                               placeholder="<fmt:message key="airplane.label.businessSeatsCount" bundle="${lang}"/>">
                     </td>
                     <td>
                         <div class="btn-group btn-group-justified">
@@ -383,5 +335,5 @@
         </nav>
     </div>
 </div>
-<%@include file="../layout/footer.jsp" %>
+<%@include file="layout/footer.jsp" %>
 </body>

@@ -89,10 +89,10 @@
   }
 </script>
 <body>
-<%@include file="../layout/header.jsp" %>
+<%@include file="layout/header.jsp" %>
 <div class="container" style="width: 100%">
     <h2><fmt:message key="flight.header.search" bundle="${lang}"/></h2>
-    <table id="searchTable" class="table-bordered">
+    <table id="searchTable" width="2000">
         <thead>
         <tr>
             <th class="text-center" style="width: 3%;">
@@ -254,7 +254,7 @@
     </table>
     <br>
     <h2><fmt:message key="flight.header.add" bundle="${lang}"/></h2>
-    <table id="addTable" class="table-bordered">
+    <table id="addTable" width="2000">
         <thead>
         <tr>
             <th class="text-center" style="width: 3%;">
@@ -444,30 +444,30 @@
             </ul>
         </nav>
     </div>
-    <table id="dataTable" class="table-bordered">
+    <table id="dataTable" width="2000">
         <thead>
         <tr>
-            <th class="text-center" style="width: 3%;">
+            <th class="text-center">
                 <fmt:message key="flight.label.id" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 7%;">
+            <th class="text-center">
                 <fmt:message key="flight.label.from" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 7%;">
+            <th class="text-center">
                 <fmt:message key="flight.label.to" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 7%;">
+            <th class="text-center">
                 <fmt:message key="flight.label.airplane" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 7%;">
+            <th class="text-center">
                 <fmt:message key="flight.label.departure" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 7%;">
+            <th class="text-center">
                 <fmt:message key="flight.label.arrival" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 5%;">
+            <th class="text-center">
                 <fmt:message key="flight.label.base_ticket_price" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 5%;">
+            <th class="text-center">
                 <fmt:message key="flight.label.extra_baggage_price" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 3%;">
+            <th class="text-center">
                 <fmt:message key="flight.label.free_seat_economy" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 3%;">
+            <th class="text-center">
                 <fmt:message key="flight.label.free_seat_business" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 10%;">
+            <th class="text-center">
                 <fmt:message key="flight.label.control" bundle="${lang}"/></th>
         </tr>
         </thead>
@@ -621,5 +621,5 @@
         </nav>
     </div>
 </div>
-<%@include file="../layout/footer.jsp" %>
+<%@include file="layout/footer.jsp" %>
 </body>

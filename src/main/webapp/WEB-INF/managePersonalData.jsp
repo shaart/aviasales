@@ -8,12 +8,12 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="com.epam.aviasales.bundles.global" var="lang"/>
 <c:set var="COLUMNS_FIRST_NUM" value="0"/>
-<c:set var="COLUMNS_COUNT" value="2"/>
+<c:set var="COLUMNS_COUNT" value="4"/>
 <c:set var="page" value="${page == null || page < 1 ? 1 : page}"/>
 <!DOCTYPE html>
 <html lang="${language}">
 <head>
-    <title><fmt:message key="manage.airports.title" bundle="${lang}"/></title>
+    <title><fmt:message key="manage.personaldata.title" bundle="${lang}"/></title>
 </head>
 <script type="text/javascript">
   var COLUMNS_START_FROM = ${COLUMNS_FIRST_NUM};
@@ -89,30 +89,42 @@
   }
 </script>
 <body>
-<%@include file="../layout/header.jsp" %>
+<%@include file="layout/header.jsp" %>
 <div class="container" style="width: 100%">
     <h2><fmt:message key="page.header.search" bundle="${lang}"/></h2>
     <table id="searchTable" class="table-bordered">
         <thead>
         <tr>
             <th class="text-center" style="width: 3%;">
-                <fmt:message key="airport.label.id" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 7%;">
-                <fmt:message key="airport.label.name" bundle="${lang}"/></th>
+                <fmt:message key="personaldata.label.id" bundle="${lang}"/></th>
+            <th class="text-center" style="width: 20%;">
+                <fmt:message key="personaldata.label.name" bundle="${lang}"/></th>
+            <th class="text-center" style="width: 20%;">
+                <fmt:message key="personaldata.label.passport" bundle="${lang}"/></th>
+            <th class="text-center" style="width: 20%;">
+                <fmt:message key="personaldata.label.dateOfBirth" bundle="${lang}"/></th>
             <th class="text-center" style="width: 10%;">
                 <fmt:message key="page.label.control" bundle="${lang}"/></th>
         </tr>
         </thead>
         <tbody>
         <tr id="searching-row">
-            <form id="search-form" action="/manage/airports" method="get">
+            <form id="search-form" action="/manage/personals" method="get">
                 <td><input type="text" class="form-control" width="10" name="id"
                            value="${id}"
-                           placeholder="<fmt:message key="airport.label.id" bundle="${lang}"/>">
+                           placeholder="<fmt:message key="personaldata.label.id" bundle="${lang}"/>">
                 </td>
                 <td><input type="text" class="form-control" name="name"
                            value="${name}"
-                           placeholder="<fmt:message key="airport.label.name" bundle="${lang}"/>">
+                           placeholder="<fmt:message key="personaldata.label.name" bundle="${lang}"/>">
+                </td>
+                <td><input type="text" class="form-control" name="passport"
+                           value="${passport}"
+                           placeholder="<fmt:message key="personaldata.label.passport" bundle="${lang}"/>">
+                </td>
+                <td><input type="date" class="form-control" name="dateOfBirth"
+                           value="${dateOfBirth}"
+                           placeholder="<fmt:message key="personaldata.label.dateOfBirth" bundle="${lang}"/>">
                 </td>
                 <td>
                     <div class="btn-group btn-group-justified">
@@ -136,25 +148,36 @@
     <table id="addTable" class="table-bordered">
         <thead>
         <tr>
-        <tr>
             <th class="text-center" style="width: 3%;">
-                <fmt:message key="airport.label.id" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 7%;">
-                <fmt:message key="airport.label.name" bundle="${lang}"/></th>
+                <fmt:message key="personaldata.label.id" bundle="${lang}"/></th>
+            <th class="text-center" style="width: 20%;">
+                <fmt:message key="personaldata.label.name" bundle="${lang}"/></th>
+            <th class="text-center" style="width: 20%;">
+                <fmt:message key="personaldata.label.passport" bundle="${lang}"/></th>
+            <th class="text-center" style="width: 20%;">
+                <fmt:message key="personaldata.label.dateOfBirth" bundle="${lang}"/></th>
             <th class="text-center" style="width: 10%;">
                 <fmt:message key="page.label.control" bundle="${lang}"/></th>
         </tr>
         </thead>
         <tbody>
         <tr id="adding-row">
-            <form id="addForm" action="/manage/airports" method="post">
+            <form id="addForm" action="/manage/personals" method="post">
                 <td><input readonly type="text" disabled class="form-control" width="10" name="id"
                            value="-"
-                           placeholder="<fmt:message key="airport.label.id" bundle="${lang}"/>">
+                           placeholder="<fmt:message key="personaldata.label.id" bundle="${lang}"/>">
                 </td>
                 <td><input required type="text" class="form-control" name="name"
                            value=""
-                           placeholder="<fmt:message key="airport.label.name" bundle="${lang}"/>">
+                           placeholder="<fmt:message key="personaldata.label.name" bundle="${lang}"/>">
+                </td>
+                <td><input required type="text" class="form-control" name="passport"
+                           value=""
+                           placeholder="<fmt:message key="personaldata.label.passport" bundle="${lang}"/>">
+                </td>
+                <td><input required type="date" class="form-control" name="dateOfBirth"
+                           value=""
+                           placeholder="<fmt:message key="personaldata.label.dateOfBirth" bundle="${lang}"/>">
                 </td>
                 <td>
                     <div class="btn-group btn-group-justified">
@@ -209,9 +232,13 @@
         <thead>
         <tr>
             <th class="text-center" style="width: 3%;">
-                <fmt:message key="airport.label.id" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 7%;">
-                <fmt:message key="airport.label.name" bundle="${lang}"/></th>
+                <fmt:message key="personaldata.label.id" bundle="${lang}"/></th>
+            <th class="text-center" style="width: 20%;">
+                <fmt:message key="personaldata.label.name" bundle="${lang}"/></th>
+            <th class="text-center" style="width: 20%;">
+                <fmt:message key="personaldata.label.passport" bundle="${lang}"/></th>
+            <th class="text-center" style="width: 20%;">
+                <fmt:message key="personaldata.label.dateOfBirth" bundle="${lang}"/></th>
             <th class="text-center" style="width: 10%;">
                 <fmt:message key="page.label.control" bundle="${lang}"/></th>
         </tr>
@@ -239,14 +266,22 @@
             </td>
         </tr>
         </tr>
-        <c:forEach var="airport" items="${airports}">
+        <c:forEach var="personaldata" items="${personaldatas}">
             <tr>
-                <form action="/manage/airports" method="post">
+                <form action="/manage/personals" method="post">
                     <td><input readonly type="text" class="form-control" width="10" name="id"
-                               value="${airport.id}"></td>
+                               value="${personaldata.id}"></td>
                     <td><input required type="text" class="form-control" name="name"
-                               value="${airport.name}"
-                               placeholder="<fmt:message key="airport.label.name" bundle="${lang}"/>">
+                               value="${personaldata.name}"
+                               placeholder="<fmt:message key="personaldata.label.name" bundle="${lang}"/>">
+                    </td>
+                    <td><input required type="text" class="form-control" name="passport"
+                               value="${personaldata.passport}"
+                               placeholder="<fmt:message key="personaldata.label.passport" bundle="${lang}"/>">
+                    </td>
+                    <td><input required type="date" class="form-control" name="dateOfBirth"
+                               value="${personaldata.dateOfBirth}"
+                               placeholder="<fmt:message key="personaldata.label.dateOfBirth" bundle="${lang}"/>">
                     </td>
                     <td>
                         <div class="btn-group btn-group-justified">
@@ -300,5 +335,5 @@
         </nav>
     </div>
 </div>
-<%@include file="../layout/footer.jsp" %>
+<%@include file="layout/footer.jsp" %>
 </body>
