@@ -1,5 +1,6 @@
 package com.epam.aviasales.repositories.implMock;
 
+import com.epam.aviasales.domain.PersonalData;
 import com.epam.aviasales.domain.Ticket;
 import com.epam.aviasales.repositories.TicketRepository;
 import com.epam.aviasales.services.AccountService;
@@ -112,6 +113,16 @@ public class TicketRepositoryImplMock implements TicketRepository {
       }
     }
     return ticketList;
+  }
+
+  public List<PersonalData> getAccountPersonalDatasByAccountId(Long accountId) {
+    List<PersonalData> personalData = new ArrayList<>();
+    for (Map.Entry<Long, Ticket> entry : TICKET_CACHE.entrySet()) {
+      if (entry.getValue().getAccount().getId() == accountId) {
+        personalData.add(entry.getValue().getPersonalData());
+      }
+    }
+    return personalData;
   }
 
   @Override

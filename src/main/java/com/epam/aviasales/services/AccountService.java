@@ -9,7 +9,7 @@ public interface AccountService {
 
   List<Account> getAccounts(int page, int count);
 
-  Account getAccountById(Long id);
+  List<Account> getAccountById(Long id);
 
   Account getAccountByLogin(String login);
 

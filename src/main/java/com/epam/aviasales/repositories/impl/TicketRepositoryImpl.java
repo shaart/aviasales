@@ -1,5 +1,6 @@
 package com.epam.aviasales.repositories.impl;
 
+import com.epam.aviasales.domain.PersonalData;
 import com.epam.aviasales.domain.Ticket;
 import com.epam.aviasales.repositories.TicketRepository;
 import com.epam.aviasales.util.HibernateUtil;
@@ -161,5 +162,17 @@ public class TicketRepositoryImpl implements TicketRepository {
     Query query = session.createQuery("from Ticket WHERE account.id = :accountId");
     query.setParameter("accountId", accountId);
     return query.list();
+  }
+
+  public List<PersonalData> getAccountPersonalDatasByAccountId(Long accountId) {
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    Query query =
+        session.createQuery(
+            "SELECT personalData "
+                + "from Ticket t WHERE"
+                + " t.account.id = :accountId");
+    List list = query.setParameter("accountId", accountId).list();
+    session.close();
+    return list;
   }
 }

@@ -41,7 +41,7 @@ public class RegisterServlet extends HttpServlet {
     List<String> errorMessages = registerService.addAccount(account);
 
     if (errorMessages.isEmpty()) {
-      account.setPassword(null);
+      account.setPassword("");
       HttpSession session = request.getSession(true);
       session.setAttribute("account", account);
       response.sendRedirect("/");

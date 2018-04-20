@@ -52,7 +52,7 @@ public class LoginServiceImpl implements LoginService {
 
     String sha256hex = DigestUtils.sha256Hex(password);
     if (sha256hex.equals(account.getPassword())) {
-      account.setPassword(null);
+      account.setPassword("");
     } else {
       this.account = null;
       errorMessages.add("login.error.wrongPassword");

@@ -1,5 +1,6 @@
 package com.epam.aviasales.repositories;
 
+import com.epam.aviasales.domain.PersonalData;
 import com.epam.aviasales.domain.Ticket;
 import java.util.List;
 
@@ -22,4 +23,6 @@ public interface TicketRepository {
   void updateTicket(Long id, Ticket receivedTicket);
 
   List<Ticket> getTicketsByAccountId(Long accountId);
+
+  List <PersonalData> getAccountPersonalDatasByAccountId(Long accountId);
 }
