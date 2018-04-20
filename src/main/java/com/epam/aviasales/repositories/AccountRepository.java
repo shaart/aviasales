@@ -16,4 +16,10 @@ public interface AccountRepository {
   void addAccount(Account account);
 
   boolean isExist(String rowValue, String rowName);
+
+  List<Account> getAccountsLike(Account seekingAccount, int page, int size);
+
+  void updateAccount(Long id, Account receivedAccount);
+
+  void deleteAccount(Long id);
 }

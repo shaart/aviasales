@@ -3,11 +3,16 @@ package com.epam.aviasales.repositories.impl;
 import com.epam.aviasales.domain.Account;
 import com.epam.aviasales.repositories.AccountRepository;
 import com.epam.aviasales.util.HibernateUtil;
+import java.util.ArrayList;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import java.util.List;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AccountRepositoryImpl implements AccountRepository {
@@ -82,5 +87,79 @@ public class AccountRepositoryImpl implements AccountRepository {
     List list = query.list();
 
     return !list.isEmpty();
+  }
+
+  @Override
+  public List<Account> getAccountsLike(Account seekingAccount, int page, int size) {
+    if (size <= 0) {
+      return new ArrayList<>();
+    }
+    if (page < 1) {
+      page = 1;
+    }
+    // pages start from 1
+    page -= 1;
+
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    session.beginTransaction();
+    Criteria criteria = session.createCriteria(Account.class);
+
+    if (seekingAccount != null) {
+      if (seekingAccount.getId() != null) {
+        criteria.add(Restrictions.eq("id", seekingAccount.getId()));
+      }
+      if (seekingAccount.getRole() != null) {
+        criteria.add(Restrictions.eq("role", seekingAccount.getRole()));
+      }
+      if (seekingAccount.getName() != null) {
+        criteria.add(Restrictions.like("name", seekingAccount.getName(), MatchMode.ANYWHERE));
+      }
+      if (seekingAccount.getLogin() != null) {
+        criteria.add(Restrictions.like("login", seekingAccount.getLogin(), MatchMode.ANYWHERE));
+      }
+      if (seekingAccount.getEmail() != null) {
+        criteria.add(Restrictions.like("email", seekingAccount.getEmail(), MatchMode.ANYWHERE));
+      }
+      if (seekingAccount.getPhone() != null) {
+        criteria.add(Restrictions.like("phone", seekingAccount.getPhone(), MatchMode.ANYWHERE));
+      }
+    }
+
+    criteria.addOrder(Order.asc("id"));
+    criteria.setFirstResult(page * size);
+    criteria.setMaxResults(size);
+
+    List<Account> result = (List<Account>) criteria.list();
+    session.getTransaction().commit();
+    session.close();
+
+    return result;
+  }
+
+  @Override
+  public void updateAccount(Long id, Account updatedAccount) {
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    session.beginTransaction();
+
+    if (id != null && id != updatedAccount.getId()) {
+      updatedAccount.setId(id);
+    }
+    updatedAccount.setPassword(getAccountById(id).getPassword());
+
+    session.update(updatedAccount);
+
+    session.getTransaction().commit();
+    session.close();
+  }
+
+  @Override
+  public void deleteAccount(Long id) {
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    session.beginTransaction();
+
+    session.delete(getAccountById(id));
+
+    session.getTransaction().commit();
+    session.close();
   }
 }

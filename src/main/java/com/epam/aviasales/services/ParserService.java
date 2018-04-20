@@ -1,5 +1,6 @@
 package com.epam.aviasales.services;
 
+import com.epam.aviasales.domain.Account;
 import com.epam.aviasales.domain.Airplane;
 import com.epam.aviasales.domain.Airport;
 import com.epam.aviasales.domain.Flight;
@@ -30,4 +31,6 @@ public interface ParserService {
   PersonalData parsePersonalData(HttpServletRequest req);
 
   Ticket parseTicket(HttpServletRequest req);
+
+  Account parseAccount(HttpServletRequest req);
 }

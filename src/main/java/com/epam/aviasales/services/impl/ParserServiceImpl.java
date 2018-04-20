@@ -5,6 +5,7 @@ import com.epam.aviasales.domain.Airplane;
 import com.epam.aviasales.domain.Airport;
 import com.epam.aviasales.domain.Flight;
 import com.epam.aviasales.domain.PersonalData;
+import com.epam.aviasales.domain.Role;
 import com.epam.aviasales.domain.Ticket;
 import com.epam.aviasales.services.AccountService;
 import com.epam.aviasales.services.AirplaneService;
@@ -89,6 +90,8 @@ public class ParserServiceImpl implements ParserService {
           }
         case PERSONAL_DATA:
           return (T) personalDataService.getPersonalDataByPassport(parameter);
+        case ROLE:
+          return (T) Role.valueOf(parameter);
         default:
           log.error("Received not implemented (unknown) CastType");
           return null;
@@ -166,5 +169,18 @@ public class ParserServiceImpl implements ParserService {
 
     return Ticket.builder().id(id).personalData(personalData).flight(flight).account(account)
         .price(price).isBusiness(isBusiness).build();
+  }
+
+  @Override
+  public Account parseAccount(HttpServletRequest req) {
+    Long id = parseParameter(req.getParameter("id"), CastType.LONG);
+    Role role = parseParameter(req.getParameter("role"), CastType.ROLE);
+    String name = parseParameter(req.getParameter("name"), CastType.STRING);
+    String login = parseParameter(req.getParameter("login"), CastType.STRING);
+    String email = parseParameter(req.getParameter("email"), CastType.STRING);
+    String phone = parseParameter(req.getParameter("phone"), CastType.STRING);
+
+    return Account.builder().id(id).role(role).name(name).login(login).email(email).phone(phone)
+        .build();
   }
 }
