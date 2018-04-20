@@ -138,4 +138,13 @@
     <servlet-name>ProfileServlet</servlet-name>
     <url-pattern>/profile</url-pattern>
   </servlet-mapping>
+  <!-- SING OUT -->
+  <servlet>
+    <servlet-name>SingOutServlet</servlet-name>
+    <servlet-class>com.epam.aviasales.controllers.SingOutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SingOutServlet</servlet-name>
+    <url-pattern>/singout</url-pattern>
+  </servlet-mapping>
 </web-app>
