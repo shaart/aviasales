@@ -25,7 +25,7 @@ public class UserProfileServlet extends HttpServlet {
     req.setAttribute("email", account1.getEmail());
     req.setAttribute("phone", account1.getPhone());
 
-    req.getRequestDispatcher("UserProfile.jsp").forward(req, resp);
+    req.getRequestDispatcher("/WEB-INF/userProfile.jsp").forward(req, resp);
 
   }
 }

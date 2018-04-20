@@ -42,7 +42,7 @@ public class ProfileServlet extends HttpServlet {
       session.setAttribute("personalDatas", personalDatas);
     }
 
-    request.getRequestDispatcher("Profile.jsp").forward(request, response);
+    request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
   }
 
   private void changePassword(
@@ -60,14 +60,14 @@ public class ProfileServlet extends HttpServlet {
       request.setAttribute("changePasswordError", "profile.error.wrongPassword");
       request.setAttribute("autoChangePassword", true);
     }
-    request.getRequestDispatcher("Profile.jsp").forward(request, response);
+    request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
   }
 
   private void returnTicket(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
     String ticketId = request.getParameter("ticketId");
     profileService.deleteAccountTicketById(Long.valueOf(ticketId));
-    request.getRequestDispatcher("Profile.jsp").forward(request, response);
+    request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
   }
 
   private void changeAccount(
@@ -97,7 +97,7 @@ public class ProfileServlet extends HttpServlet {
       response.sendRedirect("/profile");
       return;
     }
-    request.getRequestDispatcher("Profile.jsp").forward(request, response);
+    request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
   }
 
   private void editPersonalData(HttpServletRequest request, HttpServletResponse response)
@@ -106,7 +106,7 @@ public class ProfileServlet extends HttpServlet {
     String personalDataId = request.getParameter("personalDataId");
     PersonalData personalData = profileService.getPersonalDataById(Long.valueOf(personalDataId));
     request.setAttribute("modalPersonalData", personalData);
-    request.getRequestDispatcher("Profile.jsp").forward(request, response);
+    request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
   }
 
   private void savePersonalData(HttpServletRequest request, HttpServletResponse response)
@@ -129,7 +129,7 @@ public class ProfileServlet extends HttpServlet {
       response.sendRedirect("/profile");
       return;
     }
-    request.getRequestDispatcher("Profile.jsp").forward(request, response);
+    request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
   }
 
   @Override
@@ -144,7 +144,7 @@ public class ProfileServlet extends HttpServlet {
 
     if (request.getParameter("changePasswordButton") != null) {
       request.setAttribute("autoChangePassword", true);
-      request.getRequestDispatcher("Profile.jsp").forward(request, response);
+      request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
     }
 
     if (request.getParameter("savePassword") != null) {
@@ -152,7 +152,7 @@ public class ProfileServlet extends HttpServlet {
     }
     if (request.getParameter("editButton") != null) {
       request.setAttribute("autoOpenEditAccount", true);
-      request.getRequestDispatcher("Profile.jsp").forward(request, response);
+      request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
     }
 
     if (request.getParameter("saveButton") != null) {

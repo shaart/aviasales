@@ -60,7 +60,7 @@ public class TicketServlet extends HttpServlet {
     }
 
     if (req.getParameter("first_name") == null) {
-      req.getRequestDispatcher("ticket.jsp").forward(req, resp);
+      req.getRequestDispatcher("/WEB-INF/ticket.jsp").forward(req, resp);
     }
 
     String firstName = req.getParameter("first_name").trim();
@@ -69,16 +69,16 @@ public class TicketServlet extends HttpServlet {
     if (firstName.equals("") || lastName.equals("") || passport.equals("") ||
         req.getParameter("birthday").trim().equals("")) {
       req.setAttribute("error", "error.type_personal_data");
-      req.getRequestDispatcher("ticket.jsp").forward(req, resp);
+      req.getRequestDispatcher("/WEB-INF/ticket.jsp").forward(req, resp);
     }
     LocalDate birthday = LocalDate.parse(req.getParameter("birthday"));
     if (birthday.toString().compareTo(LocalDate.now().toString()) >= 0) {
       req.setAttribute("error", "error.birthday_after_now");
-      req.getRequestDispatcher("ticket.jsp").forward(req, resp);
+      req.getRequestDispatcher("/WEB-INF/ticket.jsp").forward(req, resp);
     }
     if ((req.getParameter("isBusiness") == null)) {
       req.setAttribute("error", "error.choose_class");
-      req.getRequestDispatcher("ticket.jsp").forward(req, resp);
+      req.getRequestDispatcher("/WEB-INF/ticket.jsp").forward(req, resp);
     }
     Boolean isBusiness = Boolean.parseBoolean(req.getParameter("isBusiness"));
     PersonalData personalData = PersonalData.builder().name(firstName + " " + lastName)
@@ -87,7 +87,7 @@ public class TicketServlet extends HttpServlet {
       personalDataService.addPersonalData(personalData);
     } catch (PersonalDataAlreadyExists e) {
       req.setAttribute("error", "error.such_person_is_exist");
-      req.getRequestDispatcher("ticket.jsp").forward(req, resp);
+      req.getRequestDispatcher("/WEB-INF/ticket.jsp").forward(req, resp);
     }
     personalData = personalDataService.getPersonalDataByPassport(passport);
     Flight flight = (Flight) req.getSession().getAttribute("flight");
@@ -104,7 +104,7 @@ public class TicketServlet extends HttpServlet {
       flight = flightsService
           .getFlightById(((Flight) req.getSession().getAttribute("flight")).getId());
       req.getSession().setAttribute("flight", flight);
-      req.getRequestDispatcher("ticket.jsp").forward(req, resp);
+      req.getRequestDispatcher("/WEB-INF/ticket.jsp").forward(req, resp);
     }
     req.getSession().setAttribute("ticket", ticket);
     req.getRequestDispatcher("/confirm").forward(req, resp);

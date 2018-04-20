@@ -60,11 +60,11 @@ public class ManageAccountsServlet extends HttpServlet {
       }
       req.setAttribute("roles", roles);
 
-      req.getRequestDispatcher("manageAccounts.jsp").forward(req, resp);
+      req.getRequestDispatcher("/WEB-INF/manageAccounts.jsp").forward(req, resp);
     } catch (Exception e) {
       log.error(e.getCause(), e);
       req.setAttribute("error", e.toString());
-      req.getRequestDispatcher("../error.jsp").forward(req, resp);
+      req.getRequestDispatcher("/WEB-INF/error.jsp").forward(req, resp);
     }
   }
 

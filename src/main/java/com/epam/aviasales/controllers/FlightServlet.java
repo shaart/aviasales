@@ -36,7 +36,7 @@ public class FlightServlet extends HttpServlet {
       req.setAttribute("flights", flightList);
     }
 
-    req.getRequestDispatcher("index.jsp").forward(req, resp);
+    req.getRequestDispatcher("/WEB-INF/index.jsp").forward(req, resp);
   }
 
   @Override
@@ -57,6 +57,6 @@ public class FlightServlet extends HttpServlet {
 
     List<Flight> flightList = flightsService.getFlights(idAirportFrom, idAirportTo, date);
     req.setAttribute("flights", flightList);
-    req.getRequestDispatcher("index.jsp").forward(req, resp);
+    req.getRequestDispatcher("/WEB-INF/index.jsp").forward(req, resp);
   }
 }

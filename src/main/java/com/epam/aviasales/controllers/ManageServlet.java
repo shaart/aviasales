@@ -12,7 +12,7 @@ public class ManageServlet extends HttpServlet {
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
 
-    req.getRequestDispatcher("manage.jsp").forward(req, resp);
+    req.getRequestDispatcher("/WEB-INF/manage.jsp").forward(req, resp);
   }
 
   @Override

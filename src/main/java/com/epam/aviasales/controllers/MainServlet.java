@@ -34,7 +34,7 @@ public class MainServlet extends HttpServlet {
     req.getSession().setAttribute("airports", airportList);
     req.getSession().setAttribute("currentDate", currentDate);
 
-    req.getRequestDispatcher("index.jsp").forward(req, resp);
+    req.getRequestDispatcher("/WEB-INF/index.jsp").forward(req, resp);
   }
 
   @Override

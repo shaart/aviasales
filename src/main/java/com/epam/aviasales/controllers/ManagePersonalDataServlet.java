@@ -51,11 +51,11 @@ public class ManagePersonalDataServlet extends HttpServlet {
       List<PersonalData> personalDatas = personalDataService.getPersonalDatasLike(seekingPersonalData, page, size);
       req.setAttribute("personaldatas", personalDatas);
 
-      req.getRequestDispatcher("managePersonalData.jsp").forward(req, resp);
+      req.getRequestDispatcher("/WEB-INF/managePersonalData.jsp").forward(req, resp);
     } catch (Exception e) {
       log.error(e.getCause(), e);
       req.setAttribute("error", e.toString());
-      req.getRequestDispatcher("../error.jsp").forward(req, resp);
+      req.getRequestDispatcher("/WEB-INF/error.jsp").forward(req, resp);
     }
   }
 
