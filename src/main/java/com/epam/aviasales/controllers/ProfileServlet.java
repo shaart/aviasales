@@ -4,6 +4,7 @@ import com.epam.aviasales.domain.*;
 import com.epam.aviasales.services.ProfileService;
 
 import com.epam.aviasales.services.impl.ProfileServiceImpl;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.IO;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -44,6 +45,93 @@ public class ProfileServlet extends HttpServlet {
     request.getRequestDispatcher("Profile.jsp").forward(request, response);
   }
 
+  private void changePassword(
+      HttpServletRequest request, HttpServletResponse response, Account account)
+      throws IOException, ServletException {
+    String oldPassword = request.getParameter("inputOldPassword");
+    String newPassword = request.getParameter("inputNewPassword");
+    String confirmNewPassword = request.getParameter("inputConfirmNewPassword");
+    if (profileService.validatePasswords(
+        account.getId(), oldPassword, newPassword, confirmNewPassword)) {
+      profileService.updateAccountPassword(account, newPassword);
+      response.sendRedirect("/profile");
+      return;
+    } else {
+      request.setAttribute("changePasswordError", "profile.error.wrongPassword");
+      request.setAttribute("autoChangePassword", true);
+    }
+    request.getRequestDispatcher("Profile.jsp").forward(request, response);
+  }
+
+  private void returnTicket(HttpServletRequest request, HttpServletResponse response)
+      throws IOException, ServletException {
+    String ticketId = request.getParameter("ticketId");
+    profileService.deleteAccountTicketById(Long.valueOf(ticketId));
+    request.getRequestDispatcher("Profile.jsp").forward(request, response);
+  }
+
+  private void changeAccount(
+      HttpServletRequest request,
+      HttpServletResponse response,
+      HttpSession session,
+      Account account)
+      throws IOException, ServletException {
+
+    Account newAccount =
+        Account.builder()
+            .id(account.getId())
+            .role(account.getRole())
+            .name(request.getParameter("inputName"))
+            .login(request.getParameter("inputLogin"))
+            .password(null)
+            .email(request.getParameter("inputEmail"))
+            .phone(request.getParameter("inputPhone"))
+            .build();
+
+    List<String> errorMessages = profileService.updateAccount(newAccount);
+    if (!errorMessages.isEmpty()) {
+      request.setAttribute("changeAccountError", errorMessages.get(0));
+      request.setAttribute("autoOpenEditAccount", true);
+    } else {
+      session.setAttribute("account", newAccount);
+      response.sendRedirect("/profile");
+      return;
+    }
+    request.getRequestDispatcher("Profile.jsp").forward(request, response);
+  }
+
+  private void editPersonalData(HttpServletRequest request, HttpServletResponse response)
+      throws IOException, ServletException {
+    request.setAttribute("autoOpenEditPersonalData", true);
+    String personalDataId = request.getParameter("personalDataId");
+    PersonalData personalData = profileService.getPersonalDataById(Long.valueOf(personalDataId));
+    request.setAttribute("modalPersonalData", personalData);
+    request.getRequestDispatcher("Profile.jsp").forward(request, response);
+  }
+
+  private void savePersonalData(HttpServletRequest request, HttpServletResponse response)
+      throws IOException, ServletException {
+    PersonalData personalData =
+        PersonalData.builder()
+            .id(Long.valueOf(request.getParameter("inputPersonalDataId")))
+            .name(request.getParameter("inputPersonalDataName"))
+            .passport(request.getParameter("inputPersonalDataPassport"))
+            .dateOfBirth(LocalDate.parse(request.getParameter("inputPersonalDataDOB")))
+            .build();
+
+    List<String> errorMessages = profileService.updatePersonalData(personalData);
+    if (!errorMessages.isEmpty()) {
+      request.setAttribute("changePersonalDataError", errorMessages.get(0));
+      request.setAttribute("autoOpenEditPersonalData", true);
+      request.setAttribute("modalPersonalData", personalData);
+    } else {
+      /*ToDo Show information about successful purchase*/
+      response.sendRedirect("/profile");
+      return;
+    }
+    request.getRequestDispatcher("Profile.jsp").forward(request, response);
+  }
+
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
@@ -51,88 +139,32 @@ public class ProfileServlet extends HttpServlet {
     Account account = (Account) session.getAttribute("account");
 
     if (request.getParameter("returnButton") != null) {
-      String ticketId = request.getParameter("ticketId");
-      profileService.deleteAccountTicketById(Long.valueOf(ticketId));
+      returnTicket(request, response);
     }
+
     if (request.getParameter("changePasswordButton") != null) {
       request.setAttribute("autoChangePassword", true);
+      request.getRequestDispatcher("Profile.jsp").forward(request, response);
     }
+
     if (request.getParameter("savePassword") != null) {
-      String oldPassword = request.getParameter("inputOldPassword");
-      String newPassword = request.getParameter("inputNewPassword");
-      String confirmNewPassword = request.getParameter("inputConfirmNewPassword");
-      if (profileService.validatePasswords(account.getId(), oldPassword, newPassword, confirmNewPassword)) {
-        profileService.updateAccountPassword(account, newPassword);
-        response.sendRedirect("/profile");
-        return;
-      }
-      else{
-        request.setAttribute("errorMessage3", "profile.error.wrongPassword");
-        request.setAttribute("autoChangePassword", true);
-      }
+      changePassword(request, response, account);
     }
     if (request.getParameter("editButton") != null) {
       request.setAttribute("autoOpenEditAccount", true);
+      request.getRequestDispatcher("Profile.jsp").forward(request, response);
     }
 
     if (request.getParameter("saveButton") != null) {
-      List<Ticket> tickets = (List<Ticket>) session.getAttribute("tickets");
-
-      Account newAccount =
-          Account.builder()
-              .id(account.getId())
-              .role(account.getRole())
-              .name(request.getParameter("inputName"))
-              .login(request.getParameter("inputLogin"))
-              .password(null)
-              .email(request.getParameter("inputEmail"))
-              .phone(request.getParameter("inputPhone"))
-              .build();
-
-      List<String> errorMessages = profileService.updateAccount(newAccount);
-      if (!errorMessages.isEmpty()) {
-        request.setAttribute("errorMessage", errorMessages.get(0));
-        request.setAttribute("autoOpenEditAccount", true);
-      } else {
-        session.setAttribute("account", newAccount);
-        response.sendRedirect("/profile");
-        return;
-      }
+      changeAccount(request, response, session, account);
     }
 
     if (request.getParameter("editPersonalDataButton") != null) {
-      request.setAttribute("autoOpenEditPersonalData", true);
-      String personalDataId = request.getParameter("personalDataId");
-      PersonalData personalData = profileService.getPersonalDataById(Long.valueOf(personalDataId));
-      request.setAttribute("modalPersonalData", personalData);
+      editPersonalData(request, response);
     }
 
-    // ToDo onsave personal data button*/
-    String personalDataName = request.getParameter("inputPersonalDataName");
-    if (personalDataName != null) {
-      String inputPersonalDataPassport = request.getParameter("inputPersonalDataPassport");
-      String inputPersonalDataId = request.getParameter("inputPersonalDataId");
-      LocalDate inputPersonalDataDOB =
-          LocalDate.parse(request.getParameter("inputPersonalDataDOB"));
-      PersonalData personalData =
-          PersonalData.builder()
-              .id(Long.valueOf(inputPersonalDataId))
-              .name(personalDataName)
-              .passport(inputPersonalDataPassport)
-              .dateOfBirth(inputPersonalDataDOB)
-              .build();
-
-      List<String> errorMessages = profileService.updatePersonalData(personalData);
-      if (!errorMessages.isEmpty()) {
-        request.setAttribute("errorMessage2", errorMessages.get(0));
-        request.setAttribute("autoOpenEditPersonalData", true);
-        request.setAttribute("modalPersonalData", personalData);
-      } else {
-        /*ToDo Show information about successful purchase*/
-        response.sendRedirect("/profile");
-        return;
-      }
+    if (request.getParameter("savePersonalDataButton") != null) {
+      savePersonalData(request, response);
     }
-    request.getRequestDispatcher("Profile.jsp").forward(request, response);
   }
 }

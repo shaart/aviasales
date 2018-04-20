@@ -148,10 +148,10 @@
                         </tbody>
                     </table>
                 </div>
-                <c:if test="${errorMessage != null}">
+                <c:if test="${changeAccountError != null}">
                     <p>
                         <font color="red"><fmt:message
-                                key="${errorMessage}"
+                                key="${changeAccountError}"
                                 bundle="${lang}"/></font>
                     </p>
                 </c:if>
@@ -172,11 +172,6 @@
         </div>
     </div>
 </form>
-<c:if test="${errorMessage != null}">
-    <p>
-        <font color="red"><fmt:message key="${errorMessage}" bundle="${lang}"/></font>
-    </p>
-</c:if>
 
 <hr>
 <div id="profileTab" class="container">
@@ -225,8 +220,24 @@
                                     <td>${ticket.personalData.dateOfBirth}</td>
                                     <td>${ticket.flight.fromAirport.name}</td>
                                     <td>${ticket.flight.toAirport.name}</td>
-                                    <td>${ticket.flight.departureTime}</td>
-                                    <td>${ticket.flight.arrivalTime}</td>
+                                    <td><fmt:parseDate value="${ticket.flight.departureTime}"
+                                                       pattern="yyyy-MM-dd'T'HH:mm"
+                                                       var="parsedDateTime" type="both"/>
+
+                                        <label class="form-control"
+                                               name="departureTime"
+                                               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
+                                               required><fmt:formatDate pattern="yyyy-MM-dd' 'HH:mm" value="${parsedDateTime}"/></label></td>
+
+
+                                    <td><fmt:parseDate value="${ticket.flight.arrivalTime}"
+                                                       pattern="yyyy-MM-dd'T'HH:mm"
+                                                       var="parsedDateTime" type="both"/>
+
+                                        <label class="form-control"
+                                               name="departureTime"
+                                               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
+                                               required><fmt:formatDate pattern="yyyy-MM-dd' 'HH:mm" value="${parsedDateTime}"/></label></td>
                                     <td>${ticket.flight.extraBaggagePrice}</td>
                                     <td>
                                         <c:choose>
@@ -349,17 +360,18 @@
                                                "${modalPersonalData.dateOfBirth}"
                                        required></div>
                         </div>
-                        <c:if test="${errorMessage2 != null}">
+                        <c:if test="${changePersonalDataError != null}">
                             <p>
                                 <font color="red"><fmt:message
-                                        key="${errorMessage2}"
+                                        key="${changePersonalDataError}"
                                         bundle="${lang}"/></font>
                             </p>
                         </c:if>
 
                         <div class="modal-footer">
 
-                            <button class="btn btn-sm" type="submit">
+                            <button class="btn btn-sm" type="submit" name="savePersonalDataButton"
+                                    id="savePersonalDataButton">
                                 <fmt:message
                                         key="register.label.save"
                                         bundle="${lang}"/></button>
@@ -414,10 +426,10 @@
                                        id="inputConfirmNewPassword"
                                        required></div>
                         </div>
-                        <c:if test="${errorMessage3 != null}">
+                        <c:if test="${changePasswordError != null}">
                             <p>
                                 <font color="red"><fmt:message
-                                        key="${errorMessage3}"
+                                        key="${changePasswordError}"
                                         bundle="${lang}"/></font>
                             </p>
                         </c:if>
