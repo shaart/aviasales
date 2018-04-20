@@ -27,35 +27,45 @@ public class AirportServiceImpl implements AirportService {
     return localInstance;
   }
 
-  private static final AirportRepository airportRepository = AirportRepositoryImpl.getInstance();
+  private static final AirportRepository airportRepositoryMock = AirportRepositoryImpl.getInstance();
 
   @Override
   public List<Airport> getAirports() {
-    return airportRepository.getAirports();
+    return airportRepositoryMock.getAirports();
   }
 
   @Override
   public List<Airport> getAirports(int page, int count) {
-    return airportRepository.getAirports(page, count);
+    return airportRepositoryMock.getAirports(page, count);
   }
 
   @Override
   public Airport getAirportByName(String name) {
-    return airportRepository.getAirportByName(name);
+    return airportRepositoryMock.getAirportByName(name);
   }
 
   @Override
   public Airport getAirportById(Long id) {
-    return airportRepository.getAirportById(id);
+    return airportRepositoryMock.getAirportById(id);
   }
 
   @Override
   public void addAirport(Airport airport) {
-    airportRepository.addAirport(airport);
+    airportRepositoryMock.addAirport(airport);
   }
 
   @Override
   public void deleteAirport(Long id) {
-    airportRepository.deleteAirport(id);
+    airportRepositoryMock.deleteAirport(id);
+  }
+
+  @Override
+  public List<Airport> getAirportsLike(Airport seekingAirport, int page, int size) {
+    return airportRepositoryMock.getAirportsLike(seekingAirport, page, size);
+  }
+
+  @Override
+  public void updateAirport(Long id, Airport receivedAirport) {
+    airportRepositoryMock.updateAirport(id, receivedAirport);
   }
 }

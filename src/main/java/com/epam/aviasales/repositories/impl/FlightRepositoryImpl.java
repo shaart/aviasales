@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -196,6 +197,7 @@ public class FlightRepositoryImpl implements FlightRepository {
     }
     criteria.setFirstResult(page * size);
     criteria.setMaxResults(size);
+    criteria.addOrder(Order.asc("id"));
 
     List<Flight> result = (List<Flight>) criteria.list();
     session.getTransaction().commit();

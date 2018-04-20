@@ -92,4 +92,37 @@ public class AirportRepositoryImplMock implements AirportRepository {
   public boolean isExist(Long id) {
     return AIRPORT_CACHE.containsKey(id);
   }
+
+  @Override
+  public List<Airport> getAirportsLike(Airport seekingAirport, int page, int size) {
+
+    List<Airport> airportList = new ArrayList<>();
+    if (size <= 0) {
+      return airportList;
+    }
+    if (page <= 0) {
+      page = 1;
+    }
+
+    final int startI = (page - 1) * size;
+    for (int i = startI; i < startI + size; i++) {
+      if (i >= AIRPORT_CACHE.size()) {
+        break;
+      }
+      Airport flight = AIRPORT_CACHE.get(Long.valueOf(i));
+      if (flight != null) {
+        if ((seekingAirport.getId() == null || seekingAirport.getId().equals(flight.getId()))
+            && (seekingAirport.getName() == null || seekingAirport.getName()
+            .equals(flight.getName()))) {
+          airportList.add(flight);
+        }
+      }
+    }
+    return airportList;
+  }
+
+  @Override
+  public void updateAirport(Long id, Airport receivedAirport) {
+    AIRPORT_CACHE.put(id, receivedAirport);
+  }
 }

@@ -7,12 +7,12 @@ import com.epam.aviasales.services.AirplaneService;
 import com.epam.aviasales.services.AirportService;
 import com.epam.aviasales.services.FlightService;
 import com.epam.aviasales.services.ParserService;
+import com.epam.aviasales.util.CastType;
 import java.time.LocalDateTime;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.extern.log4j.Log4j;
 
+@Log4j
 public class ParserServiceImpl implements ParserService {
 
   private static volatile ParserService instance;
@@ -41,42 +41,59 @@ public class ParserServiceImpl implements ParserService {
     airplaneService = AirplaneServiceImpl.getInstance();
   }
 
-  public Object parseParameter(String parameter, Class type) {
+  public static void main(String[] args) {
+    ParserServiceImpl parserService = new ParserServiceImpl();
+
+    Airport airport = parserService.parseParameter("Moscow", CastType.AIRPORT);
+    System.out.println(airport);
+    Airplane airplane = parserService.parseParameter("SU-2", CastType.AIRPLANE);
+    System.out.println(airplane);
+  }
+
+  public <T> T parseParameter(String parameter, CastType type) {
     if (parameter == null || parameter.trim().isEmpty()) {
       return null;
     }
 
-    if (type == Long.class) {
-      return Long.valueOf(parameter);
-    } else if (type == Integer.class) {
-      return Integer.valueOf(parameter);
-    } else if (type == LocalDateTime.class) {
-      return LocalDateTime.parse(parameter);
-    } else if (type == Airplane.class) {
-      return airplaneService.getAirplaneByName(parameter);
-    } else if (type == Airport.class) {
-      return airportsService.getAirportByName(parameter);
+    try {
+      switch (type) {
+        case LONG:
+          return (T) Long.valueOf(parameter);
+        case INTEGER:
+          return (T) Integer.valueOf(parameter);
+        case LOCAL_DATE_TIME:
+          return (T) LocalDateTime.parse(parameter);
+        case AIRPLANE:
+          return (T) airplaneService.getAirplaneByName(parameter);
+        case AIRPORT:
+          return (T) airportsService.getAirportByName(parameter);
+        case STRING:
+          return (T) parameter;
+        default:
+          log.error("Received not implemented (unknown) CastType");
+          return null;
+      }
+    } catch (ClassCastException e) {
+      log.error(e.getCause(), e);
+      return null;
     }
-    return null;
   }
 
   public Flight parseFlight(HttpServletRequest req) {
-    Long id = (Long) parseParameter(req.getParameter("id"), Long.class);
-    Airport fromAirport = (Airport) parseParameter(req.getParameter("fromAirport"), Airport.class);
-    Airport toAirport = (Airport) parseParameter(req.getParameter("toAirport"), Airport.class);
-    Airplane airplane = (Airplane) parseParameter(req.getParameter("airplane"), Airplane.class);
-    LocalDateTime departureTime = (LocalDateTime) parseParameter(req.getParameter("departureTime"),
-        LocalDateTime.class);
-    LocalDateTime arrivalTime = (LocalDateTime) parseParameter(req.getParameter("arrivalTime"),
-        LocalDateTime.class);
-    Integer baseTicketPrice = (Integer) parseParameter(req.getParameter("baseTicketPrice"),
-        Integer.class);
-    Integer extraBaggagePrice = (Integer) parseParameter(req.getParameter("extraBaggagePrice"),
-        Integer.class);
-    Integer freeSeatEconomy = (Integer) parseParameter(req.getParameter("freeSeatEconomy"),
-        Integer.class);
-    Integer freeSeatBusiness = (Integer) parseParameter(req.getParameter("freeSeatBusiness"),
-        Integer.class);
+    Long id = parseParameter(req.getParameter("id"), CastType.LONG);
+    Airport fromAirport = parseParameter(req.getParameter("fromAirport"), CastType.AIRPORT);
+    Airport toAirport = parseParameter(req.getParameter("toAirport"), CastType.AIRPORT);
+    Airplane airplane = parseParameter(req.getParameter("airplane"), CastType.AIRPLANE);
+    LocalDateTime departureTime = parseParameter(req.getParameter("departureTime"),
+        CastType.LOCAL_DATE_TIME);
+    LocalDateTime arrivalTime = parseParameter(req.getParameter("arrivalTime"),
+        CastType.LOCAL_DATE_TIME);
+    Integer baseTicketPrice = parseParameter(req.getParameter("baseTicketPrice"), CastType.INTEGER);
+    Integer extraBaggagePrice = parseParameter(req.getParameter("extraBaggagePrice"),
+        CastType.INTEGER);
+    Integer freeSeatEconomy = parseParameter(req.getParameter("freeSeatEconomy"), CastType.INTEGER);
+    Integer freeSeatBusiness = parseParameter(req.getParameter("freeSeatBusiness"),
+        CastType.INTEGER);
 
     return Flight.builder().id(id).fromAirport(fromAirport)
         .toAirport(toAirport)
@@ -85,13 +102,11 @@ public class ParserServiceImpl implements ParserService {
         .freeSeatEconomy(freeSeatEconomy).freeSeatBusiness(freeSeatBusiness).build();
   }
 
-  public static void main(String[] args) {
-    ParserServiceImpl parserService = new ParserServiceImpl();
-//    Long id = (Long)
-    Long id = (Long) parserService.parseParameter("5", Long.class);
-    System.out.println(id);
-    Airport airport = (Airport) parserService.parseParameter("Moscow", Airport.class);
-    System.out.println(airport);
+  @Override
+  public Airport parseAirport(HttpServletRequest req) {
+    Long id = parseParameter(req.getParameter("id"), CastType.LONG);
+    String name = parseParameter(req.getParameter("name"), CastType.STRING);
 
+    return Airport.builder().id(id).name(name).build();
   }
 }

@@ -18,4 +18,8 @@ public interface AirportRepository {
   void deleteAirport(Long id);
 
   boolean isExist(Long id);
+
+  List<Airport> getAirportsLike(Airport seekingAirport, int page, int size);
+
+  void updateAirport(Long id, Airport receivedAirport);
 }

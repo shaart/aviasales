@@ -13,7 +13,7 @@
 <!DOCTYPE html>
 <html lang="${language}">
 <head>
-    <title><fmt:message key="manage.title" bundle="${lang}"/></title>
+    <title><fmt:message key="manage.flights.title" bundle="${lang}"/></title>
 </head>
 <script type="text/javascript">
   var COLUMNS_START_FROM = ${COLUMNS_FIRST_NUM};

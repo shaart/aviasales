@@ -1,15 +1,9 @@
 package com.epam.aviasales.controllers;
 
-import com.epam.aviasales.domain.Airplane;
 import com.epam.aviasales.domain.Airport;
-import com.epam.aviasales.domain.Flight;
-import com.epam.aviasales.services.AirplaneService;
 import com.epam.aviasales.services.AirportService;
-import com.epam.aviasales.services.FlightService;
 import com.epam.aviasales.services.ParserService;
-import com.epam.aviasales.services.impl.AirplaneServiceImpl;
 import com.epam.aviasales.services.impl.AirportServiceImpl;
-import com.epam.aviasales.services.impl.FlightServiceImpl;
 import com.epam.aviasales.services.impl.ParserServiceImpl;
 import com.epam.aviasales.util.Action;
 import com.epam.aviasales.util.ParseRequestHelper;
@@ -22,19 +16,15 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
-public class ManageFlightsServlet extends HttpServlet {
+public class ManageAirportsServlet extends HttpServlet {
 
-  private FlightService flightService;
-  private AirportService airportsService;
-  private AirplaneService airplaneService;
   private ParserService parserService;
+  private AirportService airportService;
 
   @Override
   public void init() throws ServletException {
     try {
-      flightService = FlightServiceImpl.getInstance();
-      airportsService = AirportServiceImpl.getInstance();
-      airplaneService = AirplaneServiceImpl.getInstance();
+      airportService = AirportServiceImpl.getInstance();
       parserService = ParserServiceImpl.getInstance();
     } catch (Exception e) {
       log.error(e);
@@ -53,23 +43,15 @@ public class ManageFlightsServlet extends HttpServlet {
       req.setAttribute("page", page);
       req.setAttribute("size", size);
 
-      String[] parameters = {"id", "fromAirport", "toAirport", "airplane", "departureTime",
-          "arrivalTime", "baseTicketPrice", "extraBaggagePrice", "freeSeatEconomy",
-          "freeSeatBusiness"};
+      String[] parameters = {"id", "name"};
       ParseRequestHelper.setExistingParametersAsAttributes(req, parameters);
       ParseRequestHelper.setPagingURLAttributes(req, page);
 
-      Flight seekingFlight = parserService.parseFlight(req);
-      List<Flight> flights = flightService.getFlightsLike(seekingFlight, page, size);
-      req.setAttribute("flights", flights);
-
-      List<Airport> airports = airportsService.getAirports();
+      Airport seekingAirport = parserService.parseAirport(req);
+      List<Airport> airports = airportService.getAirportsLike(seekingAirport, page, size);
       req.setAttribute("airports", airports);
 
-      List<Airplane> airplanes = airplaneService.getAirplanes();
-      req.setAttribute("airplanes", airplanes);
-
-      req.getRequestDispatcher("manageFlights.jsp").forward(req, resp);
+      req.getRequestDispatcher("manageAirports.jsp").forward(req, resp);
     } catch (Exception e) {
       log.error(e.getCause(), e);
       req.setAttribute("error", e.toString());
@@ -83,23 +65,23 @@ public class ManageFlightsServlet extends HttpServlet {
 
     Action action = ParseRequestHelper.getRequestAction(req);
     try {
-      Flight receivedFlight = parserService.parseFlight(req);
+      Airport receivedAirport = parserService.parseAirport(req);
 
       switch (action) {
         case ADD:
-          flightService.addFlight(receivedFlight);
-          log.info("Added " + receivedFlight);
+          airportService.addAirport(receivedAirport);
+          log.info("Added " + receivedAirport);
           break;
         case SAVE:
-          flightService.updateFlight(receivedFlight.getId(), receivedFlight);
-          log.info("Updated " + receivedFlight);
+          airportService.updateAirport(receivedAirport.getId(), receivedAirport);
+          log.info("Updated " + receivedAirport);
           break;
         case DELETE:
-          flightService.deleteFlight(receivedFlight.getId());
-          log.info("Removed " + receivedFlight);
+          airportService.deleteAirport(receivedAirport.getId());
+          log.info("Removed " + receivedAirport);
           break;
         default:
-          log.error("ManageFlightsServlet received unknown action to \"doPost()\"");
+          log.error("ManageAirportsServlet received unknown action to \"doPost()\"");
           break;
       }
     } catch (Exception e) {
@@ -108,7 +90,7 @@ public class ManageFlightsServlet extends HttpServlet {
       return;
     }
     try {
-      resp.sendRedirect("/manage/flights");
+      resp.sendRedirect("/manage/airports");
     } catch (IOException e) {
       log.error(e);
     }
