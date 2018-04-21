@@ -4,54 +4,68 @@
 </head>
 
 <body>
-<form action="/flights" method="post">
-    <div align="right">
-        <label>
-            <fmt:message key="from" bundle="${lang}"/>
-            <select name="flight_from" size="1" required>
-                <c:forEach var="flight" items="${airports}">
-                    <c:choose>
-                        <c:when test="${flight.id == from}">
-                            <option selected value="${flight.id}">${flight.name}</option>
-                        </c:when>
-                        <c:otherwise>
-                            <option value="${flight.id}">${flight.name}</option>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-            </select>
-        </label>
-        <label>
-            <fmt:message key="to" bundle="${lang}"/>
-            <select name="flight_to" size="1" required>
-                <c:forEach var="flight" items="${airports}">
-                    <c:choose>
-                        <c:when test="${flight.id == to}">
-                            <option selected value="${flight.id}">${flight.name}</option>
-                        </c:when>
-                        <c:otherwise>
-                            <option value="${flight.id}">${flight.name}</option>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-            </select>
-        </label>
-    </div>
-    <div align="right">
-        <label>
-            <fmt:message key="departure" bundle="${lang}"/>
-        </label>
-        <label>
-            <input type="date" name="date" value=${date.equals("") ? currentDate : date}>
-        </label><br>
-        <label>
-            <input type="submit" value="<fmt:message key="find" bundle="${lang}"/>"/>
-        </label>
-    </div>
-</form>
+<div class="tab-content" style="margin: auto; background: skyblue; padding: 20px">
+    <form action="/flights" method="post" class="container-fluid colorlib-form">
+        <div class="row" align="right">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label><fmt:message key="from" bundle="${lang}"/></label>
+                    <div class="form-field">
+                        <select name="flight_from" size="1" class="form-control">
+                            <c:forEach var="flight" items="${airports}">
+                                <c:choose>
+                                    <c:when test="${flight.id == from}">
+                                        <option value="${flight.id}">${flight.name}</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="${flight.id}">${flight.name}</option>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label><fmt:message key="to" bundle="${lang}"/></label>
+                    <div class="form-field">
+                        <select name="flight_to" size="1" class="form-control">
+                            <c:forEach var="flight" items="${airports}">
+                                <c:choose>
+                                    <c:when test="${flight.id == to}">
+                                        <option selected
+                                                value="${flight.id}">${flight.name}</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="${flight.id}">${flight.name}</option>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label><fmt:message key="departure" bundle="${lang}"/></label>
+                    <div class="form-field">
+                        <input type="date" class="form-control" name="date"
+                               value=${date.equals("") ? currentDate : date}>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <input type="submit" value="<fmt:message key="find" bundle="${lang}"/>"
+                       class="btn btn-primary btn-block">
+            </div>
+        </div>
+    </form>
+</div>
+
 
 <c:if test="${error != null}">
-    <h5 style="color: red"><fmt:message key="${error}" bundle="${lang}"/>!</h5>
+    <label style="color: red"><fmt:message key="${error}" bundle="${lang}"/>!</label>
 </c:if>
 
 <c:if test="${flights.size() >= 1}">
@@ -76,20 +90,33 @@
             </c:forEach>
         </div>
         <br>
+            <%----%>
+            <%----%>
+            <%----%>
+            <%----%>
+            <%----%>
         <c:choose>
             <c:when test="${account == null}">
-                <h5 style="color: red"><fmt:message key="registrate.warning" bundle="${lang}"/>.</h5>
+                <label style="color: red"><fmt:message key="registrate.warning"
+                                                       bundle="${lang}"/>.</label>
             </c:when>
             <c:otherwise>
-                <div align="right">
-                    <input type="submit" value="<fmt:message key="select" bundle="${lang}"/>">
+                <div class="col-md-2">
+                    <input type="submit" value="<fmt:message key="select" bundle="${lang}"/>"
+                           class="btn btn-primary btn-block">
                 </div>
             </c:otherwise>
         </c:choose>
+            <%----%>
+            <%----%>
+            <%----%>
+            <%----%>
+            <%----%>
     </form>
     <h5><c:if test="${error != null}"> ${error}</c:if></h5>
 </c:if>
 <%@include file="layout/footer.jspf" %>
+
 
 </body>
 </html>
