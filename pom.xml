@@ -111,14 +111,13 @@
       <artifactId>jstl</artifactId>
       <version>1.2</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+    <!-- BOOTSTRAP -->
+    <!-- https://mvnrepository.com/artifact/org.webjars/bootstrap -->
     <dependency>
       <groupId>org.webjars</groupId>
       <artifactId>jquery</artifactId>
       <version>2.1.1</version>
     </dependency>
-    <!-- BOOTSTRAP -->
-    <!-- https://mvnrepository.com/artifact/org.webjars/bootstrap -->
     <dependency>
       <groupId>org.webjars</groupId>
       <artifactId>bootstrap</artifactId>
@@ -129,11 +128,6 @@
           <artifactId>jquery</artifactId>
         </exclusion>
       </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.webjars</groupId>
-      <artifactId>jquery</artifactId>
-      <version>2.1.1</version>
     </dependency>
   </dependencies>
 

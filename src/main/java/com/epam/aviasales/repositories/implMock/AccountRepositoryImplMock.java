@@ -38,8 +38,8 @@ public class AccountRepositoryImplMock implements AccountRepository {
       ACCOUNTS_CACHE.put(Long.valueOf(i),
           Account.builder().id(Long.valueOf(i))
               .role(i % 30 == 0 ? Role.ADMIN : (i % 15 == 0 ? Role.MANAGER : Role.USER))
-              .name(i == 15 ? "Bob Marley" : "BOB-" + i).login("smartbob" + i)
-              .password(DigestUtils.sha256Hex("SHA256-" + i))
+              .name(i == 15 ? "Bob Marley" : "BOB-" + i).login("bob" + i)
+              .password(DigestUtils.sha256Hex(String.valueOf(i)))
               .email("bob" + i + "@bobworld.com")
               .phone("123456789")
               .build());
@@ -147,7 +147,7 @@ public class AccountRepositoryImplMock implements AccountRepository {
   }
 
   @Override
-  public void updateAccount(Account newAccount){
+  public void updateAccount(Account newAccount) {
     for (Account account : ACCOUNTS_CACHE.values()) {
       if (account.getId().equals(newAccount.getId())) {
         account.setLogin(newAccount.getLogin());
@@ -159,7 +159,7 @@ public class AccountRepositoryImplMock implements AccountRepository {
   }
 
   @Override
-  public void updateAccountPasswordById(Long c, String password){
+  public void updateAccountPasswordById(Long c, String password) {
 
   }
 }
