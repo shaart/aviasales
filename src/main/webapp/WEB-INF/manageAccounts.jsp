@@ -7,6 +7,9 @@
        scope="session"/>
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="com.epam.aviasales.bundles.global" var="lang"/>
+<c:if test="${account == null || (account.role != 'ADMIN')}">
+    <% response.sendError(404); %>
+</c:if>
 <c:set var="COLUMNS_FIRST_NUM" value="0"/>
 <c:set var="COLUMNS_COUNT" value="6"/>
 <c:set var="page" value="${page == null || page < 1 ? 1 : page}"/>
@@ -108,7 +111,7 @@
                 <fmt:message key="account.label.email" bundle="${lang}"/></th>
             <th class="text-center" style="width: 13%;">
                 <fmt:message key="account.label.phone" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 15%; min-width: 150px">
+            <th class="text-center" style="width: 15%; min-width: 170px">
                 <fmt:message key="page.label.control" bundle="${lang}"/></th>
         </tr>
         </thead>
@@ -164,8 +167,6 @@
     <table id="addTable" class="table-bordered">
         <thead>
         <tr>
-            <th class="text-center" style="width: 3%;">
-                <fmt:message key="account.label.id" bundle="${lang}"/></th>
             <th class="text-center" style="width: 13%;">
                 <fmt:message key="account.label.role" bundle="${lang}"/></th>
             <th class="text-center" style="width: 20%;">
@@ -178,17 +179,13 @@
                 <fmt:message key="account.label.email" bundle="${lang}"/></th>
             <th class="text-center" style="width: 13%;">
                 <fmt:message key="account.label.phone" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 15%; min-width: 150px">
+            <th class="text-center" style="width: 15%; min-width: 170px">
                 <fmt:message key="page.label.control" bundle="${lang}"/></th>
         </tr>
         </thead>
         <tbody>
         <tr id="adding-row">
             <form id="addForm" action="/manage/accounts" method="post">
-                <td><input readonly type="text" disabled class="form-control" width="10" name="id"
-                           value="-"
-                           placeholder="<fmt:message key="account.label.id" bundle="${lang}"/>">
-                </td>
                 <td>
                     <select required oninvalid='this.setCustomValidity("<fmt:message
                             key="page.error.field.is.required" bundle="${lang}"/>")'
@@ -296,7 +293,7 @@
                 <fmt:message key="account.label.email" bundle="${lang}"/></th>
             <th class="text-center" style="width: 13%;">
                 <fmt:message key="account.label.phone" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 15%; min-width: 150px">
+            <th class="text-center" style="width: 15%; min-width: 170px">
                 <fmt:message key="page.label.control" bundle="${lang}"/></th>
         </tr>
         </thead>

@@ -3,6 +3,7 @@ package com.epam.aviasales.controllers;
 import com.epam.aviasales.domain.Airplane;
 import com.epam.aviasales.domain.Airport;
 import com.epam.aviasales.domain.Flight;
+import com.epam.aviasales.domain.Role;
 import com.epam.aviasales.services.AirplaneService;
 import com.epam.aviasales.services.AirportService;
 import com.epam.aviasales.services.FlightService;
@@ -12,9 +13,11 @@ import com.epam.aviasales.services.impl.AirportServiceImpl;
 import com.epam.aviasales.services.impl.FlightServiceImpl;
 import com.epam.aviasales.services.impl.ParserServiceImpl;
 import com.epam.aviasales.util.Action;
+import com.epam.aviasales.util.AuthHelper;
 import com.epam.aviasales.util.ErrorHelper;
 import com.epam.aviasales.util.ParseRequestHelper;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -30,6 +33,7 @@ public class ManageFlightsServlet extends HttpServlet {
   private AirplaneService airplaneService;
   private ParserService parserService;
   private static final String SERVLET_ADDRESS = "/manage/flights";
+  private static final List<Role> ALLOWED_ROLES = Arrays.asList(Role.ADMIN, Role.MANAGER);
 
   @Override
   public void init() throws ServletException {
@@ -46,6 +50,12 @@ public class ManageFlightsServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
+
+    boolean canAccess = AuthHelper.isAllowedUser(req, resp, ALLOWED_ROLES, SERVLET_ADDRESS);
+    if (!canAccess) {
+      return;
+    }
+
     try {
       final int DEFAULT_PAGE_SIZE = 15;
       final int DEFAULT_PAGE = 1;
@@ -81,6 +91,11 @@ public class ManageFlightsServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
+
+    boolean canAccess = AuthHelper.isAllowedUser(req, resp, ALLOWED_ROLES, SERVLET_ADDRESS);
+    if (!canAccess) {
+      return;
+    }
 
     Action action = ParseRequestHelper.getRequestAction(req);
     try {
