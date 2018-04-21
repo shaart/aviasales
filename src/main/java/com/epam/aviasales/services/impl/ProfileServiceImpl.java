@@ -67,7 +67,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     PersonalData personalDataFromDB = personalDataRepository.getPersonalDataByPassport(personalData.getPassport());
 
-    if(personalDataFromDB != null && personalDataFromDB.getId() != personalData.getId()){
+    if(personalDataFromDB != null && !personalDataFromDB.getId().equals(personalData.getId())){
       errorMessages.add("profile.error.passportExists");
     }
     else{
