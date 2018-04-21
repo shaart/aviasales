@@ -90,6 +90,11 @@
 </script>
 <body>
 <%@include file="layout/header.jsp" %>
+<c:if test="${not empty error}">
+    <div class="alert alert-danger">
+        ${error}
+    </div>
+</c:if>
 <div class="container" style="width: 100%">
     <h2><fmt:message key="flight.header.search" bundle="${lang}"/></h2>
     <table id="searchTable" width="2000">

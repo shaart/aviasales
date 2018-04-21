@@ -77,12 +77,17 @@ public class ManageFlightsServlet extends HttpServlet {
     }
   }
 
+  private void getEx() throws Exception {
+    throw new Exception("test");
+  }
+
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
 
     Action action = ParseRequestHelper.getRequestAction(req);
     try {
+      getEx();
       Flight receivedFlight = parserService.parseFlight(req);
 
       switch (action) {
@@ -104,7 +109,9 @@ public class ManageFlightsServlet extends HttpServlet {
       }
     } catch (Exception e) {
       log.error(e.getCause(), e);
-      resp.sendError(400);
+//      resp.sendError(400);
+      req.setAttribute("error", e.getCause());
+      req.getRequestDispatcher("/manage/flights").forward(req, resp);
       return;
     }
     try {
