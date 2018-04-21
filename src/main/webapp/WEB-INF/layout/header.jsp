@@ -7,8 +7,10 @@
 <fmt:setBundle basename="com.epam.aviasales.bundles.global" var="lang"/>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
+<script type="text/javascript" src="webjars/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <div class="container font-weight-normal">
     <header class="blog-header py-2">
@@ -46,7 +48,6 @@
                         </c:otherwise>
                     </c:choose>
             </div>
-
         </div>
     </header>
 </div>
