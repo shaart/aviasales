@@ -28,4 +28,8 @@ public interface FlightRepository {
   List<Flight> getFlightsLike(Flight seekingFlight, int page, int size);
 
   void updateFlight(Flight flight);
+
+  void deleteFlightsByAirportId(Long id);
+
+  void deleteFlightsByAirplaneId(Long id);
 }

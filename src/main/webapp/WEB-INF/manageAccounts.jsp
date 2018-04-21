@@ -90,24 +90,25 @@
 </script>
 <body>
 <%@include file="layout/header.jsp" %>
-<div class="container" style="width: 100%">
+<%@include file="layout/manageNavigation.jsp" %>
+<div class="container">
     <h2><fmt:message key="page.header.search" bundle="${lang}"/></h2>
     <table id="searchTable" class="table-bordered">
         <thead>
         <tr>
             <th class="text-center" style="width: 3%;">
                 <fmt:message key="account.label.id" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%;">
+            <th class="text-center" style="width: 13%;">
                 <fmt:message key="account.label.role" bundle="${lang}"/></th>
             <th class="text-center" style="width: 20%;">
                 <fmt:message key="account.label.name" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%;">
+            <th class="text-center" style="width: 13%;">
                 <fmt:message key="account.label.login" bundle="${lang}"/></th>
             <th class="text-center" style="width: 20%;">
                 <fmt:message key="account.label.email" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%;">
+            <th class="text-center" style="width: 13%;">
                 <fmt:message key="account.label.phone" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 10%;">
+            <th class="text-center" style="width: 15%; min-width: 150px">
                 <fmt:message key="page.label.control" bundle="${lang}"/></th>
         </tr>
         </thead>
@@ -165,17 +166,17 @@
         <tr>
             <th class="text-center" style="width: 3%;">
                 <fmt:message key="account.label.id" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%;">
+            <th class="text-center" style="width: 13%;">
                 <fmt:message key="account.label.role" bundle="${lang}"/></th>
             <th class="text-center" style="width: 20%;">
                 <fmt:message key="account.label.name" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%;">
+            <th class="text-center" style="width: 13%;">
                 <fmt:message key="account.label.login" bundle="${lang}"/></th>
             <th class="text-center" style="width: 20%;">
                 <fmt:message key="account.label.email" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%;">
+            <th class="text-center" style="width: 13%;">
                 <fmt:message key="account.label.phone" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 10%;">
+            <th class="text-center" style="width: 15%; min-width: 150px">
                 <fmt:message key="page.label.control" bundle="${lang}"/></th>
         </tr>
         </thead>
@@ -261,17 +262,17 @@
         <tr>
             <th class="text-center" style="width: 3%;">
                 <fmt:message key="account.label.id" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%;">
+            <th class="text-center" style="width: 13%;">
                 <fmt:message key="account.label.role" bundle="${lang}"/></th>
             <th class="text-center" style="width: 20%;">
                 <fmt:message key="account.label.name" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%;">
+            <th class="text-center" style="width: 13%;">
                 <fmt:message key="account.label.login" bundle="${lang}"/></th>
             <th class="text-center" style="width: 20%;">
                 <fmt:message key="account.label.email" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%;">
+            <th class="text-center" style="width: 13%;">
                 <fmt:message key="account.label.phone" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 10%;">
+            <th class="text-center" style="width: 15%; min-width: 150px">
                 <fmt:message key="page.label.control" bundle="${lang}"/></th>
         </tr>
         </thead>

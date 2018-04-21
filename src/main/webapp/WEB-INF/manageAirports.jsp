@@ -90,16 +90,17 @@
 </script>
 <body>
 <%@include file="layout/header.jsp" %>
-<div class="container" style="width: 100%">
+<%@include file="layout/manageNavigation.jsp" %>
+<div class="container">
     <h2><fmt:message key="page.header.search" bundle="${lang}"/></h2>
-    <table id="searchTable" class="table-bordered">
+    <table id="searchTable" class="table-bordered" style="width: 70%" align="center">
         <thead>
         <tr>
-            <th class="text-center" style="width: 3%;">
-                <fmt:message key="airport.label.id" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 7%;">
-                <fmt:message key="airport.label.name" bundle="${lang}"/></th>
             <th class="text-center" style="width: 10%;">
+                <fmt:message key="airport.label.id" bundle="${lang}"/></th>
+            <th class="text-center" style="width: 70%;">
+                <fmt:message key="airport.label.name" bundle="${lang}"/></th>
+            <th class="text-center" style="width: 10%; min-width: 170px;">
                 <fmt:message key="page.label.control" bundle="${lang}"/></th>
         </tr>
         </thead>
@@ -133,15 +134,14 @@
     </table>
     <br>
     <h2><fmt:message key="page.header.add" bundle="${lang}"/></h2>
-    <table id="addTable" class="table-bordered">
+    <table id="addTable" class="table-bordered" style="width: 70%" align="center">
         <thead>
         <tr>
-        <tr>
-            <th class="text-center" style="width: 3%;">
-                <fmt:message key="airport.label.id" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 7%;">
-                <fmt:message key="airport.label.name" bundle="${lang}"/></th>
             <th class="text-center" style="width: 10%;">
+                <fmt:message key="airport.label.id" bundle="${lang}"/></th>
+            <th class="text-center" style="width: 70%;">
+                <fmt:message key="airport.label.name" bundle="${lang}"/></th>
+            <th class="text-center" style="width: 10%; min-width: 170px;">
                 <fmt:message key="page.label.control" bundle="${lang}"/></th>
         </tr>
         </thead>
@@ -205,14 +205,14 @@
             </ul>
         </nav>
     </div>
-    <table id="dataTable" class="table-bordered">
+    <table id="dataTable" class="table-bordered" style="width: 70%" align="center">
         <thead>
         <tr>
-            <th class="text-center" style="width: 3%;">
-                <fmt:message key="airport.label.id" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 7%;">
-                <fmt:message key="airport.label.name" bundle="${lang}"/></th>
             <th class="text-center" style="width: 10%;">
+                <fmt:message key="airport.label.id" bundle="${lang}"/></th>
+            <th class="text-center" style="width: 70%;">
+                <fmt:message key="airport.label.name" bundle="${lang}"/></th>
+            <th class="text-center" style="width: 10%; min-width: 170px;">
                 <fmt:message key="page.label.control" bundle="${lang}"/></th>
         </tr>
         </thead>

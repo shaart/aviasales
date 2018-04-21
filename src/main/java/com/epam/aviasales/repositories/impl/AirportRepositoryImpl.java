@@ -2,10 +2,12 @@ package com.epam.aviasales.repositories.impl;
 
 import com.epam.aviasales.domain.Airport;
 import com.epam.aviasales.repositories.AirportRepository;
+import com.epam.aviasales.repositories.FlightRepository;
 import com.epam.aviasales.util.HibernateUtil;
 import java.util.ArrayList;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.extern.log4j.Log4j;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -15,9 +17,11 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Log4j
 public class AirportRepositoryImpl implements AirportRepository {
 
   private static volatile AirportRepository instance;
+  private static final FlightRepository flightRepository = FlightRepositoryImpl.getInstance();
 
   public static AirportRepository getInstance() {
     AirportRepository localInstance = instance;
@@ -103,7 +107,12 @@ public class AirportRepositoryImpl implements AirportRepository {
     Session session = HibernateUtil.getSessionFactory().openSession();
     session.beginTransaction();
 
-    session.delete(getAirportById(id));
+    flightRepository.deleteFlightsByAirportId(id);
+    Query query = session.createQuery("delete Airport where id = :id");
+    query.setParameter("id", id);
+    int result = query.executeUpdate();
+
+    log.info("Delete airport with id " + id + ". Result: " + result);
 
     session.getTransaction().commit();
     session.close();

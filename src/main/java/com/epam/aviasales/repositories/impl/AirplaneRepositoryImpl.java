@@ -2,10 +2,12 @@ package com.epam.aviasales.repositories.impl;
 
 import com.epam.aviasales.domain.Airplane;
 import com.epam.aviasales.repositories.AirplaneRepository;
+import com.epam.aviasales.repositories.FlightRepository;
 import com.epam.aviasales.util.HibernateUtil;
 import java.util.ArrayList;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.extern.log4j.Log4j;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -13,11 +15,14 @@ import java.util.List;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import sun.plugin2.os.windows.FLASHWINFO;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Log4j
 public class AirplaneRepositoryImpl implements AirplaneRepository {
 
   private static volatile AirplaneRepository instance;
+  private static final FlightRepository flightRepository = FlightRepositoryImpl.getInstance();
 
   public static AirplaneRepository getInstance() {
     AirplaneRepository localInstance = instance;
@@ -110,7 +115,12 @@ public class AirplaneRepositoryImpl implements AirplaneRepository {
     Session session = HibernateUtil.getSessionFactory().openSession();
     session.beginTransaction();
 
-    session.delete(getAirplaneById(id));
+    flightRepository.deleteFlightsByAirplaneId(id);
+    Query query = session.createQuery("delete Airplane where id = :id");
+    query.setParameter("id", id);
+    int result = query.executeUpdate();
+
+    log.info("Delete airplane with id " + id + ". Result: " + result);
 
     session.getTransaction().commit();
     session.close();

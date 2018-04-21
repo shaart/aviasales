@@ -133,7 +133,12 @@ public class PersonalDataRepositoryImpl implements PersonalDataRepository {
     Session session = HibernateUtil.getSessionFactory().openSession();
     session.beginTransaction();
 
-    session.delete(getPersonalDataById(id));
+    Query query = session.createQuery("delete Ticket where personalData.id = :id");
+    query.setParameter("id", id);
+    int result = query.executeUpdate();
+    query = session.createQuery("delete PersonalData where id = :id");
+    query.setParameter("id", id);
+    result = query.executeUpdate();
 
     session.getTransaction().commit();
     session.close();

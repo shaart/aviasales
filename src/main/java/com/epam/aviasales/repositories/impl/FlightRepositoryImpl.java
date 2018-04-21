@@ -2,10 +2,12 @@ package com.epam.aviasales.repositories.impl;
 
 import com.epam.aviasales.domain.Flight;
 import com.epam.aviasales.repositories.FlightRepository;
+import com.epam.aviasales.repositories.TicketRepository;
 import com.epam.aviasales.util.HibernateUtil;
 import java.util.ArrayList;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.extern.log4j.Log4j;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -14,13 +16,16 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Log4j
 public class FlightRepositoryImpl implements FlightRepository {
 
   private static volatile FlightRepository instance;
+  private static final TicketRepository ticketRepository = TicketRepositoryImpl.getInstance();
 
   public static FlightRepository getInstance() {
     FlightRepository localInstance = instance;
@@ -58,7 +63,12 @@ public class FlightRepositoryImpl implements FlightRepository {
     Session session = HibernateUtil.getSessionFactory().openSession();
     session.beginTransaction();
 
-    session.delete(getFlightById(id));
+    ticketRepository.deleteTicketsByFlightId(id);
+    Query query = session.createQuery("delete Flight where id = :id");
+    query.setParameter("id", id);
+    int result = query.executeUpdate();
+
+    log.info("Delete flight with id " + id + ". Result: " + result);
 
     session.getTransaction().commit();
     session.close();
@@ -129,6 +139,58 @@ public class FlightRepositoryImpl implements FlightRepository {
     query.setParameter("businessSeats", flight.getFreeSeatBusiness());
     query.setParameter("id", flight.getId());
     query.executeUpdate();
+
+    session.getTransaction().commit();
+    session.close();
+  }
+
+  @Override
+  public void deleteFlightsByAirportId(Long id) {
+
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    session.beginTransaction();
+
+    Query query = session
+        .createQuery("select id from Flight where fromAirport.id = :id or toAirport.id = :id");
+    query.setParameter("id", id);
+    List<Long> flightIds = (List<Long>) query.list();
+
+    for (Long flightId : flightIds) {
+      ticketRepository.deleteTicketsByFlightId(flightId);
+    }
+
+    query = session
+        .createQuery("delete Flight where fromAirport.id = :id or toAirport.id = :id");
+    query.setParameter("id", id);
+    int result = query.executeUpdate();
+
+    log.info("Delete all flights where airport id is " + id + ". Result: " + result);
+
+    session.getTransaction().commit();
+    session.close();
+  }
+
+  @Override
+  public void deleteFlightsByAirplaneId(Long id) {
+
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    session.beginTransaction();
+
+    Query query = session
+        .createQuery("select id from Flight where airplane.id = :id");
+    query.setParameter("id", id);
+    List<Long> flightIds = (List<Long>) query.list();
+
+    for (Long flightId : flightIds) {
+      ticketRepository.deleteTicketsByFlightId(flightId);
+    }
+
+    query = session
+        .createQuery("delete Flight where airplane.id = :id");
+    query.setParameter("id", id);
+    int result = query.executeUpdate();
+
+    log.info("Delete all flights where airplane id is " + id + ". Result: " + result);
 
     session.getTransaction().commit();
     session.close();

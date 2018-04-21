@@ -90,20 +90,21 @@
 </script>
 <body>
 <%@include file="layout/header.jsp" %>
-<div class="container" style="width: 100%">
+<%@include file="layout/manageNavigation.jsp" %>
+<div class="container">
     <h2><fmt:message key="page.header.search" bundle="${lang}"/></h2>
     <table id="searchTable" class="table-bordered">
         <thead>
         <tr>
-            <th class="text-center" style="width: 3%;">
+            <th class="text-center" style="width: 5%;">
                 <fmt:message key="airplane.label.id" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%;">
+            <th class="text-center" style="width: 35%;">
                 <fmt:message key="airplane.label.name" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%;">
-                <fmt:message key="airplane.label.economySeatsCount" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%;">
-                <fmt:message key="airplane.label.businessSeatsCount" bundle="${lang}"/></th>
             <th class="text-center" style="width: 10%;">
+                <fmt:message key="airplane.label.economySeatsCount" bundle="${lang}"/></th>
+            <th class="text-center" style="width: 10%;">
+                <fmt:message key="airplane.label.businessSeatsCount" bundle="${lang}"/></th>
+            <th class="text-center" style="width: 10%; min-width: 170px;">
                 <fmt:message key="page.label.control" bundle="${lang}"/></th>
         </tr>
         </thead>
@@ -148,15 +149,15 @@
     <table id="addTable" class="table-bordered">
         <thead>
         <tr>
-            <th class="text-center" style="width: 3%;">
+            <th class="text-center" style="width: 5%;">
                 <fmt:message key="airplane.label.id" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%;">
+            <th class="text-center" style="width: 35%;">
                 <fmt:message key="airplane.label.name" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%;">
-                <fmt:message key="airplane.label.economySeatsCount" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%;">
-                <fmt:message key="airplane.label.businessSeatsCount" bundle="${lang}"/></th>
             <th class="text-center" style="width: 10%;">
+                <fmt:message key="airplane.label.economySeatsCount" bundle="${lang}"/></th>
+            <th class="text-center" style="width: 10%;">
+                <fmt:message key="airplane.label.businessSeatsCount" bundle="${lang}"/></th>
+            <th class="text-center" style="width: 10%; min-width: 170px;">
                 <fmt:message key="page.label.control" bundle="${lang}"/></th>
         </tr>
         </thead>
@@ -231,15 +232,15 @@
     <table id="dataTable" class="table-bordered">
         <thead>
         <tr>
-            <th class="text-center" style="width: 3%;">
+            <th class="text-center" style="width: 5%;">
                 <fmt:message key="airplane.label.id" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%;">
+            <th class="text-center" style="width: 35%;">
                 <fmt:message key="airplane.label.name" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%;">
-                <fmt:message key="airplane.label.economySeatsCount" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%;">
-                <fmt:message key="airplane.label.businessSeatsCount" bundle="${lang}"/></th>
             <th class="text-center" style="width: 10%;">
+                <fmt:message key="airplane.label.economySeatsCount" bundle="${lang}"/></th>
+            <th class="text-center" style="width: 10%;">
+                <fmt:message key="airplane.label.businessSeatsCount" bundle="${lang}"/></th>
+            <th class="text-center" style="width: 10%; min-width: 170px;">
                 <fmt:message key="page.label.control" bundle="${lang}"/></th>
         </tr>
         </thead>
@@ -268,7 +269,7 @@
         </tr>
         <c:forEach var="airplane" items="${airplanes}">
             <tr>
-                <form action="/manage/airplanes" method="post">
+                <form action="/manage/airplanes" accept-charset="UTF-8" method="post">
                     <td><input readonly type="text" class="form-control" width="10" name="id"
                                value="${airplane.id}"></td>
                     <td><input required type="text" class="form-control" name="name"
