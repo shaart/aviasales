@@ -172,6 +172,8 @@
                 <fmt:message key="account.label.name" bundle="${lang}"/></th>
             <th class="text-center" style="width: 13%;">
                 <fmt:message key="account.label.login" bundle="${lang}"/></th>
+            <th class="text-center" style="width: 13%;">
+                <fmt:message key="account.label.password" bundle="${lang}"/></th>
             <th class="text-center" style="width: 20%;">
                 <fmt:message key="account.label.email" bundle="${lang}"/></th>
             <th class="text-center" style="width: 13%;">
@@ -188,7 +190,9 @@
                            placeholder="<fmt:message key="account.label.id" bundle="${lang}"/>">
                 </td>
                 <td>
-                    <select required class="form-control" name="role">
+                    <select required oninvalid='this.setCustomValidity("<fmt:message
+                            key="page.error.field.is.required" bundle="${lang}"/>")'
+                            oninput="setCustomValidity('')" class="form-control" name="role">
                         <option value=""><fmt:message key="page.label.choose"
                                                       bundle="${lang}"/></option>
                         <c:forEach var="role" items="${roles}">
@@ -196,16 +200,36 @@
                         </c:forEach>
                     </select>
                 </td>
-                <td><input required type="text" class="form-control" name="name" value=""
+                <td><input required
+                           oninvalid='this.setCustomValidity("<fmt:message
+                                   key="page.error.field.is.required"
+                                   bundle="${lang}"/>")'
+                           oninput="setCustomValidity('')" type="text" class="form-control"
+                           name="name" value=""
                            placeholder="<fmt:message key="account.label.name" bundle="${lang}"/>">
                 </td>
-                <td><input required type="text" class="form-control" name="login" value=""
+                <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                        key="page.error.field.is.required" bundle="${lang}"/>")'
+                           oninput="setCustomValidity('')" type="text" class="form-control"
+                           name="login" value=""
                            placeholder="<fmt:message key="account.label.login" bundle="${lang}"/>">
                 </td>
-                <td><input required type="text" class="form-control" name="email" value=""
+                <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                        key="page.error.field.is.required" bundle="${lang}"/>")'
+                           oninput="setCustomValidity('')" type="text" class="form-control"
+                           name="password" value=""
+                           placeholder="<fmt:message key="account.label.password" bundle="${lang}"/>">
+                </td>
+                <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                        key="page.error.field.is.required" bundle="${lang}"/>")'
+                           oninput="setCustomValidity('')" type="text" class="form-control"
+                           name="email" value=""
                            placeholder="<fmt:message key="account.label.email" bundle="${lang}"/>">
                 </td>
-                <td><input required type="text" class="form-control" name="phone" value=""
+                <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                        key="page.error.field.is.required" bundle="${lang}"/>")'
+                           oninput="setCustomValidity('')" type="text" class="form-control"
+                           name="phone" value=""
                            placeholder="<fmt:message key="account.label.phone" bundle="${lang}"/>">
                 </td>
                 <td>
@@ -305,7 +329,9 @@
                     <td><input readonly type="text" class="form-control" width="10" name="id"
                                value="${account.id}"></td>
                     <td>
-                        <select required class="form-control" name="role">
+                        <select required oninvalid='this.setCustomValidity("<fmt:message
+                                key="page.error.field.is.required" bundle="${lang}"/>")'
+                                oninput="setCustomValidity('')" class="form-control" name="role">
                             <option value="">
                                 <fmt:message key="page.label.choose" bundle="${lang}"/>
                             </option>
@@ -316,19 +342,31 @@
                             </c:forEach>
                         </select>
                     </td>
-                    <td><input required type="text" class="form-control" name="name"
+                    <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                            key="page.error.field.is.required" bundle="${lang}"/>")'
+                               oninput="setCustomValidity('')" type="text" class="form-control"
+                               name="name"
                                value="${account.name}"
                                placeholder="<fmt:message key="account.label.name" bundle="${lang}"/>">
                     </td>
-                    <td><input required type="text" class="form-control" name="login"
+                    <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                            key="page.error.field.is.required" bundle="${lang}"/>")'
+                               oninput="setCustomValidity('')" type="text" class="form-control"
+                               name="login"
                                value="${account.login}"
                                placeholder="<fmt:message key="account.label.login" bundle="${lang}"/>">
                     </td>
-                    <td><input required type="text" class="form-control" name="email"
+                    <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                            key="page.error.field.is.required" bundle="${lang}"/>")'
+                               oninput="setCustomValidity('')" type="text" class="form-control"
+                               name="email"
                                value="${account.email}"
                                placeholder="<fmt:message key="account.label.email" bundle="${lang}"/>">
                     </td>
-                    <td><input required type="text" class="form-control" name="phone"
+                    <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                            key="page.error.field.is.required" bundle="${lang}"/>")'
+                               oninput="setCustomValidity('')" type="text" class="form-control"
+                               name="phone"
                                value="${account.phone}"
                                placeholder="<fmt:message key="account.label.phone" bundle="${lang}"/>">
                     </td>

@@ -168,15 +168,24 @@
                            value="-"
                            placeholder="<fmt:message key="personaldata.label.id" bundle="${lang}"/>">
                 </td>
-                <td><input required type="text" class="form-control" name="name"
+                <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                        key="page.error.field.is.required" bundle="${lang}"/>")'
+                           oninput="setCustomValidity('')" type="text" class="form-control"
+                           name="name"
                            value=""
                            placeholder="<fmt:message key="personaldata.label.name" bundle="${lang}"/>">
                 </td>
-                <td><input required type="text" class="form-control" name="passport"
+                <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                        key="page.error.field.is.required" bundle="${lang}"/>")'
+                           oninput="setCustomValidity('')" type="text" class="form-control"
+                           name="passport"
                            value=""
                            placeholder="<fmt:message key="personaldata.label.passport" bundle="${lang}"/>">
                 </td>
-                <td><input required type="date" class="form-control" name="dateOfBirth"
+                <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                        key="page.error.field.is.required" bundle="${lang}"/>")'
+                           oninput="setCustomValidity('')" type="date" class="form-control"
+                           name="dateOfBirth"
                            value=""
                            placeholder="<fmt:message key="personaldata.label.dateOfBirth" bundle="${lang}"/>">
                 </td>
@@ -272,15 +281,24 @@
                 <form action="/manage/personals" method="post">
                     <td><input readonly type="text" class="form-control" width="10" name="id"
                                value="${personaldata.id}"></td>
-                    <td><input required type="text" class="form-control" name="name"
+                    <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                            key="page.error.field.is.required" bundle="${lang}"/>")'
+                               oninput="setCustomValidity('')" type="text" class="form-control"
+                               name="name"
                                value="${personaldata.name}"
                                placeholder="<fmt:message key="personaldata.label.name" bundle="${lang}"/>">
                     </td>
-                    <td><input required type="text" class="form-control" name="passport"
+                    <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                            key="page.error.field.is.required" bundle="${lang}"/>")'
+                               oninput="setCustomValidity('')" type="text" class="form-control"
+                               name="passport"
                                value="${personaldata.passport}"
                                placeholder="<fmt:message key="personaldata.label.passport" bundle="${lang}"/>">
                     </td>
-                    <td><input required type="date" class="form-control" name="dateOfBirth"
+                    <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                            key="page.error.field.is.required" bundle="${lang}"/>")'
+                               oninput="setCustomValidity('')" type="date" class="form-control"
+                               name="dateOfBirth"
                                value="${personaldata.dateOfBirth}"
                                placeholder="<fmt:message key="personaldata.label.dateOfBirth" bundle="${lang}"/>">
                     </td>

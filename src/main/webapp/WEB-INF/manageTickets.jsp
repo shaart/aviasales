@@ -214,7 +214,10 @@
                 </td>
                 </td>
                 <td>
-                    <select required class="form-control" name="personalDataPassport">
+                    <select required oninvalid='this.setCustomValidity("<fmt:message
+                            key="page.error.field.is.required" bundle="${lang}"/>")'
+                            oninput="setCustomValidity('')" class="form-control"
+                            name="personalDataPassport">
                         <option value="">
                             <fmt:message key="page.label.choose" bundle="${lang}"/>
                         </option>
@@ -225,7 +228,9 @@
                 </td>
 
                 <td>
-                    <select required class="form-control" name="flightId">
+                    <select required oninvalid='this.setCustomValidity("<fmt:message
+                            key="page.error.field.is.required" bundle="${lang}"/>")'
+                            oninput="setCustomValidity('')" class="form-control" name="flightId">
                         <option value="">
                             <fmt:message key="page.label.choose" bundle="${lang}"/>
                         </option>
@@ -235,7 +240,9 @@
                     </select>
                 </td>
                 <td>
-                    <select required class="form-control" name="accountName">
+                    <select required oninvalid='this.setCustomValidity("<fmt:message
+                            key="page.error.field.is.required" bundle="${lang}"/>")'
+                            oninput="setCustomValidity('')" class="form-control" name="accountName">
                         <option value="">
                             <fmt:message key="page.label.choose" bundle="${lang}"/>
                         </option>
@@ -244,12 +251,17 @@
                         </c:forEach>
                     </select>
                 </td>
-                <td><input required type="number" class="form-control" name="price"
+                <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                        key="page.error.field.is.required" bundle="${lang}"/>")'
+                           oninput="setCustomValidity('')" type="number" class="form-control"
+                           name="price"
                            value=""
                            placeholder="<fmt:message key="ticket.label.price" bundle="${lang}"/>">
                 </td>
                 <td>
-                    <select required name="isBusiness" class="form-control">
+                    <select required oninvalid='this.setCustomValidity("<fmt:message
+                            key="page.error.field.is.required" bundle="${lang}"/>")'
+                            oninput="setCustomValidity('')" name="isBusiness" class="form-control">
                         <option value="">
                             <fmt:message key="page.label.choose" bundle="${lang}"/>
                         </option>

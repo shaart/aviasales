@@ -168,15 +168,24 @@
                            value="-"
                            placeholder="<fmt:message key="airplane.label.id" bundle="${lang}"/>">
                 </td>
-                <td><input required type="text" class="form-control" name="name"
+                <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                        key="page.error.field.is.required" bundle="${lang}"/>")'
+                           oninput="setCustomValidity('')" type="text" class="form-control"
+                           name="name"
                            value=""
                            placeholder="<fmt:message key="airplane.label.name" bundle="${lang}"/>">
                 </td>
-                <td><input required type="text" class="form-control" name="economySeatsCount"
+                <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                        key="page.error.field.is.required" bundle="${lang}"/>")'
+                           oninput="setCustomValidity('')" type="text" class="form-control"
+                           name="economySeatsCount"
                            value=""
                            placeholder="<fmt:message key="airplane.label.economySeatsCount" bundle="${lang}"/>">
                 </td>
-                <td><input required type="text" class="form-control" name="businessSeatsCount"
+                <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                        key="page.error.field.is.required" bundle="${lang}"/>")'
+                           oninput="setCustomValidity('')" type="text" class="form-control"
+                           name="businessSeatsCount"
                            value=""
                            placeholder="<fmt:message key="airplane.label.businessSeatsCount" bundle="${lang}"/>">
                 </td>
@@ -272,15 +281,24 @@
                 <form action="/manage/airplanes" accept-charset="UTF-8" method="post">
                     <td><input readonly type="text" class="form-control" width="10" name="id"
                                value="${airplane.id}"></td>
-                    <td><input required type="text" class="form-control" name="name"
+                    <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                            key="page.error.field.is.required" bundle="${lang}"/>")'
+                               oninput="setCustomValidity('')" type="text" class="form-control"
+                               name="name"
                                value="${airplane.name}"
                                placeholder="<fmt:message key="airplane.label.name" bundle="${lang}"/>">
                     </td>
-                    <td><input required type="text" class="form-control" name="economySeatsCount"
+                    <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                            key="page.error.field.is.required" bundle="${lang}"/>")'
+                               oninput="setCustomValidity('')" type="text" class="form-control"
+                               name="economySeatsCount"
                                value="${airplane.economySeatsCount}"
                                placeholder="<fmt:message key="airplane.label.economySeatsCount" bundle="${lang}"/>">
                     </td>
-                    <td><input required type="text" class="form-control" name="businessSeatsCount"
+                    <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                            key="page.error.field.is.required" bundle="${lang}"/>")'
+                               oninput="setCustomValidity('')" type="text" class="form-control"
+                               name="businessSeatsCount"
                                value="${airplane.businessSeatsCount}"
                                placeholder="<fmt:message key="airplane.label.businessSeatsCount" bundle="${lang}"/>">
                     </td>

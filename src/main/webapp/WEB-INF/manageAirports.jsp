@@ -152,7 +152,10 @@
                            value="-"
                            placeholder="<fmt:message key="airport.label.id" bundle="${lang}"/>">
                 </td>
-                <td><input required type="text" class="form-control" name="name"
+                <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                        key="page.error.field.is.required" bundle="${lang}"/>")'
+                           oninput="setCustomValidity('')" type="text" class="form-control"
+                           name="name"
                            value=""
                            placeholder="<fmt:message key="airport.label.name" bundle="${lang}"/>">
                 </td>
@@ -244,7 +247,10 @@
                 <form action="/manage/airports" method="post">
                     <td><input readonly type="text" class="form-control" width="10" name="id"
                                value="${airport.id}"></td>
-                    <td><input required type="text" class="form-control" name="name"
+                    <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                            key="page.error.field.is.required" bundle="${lang}"/>")'
+                               oninput="setCustomValidity('')" type="text" class="form-control"
+                               name="name"
                                value="${airport.name}"
                                placeholder="<fmt:message key="airport.label.name" bundle="${lang}"/>">
                     </td>

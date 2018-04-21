@@ -295,7 +295,10 @@
                            placeholder="<fmt:message key="flight.label.id" bundle="${lang}"/>">
                 </td>
                 <td>
-                    <select required class="form-control" name="fromAirport" size="1">
+                    <select required oninvalid='this.setCustomValidity("<fmt:message
+                            key="page.error.field.is.required" bundle="${lang}"/>")'
+                            oninput="setCustomValidity('')" class="form-control" name="fromAirport"
+                            size="1">
                         <c:choose>
                             <c:when test="${not empty fromAirport}">
                                 <option selected value="">
@@ -322,7 +325,10 @@
                     </select>
                 </td>
                 <td>
-                    <select required class="form-control" data-live-search="true" name="toAirport"
+                    <select required oninvalid='this.setCustomValidity("<fmt:message
+                            key="page.error.field.is.required" bundle="${lang}"/>")'
+                            oninput="setCustomValidity('')" class="form-control"
+                            data-live-search="true" name="toAirport"
                             size="1">
                         <c:choose>
                             <c:when test="${not empty toAirport}">
@@ -350,7 +356,10 @@
                     </select>
                 </td>
                 <td>
-                    <select required class="form-control" data-live-search="true" name="airplane"
+                    <select required oninvalid='this.setCustomValidity("<fmt:message
+                            key="page.error.field.is.required" bundle="${lang}"/>")'
+                            oninput="setCustomValidity('')" class="form-control"
+                            data-live-search="true" name="airplane"
                             size="1">
                         <c:choose>
                             <c:when test="${not empty airplane}">
@@ -385,19 +394,31 @@
                            placeholder="<fmt:message key="flight.label.arrival" bundle="${lang}"/>"
                            pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" required>
                 </td>
-                <td><input required type="number" class="form-control" name="baseTicketPrice"
+                <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                        key="page.error.field.is.required" bundle="${lang}"/>")'
+                           oninput="setCustomValidity('')" type="number" class="form-control"
+                           name="baseTicketPrice"
                            value=""
                            placeholder="<fmt:message key="flight.label.base_ticket_price" bundle="${lang}"/>">
                 </td>
-                <td><input required type="number" class="form-control" name="extraBaggagePrice"
+                <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                        key="page.error.field.is.required" bundle="${lang}"/>")'
+                           oninput="setCustomValidity('')" type="number" class="form-control"
+                           name="extraBaggagePrice"
                            value=""
                            placeholder="<fmt:message key="flight.label.extra_baggage_price" bundle="${lang}"/>">
                 </td>
-                <td><input required type="number" class="form-control" name="freeSeatEconomy"
+                <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                        key="page.error.field.is.required" bundle="${lang}"/>")'
+                           oninput="setCustomValidity('')" type="number" class="form-control"
+                           name="freeSeatEconomy"
                            value=""
                            placeholder="<fmt:message key="flight.label.free_seat_economy" bundle="${lang}"/>">
                 </td>
-                <td><input required type="number" class="form-control" name="freeSeatBusiness"
+                <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                        key="page.error.field.is.required" bundle="${lang}"/>")'
+                           oninput="setCustomValidity('')" type="number" class="form-control"
+                           name="freeSeatBusiness"
                            value=""
                            placeholder="<fmt:message key="flight.label.free_seat_business" bundle="${lang}"/>">
                 </td>
