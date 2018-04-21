@@ -11,6 +11,19 @@
     <param-name>credentials</param-name>
     <param-value>credentials.properties</param-value>
   </context-param>
+  <!--CharsetFilter start-->
+  <filter>
+    <filter-name>CharsetFilter</filter-name>
+    <filter-class>com.epam.aviasales.util.CharsetFilter</filter-class>
+    <init-param>
+      <param-name>requestEncoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>CharsetFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
   <!--DEFAULT LANGUAGE-->
   <context-param>
     <param-name>javax.servlet.jsp.jstl.fmt.fallbackLocale</param-name>
