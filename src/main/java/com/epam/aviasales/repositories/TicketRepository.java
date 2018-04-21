@@ -25,4 +25,8 @@ public interface TicketRepository {
   List<Ticket> getTicketsByAccountId(Long accountId);
 
   List <PersonalData> getAccountPersonalDatasByAccountId(Long accountId);
+
+  void deleteTicketsByAccountId(Long id);
+
+  void deleteTicketsByFlightId(Long id);
 }

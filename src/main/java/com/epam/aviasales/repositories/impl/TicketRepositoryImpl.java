@@ -7,6 +7,7 @@ import com.epam.aviasales.util.HibernateUtil;
 import java.util.ArrayList;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.extern.log4j.Log4j;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -17,6 +18,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Log4j
 public class TicketRepositoryImpl implements TicketRepository {
 
   private static volatile TicketRepository instance;
@@ -174,5 +176,35 @@ public class TicketRepositoryImpl implements TicketRepository {
     List list = query.setParameter("accountId", accountId).list();
     session.close();
     return list;
+  }
+
+  @Override
+  public void deleteTicketsByAccountId(Long id) {
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    session.beginTransaction();
+
+    Query query = session.createQuery("delete Ticket where account.id = :id");
+    query.setParameter("id", id);
+    int result = query.executeUpdate();
+
+    log.info("Delete all tickets where account id is " + id + ". Result: " + result);
+
+    session.getTransaction().commit();
+    session.close();
+  }
+
+  @Override
+  public void deleteTicketsByFlightId(Long id) {
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    session.beginTransaction();
+
+    Query query = session.createQuery("delete Ticket where flight.id = :id");
+    query.setParameter("id", id);
+    int result = query.executeUpdate();
+
+    log.info("Delete all tickets where flight id is " + id + ". Result: " + result);
+
+    session.getTransaction().commit();
+    session.close();
   }
 }

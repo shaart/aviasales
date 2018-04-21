@@ -126,6 +126,16 @@ public class TicketRepositoryImplMock implements TicketRepository {
   }
 
   @Override
+  public void deleteTicketsByAccountId(Long id) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public void deleteTicketsByFlightId(Long id) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
   public List<Ticket> getTicketsLike(Ticket seekingTicket, int page, int size) {
 
     List<Ticket> ticketList = new ArrayList<>();

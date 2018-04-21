@@ -2,6 +2,7 @@ package com.epam.aviasales.repositories.impl;
 
 import com.epam.aviasales.domain.Account;
 import com.epam.aviasales.repositories.AccountRepository;
+import com.epam.aviasales.repositories.TicketRepository;
 import com.epam.aviasales.util.HibernateUtil;
 import java.util.ArrayList;
 import lombok.AccessLevel;
@@ -19,6 +20,7 @@ import org.hibernate.criterion.Restrictions;
 public class AccountRepositoryImpl implements AccountRepository {
 
   private static volatile AccountRepository instance;
+  private static final TicketRepository ticketRepository = TicketRepositoryImpl.getInstance();
 
   public static AccountRepository getInstance() {
     AccountRepository localInstance = instance;
@@ -188,12 +190,10 @@ public class AccountRepositoryImpl implements AccountRepository {
     Session session = HibernateUtil.getSessionFactory().openSession();
     session.beginTransaction();
 
-    Query query = session.createQuery("delete Ticket where account.id = :id");
+    ticketRepository.deleteTicketsByAccountId(id);
+    Query query = session.createQuery("delete Account where id = :id");
     query.setParameter("id", id);
     int result = query.executeUpdate();
-    query = session.createQuery("delete Account where id = :id");
-    query.setParameter("id", id);
-    result = query.executeUpdate();
 
     session.getTransaction().commit();
     session.close();

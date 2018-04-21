@@ -149,6 +149,16 @@ public class FlightRepositoryImplMock implements FlightRepository {
   }
 
   @Override
+  public void deleteFlightsByAirportId(Long id) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public void deleteFlightsByAirplaneId(Long id) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
   public List<Flight> getFlightsPage(int page, int count) {
 
     List<Flight> flightList = new ArrayList<>();
