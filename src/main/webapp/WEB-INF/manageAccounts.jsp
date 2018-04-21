@@ -136,7 +136,7 @@
                 <td><input type="text" class="form-control" name="login" value="${login}"
                            placeholder="<fmt:message key="account.label.login" bundle="${lang}"/>">
                 </td>
-                <td><input type="text" class="form-control" name="email" value="${email}"
+                <td><input type="email" class="form-control" name="email" value="${email}"
                            placeholder="<fmt:message key="account.label.email" bundle="${lang}"/>">
                 </td>
                 <td><input type="text" class="form-control" name="phone" value="${phone}"
@@ -216,13 +216,13 @@
                 </td>
                 <td><input required oninvalid='this.setCustomValidity("<fmt:message
                         key="page.error.field.is.required" bundle="${lang}"/>")'
-                           oninput="setCustomValidity('')" type="text" class="form-control"
+                           oninput="setCustomValidity('')" type="password" class="form-control"
                            name="password" value=""
                            placeholder="<fmt:message key="account.label.password" bundle="${lang}"/>">
                 </td>
                 <td><input required oninvalid='this.setCustomValidity("<fmt:message
                         key="page.error.field.is.required" bundle="${lang}"/>")'
-                           oninput="setCustomValidity('')" type="text" class="form-control"
+                           oninput="setCustomValidity('')" type="email" class="form-control"
                            name="email" value=""
                            placeholder="<fmt:message key="account.label.email" bundle="${lang}"/>">
                 </td>
@@ -358,7 +358,7 @@
                     </td>
                     <td><input required oninvalid='this.setCustomValidity("<fmt:message
                             key="page.error.field.is.required" bundle="${lang}"/>")'
-                               oninput="setCustomValidity('')" type="text" class="form-control"
+                               oninput="setCustomValidity('')" type="email" class="form-control"
                                name="email"
                                value="${account.email}"
                                placeholder="<fmt:message key="account.label.email" bundle="${lang}"/>">
