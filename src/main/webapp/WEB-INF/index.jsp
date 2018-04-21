@@ -62,6 +62,10 @@
     </div>
 </form>
 
+<c:if test="${error != null}">
+    <h5 style="color: red"><fmt:message key="${error}" bundle="${lang}"/>!</h5>
+</c:if>
+
 <c:if test="${flights.size() >= 1}">
     <h4><fmt:message key="flight.label.available_flights" bundle="${lang}"/>:</h4>
     <form action="/ticket" method="post">
@@ -86,7 +90,7 @@
         <br>
         <c:choose>
             <c:when test="${account == null}">
-                <h4 style="color: red"><fmt:message key="registrate.warning" bundle="${lang}"/></h4>
+                <h5 style="color: red"><fmt:message key="registrate.warning" bundle="${lang}"/>.</h5>
             </c:when>
             <c:otherwise>
                 <div align="right">
@@ -95,7 +99,7 @@
             </c:otherwise>
         </c:choose>
     </form>
-    <h4><c:if test="${error != null}"> ${error}</c:if></h4>
+    <h5><c:if test="${error != null}"> ${error}</c:if></h5>
 </c:if>
 
 </body>

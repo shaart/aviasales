@@ -27,9 +27,13 @@ public class FlightServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
+    if(req.getSession().getAttribute("from") == null){
+      resp.sendRedirect("/");
+      return;
+    }
     if (!req.getSession().getAttribute("from").equals("")) {
-      idAirportFrom = Long.parseLong(req.getSession().getAttribute("from").toString());
-      idAirportTo = Long.parseLong(req.getSession().getAttribute("to").toString());
+      idAirportFrom = Long.valueOf(req.getSession().getAttribute("from").toString());
+      idAirportTo = Long.valueOf(req.getSession().getAttribute("to").toString());
       date = LocalDate.parse(req.getSession().getAttribute("date").toString());
 
       List<Flight> flightList = flightsService.getFlights(idAirportFrom, idAirportTo, date);
@@ -48,14 +52,20 @@ public class FlightServlet extends HttpServlet {
     } else {
       date = LocalDate.parse(req.getParameter("date"));
     }
-    idAirportFrom = Long.parseLong(req.getParameter("flight_from"));
-    idAirportTo = Long.parseLong(req.getParameter("flight_to"));
+    idAirportFrom = Long.valueOf(req.getParameter("flight_from"));
+    idAirportTo = Long.valueOf(req.getParameter("flight_to"));
 
     req.getSession().setAttribute("from", idAirportFrom);
     req.getSession().setAttribute("to", idAirportTo);
     req.getSession().setAttribute("date", date);
 
     List<Flight> flightList = flightsService.getFlights(idAirportFrom, idAirportTo, date);
+    if(flightList.size()==0){
+      req.setAttribute("error", "error.no_flights_today");
+    }
+    if(idAirportFrom == idAirportTo){
+      req.setAttribute("error", "error.the_same_airports");
+    }
     req.setAttribute("flights", flightList);
     req.getRequestDispatcher("/WEB-INF/index.jsp").forward(req, resp);
   }
