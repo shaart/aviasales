@@ -14,9 +14,15 @@
 </head>
 <body>
 <%@include file="layout/header.jsp" %>
-<h1>Error</h1>
-<pre>
-    <p><c:out value="${error}" escapeXml="false"/></p>
-</pre>
+<div class="container">
+    <h2>Error!</h2>
+    <div class="alert alert-danger">
+        <p><c:out value="${error}" escapeXml="false"/></p>
+    </div>
+    <a href="${previousPage}" class="btn btn-primary">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        <fmt:message key="error.label.go.back" bundle="${lang}"/>
+    </a>
+</div>
 <%@include file="layout/footer.jsp" %>
 </body>

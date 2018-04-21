@@ -6,6 +6,7 @@ import com.epam.aviasales.services.ParserService;
 import com.epam.aviasales.services.impl.AirplaneServiceImpl;
 import com.epam.aviasales.services.impl.ParserServiceImpl;
 import com.epam.aviasales.util.Action;
+import com.epam.aviasales.util.ErrorHelper;
 import com.epam.aviasales.util.ParseRequestHelper;
 import java.io.IOException;
 import java.util.List;
@@ -20,6 +21,7 @@ public class ManageAirplanesServlet extends HttpServlet {
 
   private ParserService parserService;
   private AirplaneService airplaneService;
+  private static final String SERVLET_ADDRESS = "/manage/airplanes";
 
   @Override
   public void init() throws ServletException {
@@ -53,9 +55,8 @@ public class ManageAirplanesServlet extends HttpServlet {
 
       req.getRequestDispatcher("/WEB-INF/manageAirplanes.jsp").forward(req, resp);
     } catch (Exception e) {
-      log.error(e.getCause(), e);
-      req.setAttribute("error", e.toString());
-      req.getRequestDispatcher("/WEB-INF/error.jsp").forward(req, resp);
+      ErrorHelper.redirectToErrorPage(req, resp, e, SERVLET_ADDRESS);
+      return;
     }
   }
 
@@ -85,14 +86,14 @@ public class ManageAirplanesServlet extends HttpServlet {
           break;
       }
     } catch (Exception e) {
-      log.error(e.getCause(), e);
-      resp.sendError(400);
+      ErrorHelper.redirectToErrorPage(req, resp, e, SERVLET_ADDRESS);
       return;
     }
     try {
       resp.sendRedirect("/manage/airplanes");
     } catch (IOException e) {
-      log.error(e);
+      ErrorHelper.redirectToErrorPage(req, resp, e, SERVLET_ADDRESS);
+      return;
     }
   }
 }

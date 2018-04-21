@@ -7,6 +7,7 @@ import com.epam.aviasales.services.ParserService;
 import com.epam.aviasales.services.impl.AccountServiceImpl;
 import com.epam.aviasales.services.impl.ParserServiceImpl;
 import com.epam.aviasales.util.Action;
+import com.epam.aviasales.util.ErrorHelper;
 import com.epam.aviasales.util.ParseRequestHelper;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class ManageAccountsServlet extends HttpServlet {
 
   private ParserService parserService;
   private AccountService accountService;
+  private static final String SERVLET_ADDRESS = "/manage/accounts";
 
   @Override
   public void init() throws ServletException {
@@ -62,9 +64,8 @@ public class ManageAccountsServlet extends HttpServlet {
 
       req.getRequestDispatcher("/WEB-INF/manageAccounts.jsp").forward(req, resp);
     } catch (Exception e) {
-      log.error(e.getCause(), e);
-      req.setAttribute("error", e.toString());
-      req.getRequestDispatcher("/WEB-INF/error.jsp").forward(req, resp);
+      ErrorHelper.redirectToErrorPage(req, resp, e, SERVLET_ADDRESS);
+      return;
     }
   }
 
@@ -73,6 +74,7 @@ public class ManageAccountsServlet extends HttpServlet {
       throws ServletException, IOException {
 
     Action action = ParseRequestHelper.getRequestAction(req);
+
     try {
       Account receivedAccount = parserService.parseAccount(req);
 
@@ -94,12 +96,11 @@ public class ManageAccountsServlet extends HttpServlet {
           break;
       }
     } catch (Exception e) {
-      log.error(e.getCause(), e);
-      resp.sendError(400);
+      ErrorHelper.redirectToErrorPage(req, resp, e, SERVLET_ADDRESS);
       return;
     }
     try {
-      resp.sendRedirect("/manage/accounts");
+      resp.sendRedirect(SERVLET_ADDRESS);
     } catch (IOException e) {
       log.error(e);
     }

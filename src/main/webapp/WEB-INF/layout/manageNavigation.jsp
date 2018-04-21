@@ -19,7 +19,7 @@
                 var="lang"/>
         <div class="container">
         <a href="/manage" class="btn btn-primary">
-        <span class="glyphicon glyphicon-chevron-left"></span>
+            <span class="glyphicon glyphicon-chevron-left"></span>
             <fmt:message key="label.manage.back" bundle="${lang}"/>
         </a>
         </div>
