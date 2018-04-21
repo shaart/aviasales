@@ -90,7 +90,8 @@
 </script>
 <body>
 <%@include file="layout/header.jsp" %>
-<div class="container" style="width: 100%">
+<%@include file="layout/manageNavigation.jsp" %>
+<div class="container">
     <h2><fmt:message key="page.header.search" bundle="${lang}"/></h2>
     <table id="searchTable" class="table-bordered">
         <thead>
@@ -103,7 +104,7 @@
                 <fmt:message key="personaldata.label.passport" bundle="${lang}"/></th>
             <th class="text-center" style="width: 20%;">
                 <fmt:message key="personaldata.label.dateOfBirth" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 10%;">
+            <th class="text-center" style="width: 10%; min-width: 170px;">
                 <fmt:message key="page.label.control" bundle="${lang}"/></th>
         </tr>
         </thead>
@@ -156,7 +157,7 @@
                 <fmt:message key="personaldata.label.passport" bundle="${lang}"/></th>
             <th class="text-center" style="width: 20%;">
                 <fmt:message key="personaldata.label.dateOfBirth" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 10%;">
+            <th class="text-center" style="width: 10%; min-width: 170px;">
                 <fmt:message key="page.label.control" bundle="${lang}"/></th>
         </tr>
         </thead>
@@ -239,7 +240,7 @@
                 <fmt:message key="personaldata.label.passport" bundle="${lang}"/></th>
             <th class="text-center" style="width: 20%;">
                 <fmt:message key="personaldata.label.dateOfBirth" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 10%;">
+            <th class="text-center" style="width: 10%; min-width: 170px;">
                 <fmt:message key="page.label.control" bundle="${lang}"/></th>
         </tr>
         </thead>

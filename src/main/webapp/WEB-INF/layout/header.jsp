@@ -8,9 +8,10 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/aviasales.css">
+    <script type="text/javascript" src="/webjars/jquery/2.1.1/jquery.min.js"></script>
 </head>
-<script type="text/javascript" src="webjars/jquery/2.1.1/jquery.min.js"></script>
-<script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 
 <div class="container font-weight-normal">
     <header class="blog-header py-2">

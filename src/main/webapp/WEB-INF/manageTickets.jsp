@@ -90,24 +90,25 @@
 </script>
 <body>
 <%@include file="layout/header.jsp" %>
-<div class="container" style="width: 100%">
+<%@include file="layout/manageNavigation.jsp" %>
+<div class="container">
     <h2><fmt:message key="page.header.search" bundle="${lang}"/></h2>
     <table id="searchTable" class="table-bordered">
         <thead>
         <tr>
             <th class="text-center" style="width: 5%;">
                 <fmt:message key="ticket.label.id" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 15%;">
+            <th class="text-center" style="width: 13%;">
                 <fmt:message key="ticket.label.personalData.passport" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 30%;">
+            <th class="text-center" style="width: 25%;">
                 <fmt:message key="ticket.label.flight" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%;">
+            <th class="text-center" style="width: 15%;">
                 <fmt:message key="ticket.label.account.name" bundle="${lang}"/></th>
             <th class="text-center" style="width: 7%;">
                 <fmt:message key="ticket.label.price" bundle="${lang}"/></th>
             <th class="text-center" style="width: 10%;">
                 <fmt:message key="ticket.label.type" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 10%;">
+            <th class="text-center" style="width: 10%; min-width: 150px;">
                 <fmt:message key="page.label.control" bundle="${lang}"/></th>
         </tr>
         </thead>
@@ -190,17 +191,17 @@
         <tr>
             <th class="text-center" style="width: 5%;">
                 <fmt:message key="ticket.label.id" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 15%;">
+            <th class="text-center" style="width: 13%;">
                 <fmt:message key="ticket.label.personalData.passport" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 30%;">
+            <th class="text-center" style="width: 25%;">
                 <fmt:message key="ticket.label.flight" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%;">
+            <th class="text-center" style="width: 15%;">
                 <fmt:message key="ticket.label.account.name" bundle="${lang}"/></th>
             <th class="text-center" style="width: 7%;">
                 <fmt:message key="ticket.label.price" bundle="${lang}"/></th>
             <th class="text-center" style="width: 10%;">
                 <fmt:message key="ticket.label.type" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 10%;">
+            <th class="text-center" style="width: 10%; min-width: 150px;">
                 <fmt:message key="page.label.control" bundle="${lang}"/></th>
         </tr>
         </thead>
@@ -314,17 +315,17 @@
         <tr>
             <th class="text-center" style="width: 5%;">
                 <fmt:message key="ticket.label.id" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 15%;">
+            <th class="text-center" style="width: 13%;">
                 <fmt:message key="ticket.label.personalData.passport" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 30%;">
+            <th class="text-center" style="width: 25%;">
                 <fmt:message key="ticket.label.flight" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%;">
+            <th class="text-center" style="width: 15%;">
                 <fmt:message key="ticket.label.account.name" bundle="${lang}"/></th>
             <th class="text-center" style="width: 7%;">
                 <fmt:message key="ticket.label.price" bundle="${lang}"/></th>
             <th class="text-center" style="width: 10%;">
                 <fmt:message key="ticket.label.type" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 10%;">
+            <th class="text-center" style="width: 10%; min-width: 150px;">
                 <fmt:message key="page.label.control" bundle="${lang}"/></th>
         </tr>
         </thead>

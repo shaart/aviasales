@@ -90,37 +90,38 @@
 </script>
 <body>
 <%@include file="layout/header.jsp" %>
+<%@include file="layout/manageNavigation.jsp" %>
 <c:if test="${not empty error}">
     <div class="alert alert-danger">
-        ${error}
+            ${error}
     </div>
 </c:if>
-<div class="container" style="width: 100%">
+<div class="container">
     <h2><fmt:message key="flight.header.search" bundle="${lang}"/></h2>
-    <table id="searchTable" width="2000">
+    <table id="searchTable">
         <thead>
         <tr>
-            <th class="text-center" style="width: 3%;">
+            <th class="text-center" style="width: 5%; min-width: 70px;">
                 <fmt:message key="flight.label.id" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 7%;">
+            <th class="text-center" style="width: 20%; min-width: 110px;">
                 <fmt:message key="flight.label.from" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 7%;">
+            <th class="text-center" style="width: 20%; min-width: 110px;">
                 <fmt:message key="flight.label.to" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 7%;">
+            <th class="text-center" style="width: 20%; min-width: 120px;">
                 <fmt:message key="flight.label.airplane" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 7%;">
+            <th class="text-center" style="width: 5%; max-width: 240px;">
                 <fmt:message key="flight.label.departure" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 7%;">
+            <th class="text-center" style="width: 5%; max-width: 240px;">
                 <fmt:message key="flight.label.arrival" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 5%;">
+            <th class="text-center" style="width: 10%; min-width: 80px;">
                 <fmt:message key="flight.label.base_ticket_price" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 5%;">
+            <th class="text-center" style="width: 10%; min-width: 75px;">
                 <fmt:message key="flight.label.extra_baggage_price" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 3%;">
+            <th class="text-center" style="width: 5%; min-width: 60px;">
                 <fmt:message key="flight.label.free_seat_economy" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 3%;">
+            <th class="text-center" style="width: 5%; min-width: 60px;">
                 <fmt:message key="flight.label.free_seat_business" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 10%;">
+            <th class="text-center" style="width: 20%; min-width: 170px;">
                 <fmt:message key="flight.label.control" bundle="${lang}"/></th>
         </tr>
         </thead>
@@ -259,30 +260,30 @@
     </table>
     <br>
     <h2><fmt:message key="flight.header.add" bundle="${lang}"/></h2>
-    <table id="addTable" width="2000">
+    <table id="addTable">
         <thead>
         <tr>
-            <th class="text-center" style="width: 3%;">
+            <th class="text-center" style="width: 5%; min-width: 70px;">
                 <fmt:message key="flight.label.id" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 7%;">
+            <th class="text-center" style="width: 20%; min-width: 110px;">
                 <fmt:message key="flight.label.from" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 7%;">
+            <th class="text-center" style="width: 20%; min-width: 110px;">
                 <fmt:message key="flight.label.to" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 7%;">
+            <th class="text-center" style="width: 20%; min-width: 120px;">
                 <fmt:message key="flight.label.airplane" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 7%;">
+            <th class="text-center" style="width: 5%; max-width: 240px;">
                 <fmt:message key="flight.label.departure" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 7%;">
+            <th class="text-center" style="width: 5%; max-width: 240px;">
                 <fmt:message key="flight.label.arrival" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 5%;">
+            <th class="text-center" style="width: 10%; min-width: 80px;">
                 <fmt:message key="flight.label.base_ticket_price" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 5%;">
+            <th class="text-center" style="width: 10%; min-width: 75px;">
                 <fmt:message key="flight.label.extra_baggage_price" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 3%;">
+            <th class="text-center" style="width: 5%; min-width: 60px;">
                 <fmt:message key="flight.label.free_seat_economy" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 3%;">
+            <th class="text-center" style="width: 5%; min-width: 60px;">
                 <fmt:message key="flight.label.free_seat_business" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 10%;">
+            <th class="text-center" style="width: 20%; min-width: 170px;">
                 <fmt:message key="flight.label.control" bundle="${lang}"/></th>
         </tr>
         </thead>
@@ -449,30 +450,30 @@
             </ul>
         </nav>
     </div>
-    <table id="dataTable" width="2000">
+    <table id="dataTable" class="table-responsive">
         <thead>
         <tr>
-            <th class="text-center">
+            <th class="text-center" style="width: 5%; min-width: 70px;">
                 <fmt:message key="flight.label.id" bundle="${lang}"/></th>
-            <th class="text-center">
+            <th class="text-center" style="width: 20%; min-width: 110px;">
                 <fmt:message key="flight.label.from" bundle="${lang}"/></th>
-            <th class="text-center">
+            <th class="text-center" style="width: 20%; min-width: 110px;">
                 <fmt:message key="flight.label.to" bundle="${lang}"/></th>
-            <th class="text-center">
+            <th class="text-center" style="width: 20%; min-width: 120px;">
                 <fmt:message key="flight.label.airplane" bundle="${lang}"/></th>
-            <th class="text-center">
+            <th class="text-center" style="width: 5%; max-width: 240px;">
                 <fmt:message key="flight.label.departure" bundle="${lang}"/></th>
-            <th class="text-center">
+            <th class="text-center" style="width: 5%; max-width: 240px;">
                 <fmt:message key="flight.label.arrival" bundle="${lang}"/></th>
-            <th class="text-center">
+            <th class="text-center" style="width: 10%; min-width: 80px;">
                 <fmt:message key="flight.label.base_ticket_price" bundle="${lang}"/></th>
-            <th class="text-center">
+            <th class="text-center" style="width: 10%; min-width: 75px;">
                 <fmt:message key="flight.label.extra_baggage_price" bundle="${lang}"/></th>
-            <th class="text-center">
+            <th class="text-center" style="width: 5%; min-width: 60px;">
                 <fmt:message key="flight.label.free_seat_economy" bundle="${lang}"/></th>
-            <th class="text-center">
+            <th class="text-center" style="width: 5%; min-width: 60px;">
                 <fmt:message key="flight.label.free_seat_business" bundle="${lang}"/></th>
-            <th class="text-center">
+            <th class="text-center" style="width: 20%; min-width: 170px;">
                 <fmt:message key="flight.label.control" bundle="${lang}"/></th>
         </tr>
         </thead>
