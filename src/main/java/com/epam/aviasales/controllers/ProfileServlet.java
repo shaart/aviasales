@@ -64,10 +64,10 @@ public class ProfileServlet extends HttpServlet {
   }
 
   private void returnTicket(HttpServletRequest request, HttpServletResponse response)
-      throws IOException, ServletException {
+      throws IOException {
     String ticketId = request.getParameter("ticketId");
     profileService.deleteAccountTicketById(Long.valueOf(ticketId));
-    request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
+    response.sendRedirect("/profile");
   }
 
   private void changeAccount(
