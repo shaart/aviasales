@@ -12,7 +12,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @Builder
 public class Account implements Serializable {
 
@@ -23,4 +22,11 @@ public class Account implements Serializable {
   private String password;
   private String email;
   private String phone;
+
+  @Override
+  public String toString() {
+    return String
+        .format("Account(id=%s, role=%s, name=%s, login=%s, email=%s, phone=%s",
+            id, role, name, login, email, phone);
+  }
 }
