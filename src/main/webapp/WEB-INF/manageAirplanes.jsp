@@ -8,7 +8,7 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="com.epam.aviasales.bundles.global" var="lang"/>
 <c:if test="${account == null || (account.role != 'ADMIN' && account.role != 'MANAGER')}">
-    <% response.sendError(404); %>
+    <% response.sendError(403); %>
 </c:if>
 <c:set var="COLUMNS_FIRST_NUM" value="0"/>
 <c:set var="COLUMNS_COUNT" value="4"/>
