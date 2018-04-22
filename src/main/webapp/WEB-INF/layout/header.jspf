@@ -16,7 +16,9 @@
                 value="${not empty param.language ?
     param.language : not empty language ? language : pageContext.request.locale}"
                 scope="session"/>
-        <c:set var="MULTIPLIER_PRICE_FOR_BUSINESS_TICKETS" value="1.4"/>
+        <c:set
+                var="MULTIPLIER_PRICE_FOR_BUSINESS_TICKETS"
+                value="1.4"/>
 
         <fmt:setLocale value="${language}"/>
         <fmt:setBundle
@@ -30,8 +32,12 @@
         <link rel="stylesheet" type="text/css" href="/css/aviasales.css">
         <script type="text/javascript" src="/webjars/jquery/2.1.1/jquery.min.js"></script>
         <script type="text/javascript" src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="/webjars/jquery-validation/1.17.0/jquery.validate.min.js"></script>
         <script type="text/javascript" src="/js/aviasales.js"></script>
+        <script type="text/javascript" src="/js/validator.js"></script>
+        <%--<script type="text/javascript"--%>
+        <%--src="/webjars/jquery-validation/1.17.0/jquery.validate.min.js"></script>--%>
+        <%--<script type="text/javascript" src="/js/messages_ru.js.js"></script>--%>
+        <%--<script type="text/javascript" src="/js/validator.min.js"></script>--%>
 
         <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
@@ -77,3 +83,10 @@
         </div><!--/.nav-collapse -->
         </div>
         </nav>
+        <script>
+        $(document).ready(function() {
+          $("form").validate({
+            lang: '${language}' // or whatever language option you have.
+          });
+        });
+        </script>
