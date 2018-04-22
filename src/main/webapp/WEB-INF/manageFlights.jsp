@@ -1,18 +1,7 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib uri="http://aviasales.epam.com/jsp/util/functions" prefix="juf" %>
-<c:set var="language" value="${not empty param.language ? param.language :
-    not empty language ?  language : pageContext.request.locale}"
-       scope="session"/>
-<fmt:setLocale value="${language}"/>
-<fmt:setBundle basename="com.epam.aviasales.bundles.global" var="lang"/>
 <c:set var="COLUMNS_FIRST_NUM" value="0"/>
 <c:set var="COLUMNS_COUNT" value="10"/>
 <c:set var="page" value="${page == null || page < 1 ? 1 : page}"/>
-<!DOCTYPE html>
-<html lang="${language}">
-<head>
+<%@include file="layout/header.jspf" %>
     <title><fmt:message key="manage.flights.title" bundle="${lang}"/></title>
 </head>
 <script type="text/javascript">
@@ -89,7 +78,6 @@
   }
 </script>
 <body>
-<%@include file="layout/header.jsp" %>
 <%@include file="layout/manageNavigation.jsp" %>
 <c:if test="${not empty error}">
     <div class="alert alert-danger">
@@ -627,5 +615,5 @@
         </nav>
     </div>
 </div>
-<%@include file="layout/footer.jsp" %>
+<%@include file="layout/footer.jspf" %>
 </body>

@@ -1,18 +1,7 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<c:set var="language" value="${not empty param.language ? param.language :
-    not empty language ?  language : pageContext.request.locale}"
-       scope="session"/>
-<fmt:setLocale value="${language}"/>
-<fmt:setBundle basename="com.epam.aviasales.bundles.global" var="lang"/>
-<!DOCTYPE html>
-<html lang="${language}">
-<head>
+<%@include file="layout/header.jspf" %>
     <title><fmt:message key="manage.title" bundle="${lang}"/></title>
 </head>
 <body>
-<%@include file="layout/header.jsp" %>
 <div class="container">
     <div class="row">
         <div class="col-sm-6 col-md-4">
@@ -61,5 +50,5 @@
         </div>
     </div>
 </div>
-<%@include file="layout/footer.jsp" %>
+<%@include file="layout/footer.jspf" %>
 </body>

@@ -1,19 +1,7 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="language" value="${not empty param.language ?
-    param.language : not empty language ? language : pageContext.request.locale}" scope="session"/>
-<c:set var="MULTIPLIER_PRICE_FOR_BUSINESS_TICKETS" value="1.4"/>
-<fmt:setLocale value="${language}"/>
-<fmt:setBundle basename="com.epam.aviasales.bundles.global" var="lang"/>
-<!DOCTYPE html>
-<html lang="${language}">
 
-<head>
+<%@include file="layout/header.jspf" %>
     <title>aviasales</title>
 </head>
-
-<%@include file="layout/header.jsp" %>
 
 <body>
 <form action="/flights" method="post">
@@ -101,9 +89,7 @@
     </form>
     <h5><c:if test="${error != null}"> ${error}</c:if></h5>
 </c:if>
+<%@include file="layout/footer.jspf" %>
 
 </body>
-
-<%@include file="layout/footer.jsp" %>
-
 </html>
