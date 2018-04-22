@@ -118,9 +118,6 @@ public class FlightRepositoryImpl implements FlightRepository {
     query.setParameter("maxDepartureTime", LocalDateTime.of(date, LocalTime.of(23, 59)));
     List list = query.list();
     List<Flight> flights = (List<Flight>) list;
-    for (Flight flight : flights) {
-      System.out.println(flight.getDepartureTime());
-    }
 
     session.getTransaction().commit();
     session.close();

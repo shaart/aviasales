@@ -23,7 +23,7 @@
     <p><fmt:message key="ticket.seats.free.economy" bundle="${lang}"/>: ${flight.freeSeatEconomy}</p>
     <p><fmt:message key="ticket.seats.free.business" bundle="${lang}"/>: ${flight.freeSeatBusiness}</p>
     <p><fmt:message key="ticket.baggage.price" bundle="${lang}"/>
-        (1 <fmt:message key="ticket.baggage.kg" bundle="${lang}"/>): ${flight.extraBaggagePrice} €</p>
+        (1 <fmt:message key="ticket.baggage.kg" bundle="${lang}"/>): ${flight.extraBaggagePrice} &#8364;</p>
 </div>
 
 <h4><fmt:message key="ticket.personal_data.type" bundle="${lang}"/>:</h4>
@@ -67,13 +67,13 @@
         <c:if test="${flight.freeSeatEconomy > 0}">
             <input name="isBusiness" type="radio" value="false"/>
             <fmt:message key="flight.label.economy_class" bundle="${lang}"/>
-            <fmt:formatNumber value="${flight.baseTicketPrice}" minFractionDigits="2" maxFractionDigits="2"/> €
+            <fmt:formatNumber value="${flight.baseTicketPrice}" minFractionDigits="2" maxFractionDigits="2"/> &#8364;
             (<fmt:message key="ticket.baggage.weight" bundle="${lang}"/> 8 <fmt:message key="ticket.baggage.kg" bundle="${lang}"/>) <br>
         </c:if>
         <c:if test="${flight.freeSeatBusiness > 0}">
             <input name="isBusiness" type="radio" value="true"/>
             <fmt:message key="flight.label.business_class" bundle="${lang}"/>
-            <fmt:formatNumber value="${flight.baseTicketPrice*1.4}" minFractionDigits="2" maxFractionDigits="2"/> €
+            <fmt:formatNumber value="${flight.baseTicketPrice*1.4}" minFractionDigits="2" maxFractionDigits="2"/> &#8364;
             (<fmt:message key="ticket.baggage.weight" bundle="${lang}"/> 20 <fmt:message key="ticket.baggage.kg" bundle="${lang}"/>) <br>
         </c:if>
         <c:if test="${error != null}">
