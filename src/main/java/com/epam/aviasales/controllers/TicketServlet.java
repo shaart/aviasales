@@ -49,7 +49,8 @@ public class TicketServlet extends HttpServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
     if (req.getSession().getAttribute("flight").equals("")) {
-      if (req.getParameter("selected_flight") == null) {
+      if (req.getParameter("selected_flight") == null ||
+          req.getParameter("selected_flight").equals("")) {
         resp.sendRedirect("/flights");
         return;
       } else {

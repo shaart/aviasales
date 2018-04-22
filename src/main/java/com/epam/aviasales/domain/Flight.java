@@ -28,10 +28,15 @@ public class Flight implements Serializable {
   private Integer freeSeatEconomy;
   private Integer freeSeatBusiness;
 
+//  @Override
+//  public String toString() {
+//    return fromAirport.getName() + " (" + departureTime
+//        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) + ") -> " + toAirport.getName()
+//        + " (" + arrivalTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) + ")";
+//  }
+
   @Override
   public String toString() {
-    return fromAirport.getName() + " (" + departureTime
-        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) + ") -> " + toAirport.getName()
-        + " (" + arrivalTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) + ")";
+    return fromAirport.getName() + " -> " + toAirport.getName();
   }
 }

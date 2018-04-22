@@ -28,8 +28,7 @@ public class FlightServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
-    if (req.getSession().getAttribute("account") == null ||
-        req.getSession().getAttribute("from") == null ||
+    if (req.getSession().getAttribute("from") == null ||
         req.getSession().getAttribute("from").equals("")) {
       resp.sendRedirect("/");
       return;
@@ -38,8 +37,8 @@ public class FlightServlet extends HttpServlet {
     idAirportTo = Long.valueOf(req.getSession().getAttribute("to").toString());
     date = LocalDate.parse(req.getSession().getAttribute("date").toString());
 
-    List<Flight> flightList = flightsService.getFlights(idAirportFrom, idAirportTo, date);
-    req.setAttribute("flights", flightList);
+    List<Flight> flightList = (List<Flight>)req.getSession().getAttribute("flights");
+
     req.getRequestDispatcher("/WEB-INF/index.jsp").forward(req, resp);
   }
 
@@ -47,11 +46,17 @@ public class FlightServlet extends HttpServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
 
-    if (req.getParameter("date").equals("")) {
-      date = LocalDate.now();
+    if (req.getParameter("flight_from") == null ||
+        req.getParameter("flight_from").equals("")) {
+      resp.sendRedirect("/");
+      return;
+    }
+    if(req.getParameter("date").equals("")){
+      date=LocalDate.now();
     } else {
       date = LocalDate.parse(req.getParameter("date"));
     }
+
     idAirportFrom = Long.valueOf(req.getParameter("flight_from"));
     idAirportTo = Long.valueOf(req.getParameter("flight_to"));
 
@@ -66,7 +71,7 @@ public class FlightServlet extends HttpServlet {
     if (idAirportFrom == idAirportTo) {
       req.setAttribute("error", "error.the_same_airports");
     }
-    req.setAttribute("flights", flightList);
+    req.getSession().setAttribute("flights", flightList);
     req.getRequestDispatcher("/WEB-INF/index.jsp").forward(req, resp);
   }
 }
