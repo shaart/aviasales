@@ -129,6 +129,13 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.webjars/jquery-validation -->
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>jquery-validation</artifactId>
+      <version>1.17.0</version>
+    </dependency>
+
   </dependencies>
 
   <build>
