@@ -11,7 +11,7 @@ public class ConfirmationServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
-    if (req.getParameter("account") == null) {
+    if (req.getSession().getAttribute("account") == null) {
       resp.sendError(403);
     } else {
       doPost(req, resp);

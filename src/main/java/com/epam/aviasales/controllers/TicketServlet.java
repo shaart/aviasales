@@ -108,6 +108,6 @@ public class TicketServlet extends HttpServlet {
       req.getRequestDispatcher("/WEB-INF/ticket.jsp").forward(req, resp);
     }
     req.getSession().setAttribute("ticket", ticket);
-    req.getRequestDispatcher("/confirm").forward(req, resp);
+    resp.sendRedirect("/confirm");
   }
 }
