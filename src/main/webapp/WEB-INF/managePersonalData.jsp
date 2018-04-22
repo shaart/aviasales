@@ -1,23 +1,12 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib uri="http://aviasales.epam.com/jsp/util/functions" prefix="juf" %>
-<c:set var="language" value="${not empty param.language ? param.language :
-    not empty language ?  language : pageContext.request.locale}"
-       scope="session"/>
-<fmt:setLocale value="${language}"/>
-<fmt:setBundle basename="com.epam.aviasales.bundles.global" var="lang"/>
+<%@include file="layout/header.jspf" %>
+    <title><fmt:message key="manage.personaldata.title" bundle="${lang}"/></title>
+</head>
 <c:if test="${account == null || (account.role != 'ADMIN' && account.role != 'MANAGER')}">
-    <% response.sendError(403); %>
+        <% response.sendError(403); %>
 </c:if>
 <c:set var="COLUMNS_FIRST_NUM" value="0"/>
 <c:set var="COLUMNS_COUNT" value="4"/>
 <c:set var="page" value="${page == null || page < 1 ? 1 : page}"/>
-<!DOCTYPE html>
-<html lang="${language}">
-<head>
-    <title><fmt:message key="manage.personaldata.title" bundle="${lang}"/></title>
-</head>
 <script type="text/javascript">
   var COLUMNS_START_FROM = ${COLUMNS_FIRST_NUM};
   var COLUMNS_COUNT = ${COLUMNS_COUNT};
@@ -92,8 +81,7 @@
   }
 </script>
 <body>
-<%@include file="layout/header.jsp" %>
-<%@include file="layout/manageNavigation.jsp" %>
+<%@include file="layout/manageNavigation.jspf" %>
 <div class="container">
     <h2><fmt:message key="page.header.search" bundle="${lang}"/></h2>
     <table id="searchTable" class="table-bordered">
@@ -372,5 +360,5 @@
         </c:otherwise>
     </c:choose>
 </div>
-<%@include file="layout/footer.jsp" %>
+<%@include file="layout/footer.jspf" %>
 </body>
