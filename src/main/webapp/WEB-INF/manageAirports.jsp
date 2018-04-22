@@ -177,137 +177,150 @@
     </table>
     <br>
     <h2><fmt:message key="page.header.result" bundle="${lang}"/></h2>
-    <div class="text-center">
-        <nav aria-label="page navigation">
-            <ul class="pagination">
-                <c:if test="${page > 1}">
-                    <li class="page-item">
-                        <a class="page-link"
-                           href="${prevPageURL}">
-                            <fmt:message key="page.previous" bundle="${lang}"/>
-                        </a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="${prevPageURL}">
-                                ${page-1}
-                        </a>
-                    </li>
-                </c:if>
-                <li class="page-item">
-                    <a class="page-link" href="${currPageURL}">
-                        ${page}
-                    </a>
-                </li>
-                <li class=" page-item">
-                    <a class="page-link" href="${nextPageURL}">
-                        ${page+1}
-                    </a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="${nextPageURL}">
-                        <fmt:message key="page.next" bundle="${lang}"/>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-    <table id="dataTable" class="table-bordered" style="width: 70%" align="center">
-        <thead>
-        <tr>
-            <th class="text-center" style="width: 10%;">
-                <fmt:message key="airport.label.id" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 70%;">
-                <fmt:message key="airport.label.name" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 10%; min-width: 170px;">
-                <fmt:message key="page.label.control" bundle="${lang}"/></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr id="filtering-row">
-            <c:forEach begin="${COLUMNS_FIRST_NUM}" end="${COLUMNS_COUNT - 1}" var="counter">
-                <td>
-                    <div class="form-group has-feedback">
-                        <i class="form-control-feedback glyphicon glyphicon-search"></i>
-                        <input id="seekAtColumn${counter}" class="form-control" type="text"
-                               onkeyup="searchAtTable()"
-                               placeholder="<fmt:message key="page.label.filter" bundle="${lang}"/>"
-                               title="<fmt:message key="page.label.filter.title" bundle="${lang}"/>">
-                    </div>
-                </td>
-            </c:forEach>
-            <td>
-                <div class="btn-group btn-group-justified">
-                    <div class="btn-group">
-                        <input class="btn btn-primary" type="button" onclick="clearFilterFields()"
-                               value="<fmt:message key="page.label.filter.clear" bundle="${lang}"/>"/>
-                    </div>
-                </div>
-            </td>
-        </tr>
-        </tr>
-        <c:forEach var="airport" items="${airports}">
-            <tr>
-                <form action="/manage/airports" method="post">
-                    <td><input readonly type="text" class="form-control" width="10" name="id"
-                               value="${airport.id}"></td>
-                    <td><input required oninvalid='this.setCustomValidity("<fmt:message
-                            key="page.error.field.is.required" bundle="${lang}"/>")'
-                               oninput="setCustomValidity('')" type="text" class="form-control"
-                               name="name"
-                               value="${airport.name}"
-                               placeholder="<fmt:message key="airport.label.name" bundle="${lang}"/>">
-                    </td>
+    <c:choose>
+        <c:when test="${airports == null || airports.size() == 0}">
+            <h3><fmt:message key="page.result.no.results" bundle="${lang}"/></h3>
+        </c:when>
+        <c:otherwise>
+            <div class="text-center">
+                <nav aria-label="page navigation">
+                    <ul class="pagination">
+                        <c:if test="${page > 1}">
+                            <li class="page-item">
+                                <a class="page-link"
+                                   href="${prevPageURL}">
+                                    <fmt:message key="page.previous" bundle="${lang}"/>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="${prevPageURL}">
+                                        ${page-1}
+                                </a>
+                            </li>
+                        </c:if>
+                        <li class="page-item">
+                            <a class="page-link" href="${currPageURL}">
+                                    ${page}
+                            </a>
+                        </li>
+                        <li class=" page-item">
+                            <a class="page-link" href="${nextPageURL}">
+                                    ${page+1}
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="${nextPageURL}">
+                                <fmt:message key="page.next" bundle="${lang}"/>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <table id="dataTable" class="table-bordered" style="width: 70%" align="center">
+                <thead>
+                <tr>
+                    <th class="text-center" style="width: 10%;">
+                        <fmt:message key="airport.label.id" bundle="${lang}"/></th>
+                    <th class="text-center" style="width: 70%;">
+                        <fmt:message key="airport.label.name" bundle="${lang}"/></th>
+                    <th class="text-center" style="width: 10%; min-width: 170px;">
+                        <fmt:message key="page.label.control" bundle="${lang}"/></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr id="filtering-row">
+                    <c:forEach begin="${COLUMNS_FIRST_NUM}" end="${COLUMNS_COUNT - 1}"
+                               var="counter">
+                        <td>
+                            <div class="form-group has-feedback">
+                                <i class="form-control-feedback glyphicon glyphicon-search"></i>
+                                <input id="seekAtColumn${counter}" class="form-control" type="text"
+                                       onkeyup="searchAtTable()"
+                                       placeholder="<fmt:message key="page.label.filter" bundle="${lang}"/>"
+                                       title="<fmt:message key="page.label.filter.title" bundle="${lang}"/>">
+                            </div>
+                        </td>
+                    </c:forEach>
                     <td>
                         <div class="btn-group btn-group-justified">
                             <div class="btn-group">
-                                <input type="submit" class="btn btn-primary" name="actionSave"
-                                       value="<fmt:message key="page.label.control.save" bundle="${lang}"/>">
-                            </div>
-                            <div class="btn-group">
-                                <input type="submit" class="btn btn-primary" name="actionDelete"
-                                       value="<fmt:message key="page.label.control.delete" bundle="${lang}"/>">
+                                <input class="btn btn-primary" type="button"
+                                       onclick="clearFilterFields()"
+                                       value="<fmt:message key="page.label.filter.clear" bundle="${lang}"/>"/>
                             </div>
                         </div>
                     </td>
-                </form>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
-    <div class="text-center">
-        <nav aria-label="page navigation">
-            <ul class="pagination">
-                <c:if test="${page > 1}">
-                    <li class="page-item">
-                        <a class="page-link"
-                           href="${prevPageURL}">
-                            <fmt:message key="page.previous" bundle="${lang}"/>
-                        </a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="${prevPageURL}">
-                                ${page-1}
-                        </a>
-                    </li>
-                </c:if>
-                <li class="page-item">
-                    <a class="page-link" href="${currPageURL}">
-                        ${page}
-                    </a>
-                </li>
-                <li class=" page-item">
-                    <a class="page-link" href="${nextPageURL}">
-                        ${page+1}
-                    </a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="${nextPageURL}">
-                        <fmt:message key="page.next" bundle="${lang}"/>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
+                </tr>
+                </tr>
+                <c:forEach var="airport" items="${airports}">
+                    <tr>
+                        <form action="/manage/airports" method="post">
+                            <td><input readonly type="text" class="form-control" width="10"
+                                       name="id"
+                                       value="${airport.id}"></td>
+                            <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                                    key="page.error.field.is.required" bundle="${lang}"/>")'
+                                       oninput="setCustomValidity('')" type="text"
+                                       class="form-control"
+                                       name="name"
+                                       value="${airport.name}"
+                                       placeholder="<fmt:message key="airport.label.name" bundle="${lang}"/>">
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-justified">
+                                    <div class="btn-group">
+                                        <input type="submit" class="btn btn-primary"
+                                               name="actionSave"
+                                               value="<fmt:message key="page.label.control.save" bundle="${lang}"/>">
+                                    </div>
+                                    <div class="btn-group">
+                                        <input type="submit" class="btn btn-primary"
+                                               name="actionDelete"
+                                               value="<fmt:message key="page.label.control.delete" bundle="${lang}"/>">
+                                    </div>
+                                </div>
+                            </td>
+                        </form>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <nav aria-label="page navigation">
+                    <ul class="pagination">
+                        <c:if test="${page > 1}">
+                            <li class="page-item">
+                                <a class="page-link"
+                                   href="${prevPageURL}">
+                                    <fmt:message key="page.previous" bundle="${lang}"/>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="${prevPageURL}">
+                                        ${page-1}
+                                </a>
+                            </li>
+                        </c:if>
+                        <li class="page-item">
+                            <a class="page-link" href="${currPageURL}">
+                                    ${page}
+                            </a>
+                        </li>
+                        <li class=" page-item">
+                            <a class="page-link" href="${nextPageURL}">
+                                    ${page+1}
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="${nextPageURL}">
+                                <fmt:message key="page.next" bundle="${lang}"/>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </c:otherwise>
+    </c:choose>
 </div>
 <%@include file="layout/footer.jsp" %>
 </body>
