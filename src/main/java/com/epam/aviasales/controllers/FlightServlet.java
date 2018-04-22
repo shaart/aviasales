@@ -1,5 +1,6 @@
 package com.epam.aviasales.controllers;
 
+import com.epam.aviasales.domain.Airport;
 import com.epam.aviasales.domain.Flight;
 
 import com.epam.aviasales.services.FlightService;
@@ -45,6 +46,12 @@ public class FlightServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
+
+    if(req.getSession().getAttribute("airports") == null ||
+        ((List<Airport>)req.getSession().getAttribute("airports")).size() == 0){
+      resp.sendRedirect("/");
+      return;
+    }
 
     if (req.getParameter("flight_from") == null ||
         req.getParameter("flight_from").equals("")) {

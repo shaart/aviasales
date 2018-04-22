@@ -1,0 +1,83 @@
+<%@ page
+        contentType="text/html;charset=UTF-8"
+        pageEncoding="UTF-8"
+        language="java" %>
+<%@ taglib
+        prefix="c"
+        uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib
+        prefix="fmt"
+        uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib
+        uri="/WEB-INF/functions.tld"
+        prefix="f" %>
+<c:set
+        var="language"
+        value="${not empty param.language ?
+    param.language : not empty language ? language : pageContext.request.locale}"
+        scope="session"/>
+
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle
+        basename="com.epam.aviasales.bundles.global"
+        var="lang"/>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/aviasales.css">
+    <script type="text/javascript" src="webjars/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript"
+            src="webjars/jquery-validation/1.17.0/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="/js/aviasales.js"></script>
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Aviasales</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/"><fmt:message key="home" bundle="${lang}"/></a></li>
+                    <c:choose>
+                        <c:when test="${account == null}">
+                            <li><a href="/register"><fmt:message key="sign_up"
+                                                                 bundle="${lang}"/></a></li>
+                            <li><a href="/login"><fmt:message key="sign_in" bundle="${lang}"/></a>
+                            </li>
+                        </c:when>
+                        <c:otherwise>
+                            <c:if test="${account.role != 'USER'}">
+                                <li><a href="/manage"><fmt:message key="manage.title"
+                                                                   bundle="${lang}"/></a></li>
+                            </c:if>
+                            <li><a href="/profile"><fmt:message key="profile" bundle="${lang}"/></a>
+                            </li>
+                            <li><a href="/singout"><fmt:message key="sign_out"
+                                                                bundle="${lang}"/></a></li>
+                        </c:otherwise>
+                    </c:choose>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <form>
+                            <input type="image" src="../resources/header/russia.png" value="ru"
+                                   name="language" onclick="submit()">
+                            <input type="image" src="../resources/header/united-kingdom.png"
+                                   value="en"
+                                   name="language" onclick="submit()">
+                        </form>
+                    </li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>

@@ -1,6 +1,5 @@
-<c:set var="MULTIPLIER_PRICE_FOR_BUSINESS_TICKETS" value="1.4"/>
-
 <%@include file="layout/header.jspf" %>
+<%--<c:set var="MULTIPLIER_PRICE_FOR_BUSINESS_TICKETS" value="1.4"/>--%>
 <title>aviasales</title>
 </head>
 
@@ -71,7 +70,7 @@
         <label style="color: red"><fmt:message key="${error}" bundle="${lang}"/>!</label>
     </c:if>
 
-    <c:if test="${flights.size() >= 1}">
+    <c:if test="${not empty flights && flights.size() > 0}">
         <form action="/ticket" method="post">
             <label><fmt:message key="flight.label.available_flights" bundle="${lang}"/>:</label>
             <div class="form-group col-sm-12">
@@ -83,24 +82,28 @@
                             <fmt:parseDate value="${ flight.departureTime }"
                                            pattern="yyyy-MM-dd'T'HH:mm"
                                            var="parsedDateTime" type="both"/>
-                            <label><fmt:message key="ticket.departure.time" bundle="${lang}"/>: <fmt:formatDate
-                                    pattern="yyyy-MM-dd HH:mm" value="${ parsedDateTime }"/></label><br>
+                            <label><fmt:message key="ticket.departure.time" bundle="${lang}"/>:
+                                <fmt:formatDate
+                                        pattern="yyyy-MM-dd HH:mm"
+                                        value="${ parsedDateTime }"/></label><br>
                             <fmt:parseDate value="${ flight.arrivalTime }"
                                            pattern="yyyy-MM-dd'T'HH:mm"
                                            var="parsedDateTime" type="both"/>
-                            <label><fmt:message key="ticket.arrival.time" bundle="${lang}"/>: <fmt:formatDate
-                                    pattern="yyyy-MM-dd HH:mm" value="${ parsedDateTime }"/></label><br>
+                            <label><fmt:message key="ticket.arrival.time" bundle="${lang}"/>:
+                                <fmt:formatDate
+                                        pattern="yyyy-MM-dd HH:mm"
+                                        value="${ parsedDateTime }"/></label><br>
 
                             <label><fmt:message key="flight.label.economy_class" bundle="${lang}"/>:
                                 <fmt:formatNumber value="${flight.baseTicketPrice}"
                                                   minFractionDigits="2" maxFractionDigits="2"/>
-                                €</label><br>
+                                &#8364;</label><br>
                             <label><fmt:message key="flight.label.free_seats"
                                                 bundle="${lang}"/>: ${flight.freeSeatEconomy}</label><br>
                             <label><fmt:message key="flight.label.business_class" bundle="${lang}"/>:
                                 <fmt:formatNumber
                                         value="${flight.baseTicketPrice * MULTIPLIER_PRICE_FOR_BUSINESS_TICKETS}"
-                                        minFractionDigits="2" maxFractionDigits="2"/> €</label><br>
+                                        minFractionDigits="2" maxFractionDigits="2"/> &#8364;</label><br>
                             <label><fmt:message key="flight.label.free_seats"
                                                 bundle="${lang}"/>: ${flight.freeSeatBusiness}</label><br>
                         </div>
