@@ -327,7 +327,7 @@
                                               bundle="${lang}"/></c:otherwise>
                 </c:choose>
             </div>
-            <form action="/profile" method="post">
+            <form action="/profile" method="post" data-toggle="validator" role="form">
                 <div id="modalEditPersonalData" class="modal fade" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -348,9 +348,14 @@
                                     <input type="text" class="form-control"
                                            name="inputPersonalDataName"
                                            id="inputPersonalDataName"
+                                           data-error="<fmt:message key="register.error.wrong_login"
+                    bundle="${lang}"/>"
+                                           pattern="[A-Za-z\u0400-\u04FF]{1,20}\s[A-Za-z\u0400-\u04FF]{1,20}\s?[A-Za-z\u0400-\u04FF]{0,20}"
                                            value=
                                                    "${modalPersonalData.name}"
-                                           required></div>
+                                           required>
+                                    <div class="help-block with-errors"></div></div>
+
                                 <div class="form-group">
                                     <label for="inputPersonalDataPassport"
                                            class="control-label"><fmt:message
@@ -358,12 +363,16 @@
                                             bundle="${lang}"/></label>
                                     <input type="text" class="form-control"
                                            name="inputPersonalDataPassport"
+                                           data-error="<fmt:message key="register.error.wrong_login"
+                    bundle="${lang}"/>"
+                                           pattern="[A-Za-z0-9\s\-]{6,20}"
                                            id="inputPersonalDataPassport"
                                            value=
                                                    "${modalPersonalData.passport}"
                                            required>
                                     <input type="hidden" name="inputPersonalDataId"
                                            value="${modalPersonalData.id}">
+                                    <div class="help-block with-errors"></div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputPersonalDataDOB"
@@ -423,8 +432,12 @@
                                             bundle="${lang}"/></label>
                                     <input type="password" class="form-control"
                                            name="inputOldPassword"
+                                           data-minlength="6" data-maxlength="50"
+                                           data-error="<fmt:message key="register.error.wrong_login"
+                                   bundle="${lang}"/>"
                                            id="inputOldPassword"
-                                           required></div>
+                                           required>
+                                    <div class="help-block with-errors"></div></div>
                                 <div class="form-group">
                                     <label for="inputNewPassword"
                                            class="control-label"><fmt:message
