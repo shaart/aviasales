@@ -18,7 +18,7 @@
       <column name="name" length="256" not-null="true"/>
     </property>
     <property name="login" type="java.lang.String">
-      <column name="login" length="20" not-null="true" unique="true"/>
+      <column name="login" length="50" not-null="true" unique="true"/>
     </property>
     <property name="password" type="java.lang.String">
       <column name="password" length="256" not-null="true"/>

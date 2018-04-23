@@ -1,10 +1,8 @@
 package com.epam.aviasales.services.impl;
 
 import com.epam.aviasales.domain.Account;
-import com.epam.aviasales.domain.Flight;
 import com.epam.aviasales.domain.PersonalData;
 import com.epam.aviasales.domain.Ticket;
-import com.epam.aviasales.exceptions.EmptyResponseFromDB;
 import com.epam.aviasales.exceptions.NoAvailableSeatsForTheFlight;
 import com.epam.aviasales.repositories.AccountRepository;
 import com.epam.aviasales.repositories.PersonalDataRepository;
