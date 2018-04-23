@@ -8,23 +8,15 @@
     <table class="table table-borderless">
         <thead>
         <tr>
-            <th scope="col" style="width: 50px"></th>
-            <th scope="col" style="width: 300px"></th>
-            <th scope="col" style="width: 50px"></th>
+            <th scope="col" style="width: 20px"></th>
+            <th scope="col" style="width: 20px"></th>
+            <th scope="col" style="width: 20px"></th>
         </tr>
         </thead>
         <tbody>
         <tr>
             <th scope="row"><fmt:message key="profile.label.name" bundle="${lang}"/></th>
             <td>${account.name}</td>
-        </tr>
-        <tr>
-            <th scope="row"><fmt:message key="login.label.login" bundle="${lang}"/></th>
-            <td>${account.login}</td>
-        </tr>
-        <tr>
-            <th scope="row"><fmt:message key="profile.label.email" bundle="${lang}"/></th>
-            <td>${account.email}</td>
             <td>
                 <form action="/profile" method="post">
                     <button type="submit" class="btn btn-primary btn-sm"
@@ -37,8 +29,8 @@
             </td>
         </tr>
         <tr>
-            <th scope="row"><fmt:message key="profile.label.phone" bundle="${lang}"/></th>
-            <td>${account.phone}</td>
+            <th scope="row"><fmt:message key="login.label.login" bundle="${lang}"/></th>
+            <td>${account.login}</td>
             <td>
                 <form action="/profile" method="post">
                     <button type="submit" class="btn btn-primary btn-sm" name="editButton">
@@ -48,6 +40,16 @@
                     </button>
                 </form>
             </td>
+        </tr>
+        <tr>
+            <th scope="row"><fmt:message key="profile.label.email" bundle="${lang}"/></th>
+            <td>${account.email}</td>
+
+        </tr>
+        <tr>
+            <th scope="row"><fmt:message key="profile.label.phone" bundle="${lang}"/></th>
+            <td>${account.phone}</td>
+
         </tr>
         </tbody>
     </table>
@@ -134,13 +136,16 @@
                                 <th scope="row"><fmt:message key="profile.label.phone"
                                                              bundle="${lang}"/></th>
                                 <td>
-                                    <input type="text" class="form-control" name="inputPhone"
-                                           id="inputPhone"
-                                           pattern="[\+]?[0-9][(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}"
-                                           data-error="<fmt:message key="register.error.wrong_input"
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="inputPhone"
+                                               id="inputPhone"
+                                               pattern="[\+]?[0-9][(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}"
+                                               data-error="<fmt:message key="register.error.wrong_input"
                            bundle="${lang}"/>"
-                                           value=
-                                                   "${account.phone}" required>
+                                               value=
+                                                       "${account.phone}" required>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
 
                                 </td>
                             </tr>
@@ -157,7 +162,7 @@
 
                     <div class="modal-footer">
 
-                        <button class="btn btn-sm" type="submit" name="saveButton">
+                        <button class="btn btn-default" type="submit" name="saveButton">
                             <fmt:message
                                     key="register.label.save"
                                     bundle="${lang}"/></button>
@@ -238,11 +243,12 @@
 
                                             <label class="form-control"
                                                    name="departureTime"
+                                                   style="border:0"
                                                    pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
                                                    required><fmt:formatDate
                                                     pattern="yyyy-MM-dd' 'HH:mm"
                                                     value="${parsedDateTime}"/></label></td>
-                                        <td>${ticket.flight.extraBaggagePrice}</td>
+                                        <td>${ticket.flight.extraBaggagePrice} &#8364;</td>
                                         <td>
                                             <c:choose>
                                                 <c:when test="${ticket.isBusiness == true}"><fmt:message
@@ -385,7 +391,7 @@
 
                             <div class="modal-footer">
 
-                                <button class="btn btn-sm" type="submit"
+                                <button class="btn btn-default" type="submit"
                                         name="savePersonalDataButton"
                                         id="savePersonalDataButton">
                                     <fmt:message
@@ -401,7 +407,7 @@
                     </div>
                 </div>
             </form>
-            <form action="/profile" method="post">
+            <form action="/profile" method="post" data-toggle="validator" role="form">
                 <div id="modalChangePassword" class="modal fade" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -422,7 +428,10 @@
                                     <input type="password" class="form-control"
                                            name="inputOldPassword"
                                            data-minlength="6" data-maxlength="50"
-                                           data-error="<fmt:message key="register.error.wrong_login"
+                                           data-minlength-error="<fmt:message key="input.error.minlegth6"
+                    bundle="${lang}"/>" data-maxlength-error="<fmt:message key="input.error.maxlegth50"
+                    bundle="${lang}"/>"
+                                           data-error="<fmt:message key="register.error.wrong_input"
                                    bundle="${lang}"/>"
                                            id="inputOldPassword"
                                            required>
@@ -436,40 +445,57 @@
                                     <input type="password" class="form-control"
                                            name="inputNewPassword"
                                            id="inputNewPassword"
-                                           required></div>
-                                <div class="form-group">
-                                    <label for="inputConfirmNewPassword"
-                                           class="control-label"><fmt:message
-                                            key="profile.label.confirm_new_password"
-                                            bundle="${lang}"/></label>
-                                    <input type="password" class="form-control"
-                                           name="inputConfirmNewPassword"
-                                           id="inputConfirmNewPassword"
-                                           required></div>
-                            </div>
-                            <c:if test="${changePasswordError != null}">
-                                <p>
-                                    <font color="red"><fmt:message
-                                            key="${changePasswordError}"
-                                            bundle="${lang}"/></font>
-                                </p>
-                            </c:if>
+                                           data-minlength="6" data-maxlength="50"
+                                           data-minlength-error="<fmt:message key="input.error.minlegth6"
+                    bundle="${lang}"/>" data-maxlength-error="<fmt:message key="input.error.maxlegth50"
+                    bundle="${lang}"/>"
+                                           data-error="<fmt:message key="register.error.wrong_input"
+                                   bundle="${lang}"/>"
+                                           required>
+                                    <div class="help-block with-errors"></div></div>
+                                    <div class="form-group">
+                                        <label for="inputConfirmNewPassword"
+                                               class="control-label"><fmt:message
+                                                key="profile.label.confirm_new_password"
+                                                bundle="${lang}"/></label>
+                                        <input type="password" class="form-control"
+                                               name="inputConfirmNewPassword"
+                                               id="inputConfirmNewPassword"
+                                               data-minlength="6" data-maxlength="50"
+                                               data-match="#inputPassword" data-match-error="<fmt:message key="register.error.not_match"
+                            bundle="${lang}"/>"
+                                               data-minlength-error="<fmt:message key="input.error.minlegth6"
+                    bundle="${lang}"/>" data-maxlength-error="<fmt:message key="input.error.maxlegth50"
+                    bundle="${lang}"/>"
+                                               data-error="<fmt:message key="register.error.wrong_input"
+                                   bundle="${lang}"/>"
+                                               required>
+                                        <div class="help-block with-errors"></div>
+                                    </div></div>
+                                    <c:if test="${changePasswordError != null}">
+                                        <p>
+                                            <font color="red"><fmt:message
+                                                    key="${changePasswordError}"
+                                                    bundle="${lang}"/></font>
+                                        </p>
+                                    </c:if>
 
-                            <div class="modal-footer">
+                                    <div class="modal-footer">
 
-                                <button class="btn btn-sm" type="submit" name="savePassword">
-                                    <fmt:message
-                                            key="register.label.save"
-                                            bundle="${lang}"/></button>
+                                        <button class="btn btn-sm" type="submit"
+                                                name="savePassword">
+                                            <fmt:message
+                                                    key="register.label.save"
+                                                    bundle="${lang}"/></button>
 
-                                <button class="btn btn-default"
-                                        type="button" data-dismiss="modal">
-                                    <fmt:message key="profile.label.close"
-                                                 bundle="${lang}"/></button>
+                                        <button class="btn btn-default"
+                                                type="button" data-dismiss="modal">
+                                            <fmt:message key="profile.label.close"
+                                                         bundle="${lang}"/></button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
             </form>
             <c:if test="${autoOpenEditPersonalData == true}">
                 <script type="text/javascript">

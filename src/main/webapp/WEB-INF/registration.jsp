@@ -8,8 +8,8 @@
         <h2 class="form-signin-heading"><fmt:message key="register.label.signup"
                                                      bundle="${lang}"/></h2>
 
-        <div class="form-group">
-            <label for="inputLogin" class="control-label"><fmt:message key="register.label.login"
+        <div class="form-group" style="display: flex; flex-direction: column">
+            <label for="inputLogin" class="control-label" style="align-self: flex-start"><fmt:message key="register.label.login"
                                                                        bundle="${lang}"/></label>
             <input type="login" name="inputLogin" pattern="[_@\.a-zA-z0-9]{1,50}" id="inputLogin"
                    class="form-control" data-minlength="1" data-minlength="50"
@@ -18,25 +18,24 @@
                     bundle="${lang}"/>" data-error="<fmt:message key="register.error.wrong_input"
                     bundle="${lang}"/>" placeholder=
                    <fmt:message key="register.label.login" bundle="${lang}"/> autofocus required>
-            <div class="help-block with-errors"></div>
+            <div class="help-block with-errors" style="margin-top: 0px; margin-bottom: 0px"></div>
         </div>
 
-        <div class="form-group">
-            <label for="inputName" class="control-label"><fmt:message key="register.label.fullname"
+        <div class="form-group" style="display: flex; flex-direction: column">
+            <label for="inputName" class="control-label"  style="align-self: flex-start"><fmt:message key="register.label.fullname"
                                                                       bundle="${lang}"/></label>
             <input type="text" name="inputName" id="inputName"
                    pattern="[A-Za-z\u0400-\u04FF]{1,20}\s[A-Za-z\u0400-\u04FF]{1,20}\s?[A-Za-z\u0400-\u04FF]{0,20}"
                    class="form-control" data-error="<fmt:message key="register.error.wrong_input"
                     bundle="${lang}"/>" placeholder=
-                   <fmt:message key="register.label.fullname" bundle="${lang}"/> required>
-            <div class="help-block with-errors"></div>
+                   "<fmt:message key="register.label.fullname" bundle="${lang}"/>" required>
+            <div class="help-block with-errors"  style="margin-top: 0px; margin-bottom: 0px"></div>
         </div>
 
-        <div class="form-group">
-            <label for="inputPassword" class="control-label"><fmt:message key="password"
+        <div class="form-group" style="display: flex; flex-direction: column;margin-top: 0px; margin-bottom: 0px">
+            <label for="inputPassword" class="control-label" style="align-self: flex-start"><fmt:message key="password"
                                                                           bundle="${lang}"/></label>
-            <div class="form-inline row">
-                <div class="form-group col-md-6">
+                <div class="form-group">
                     <input type="password" data-minlength="6" data-maxlength="50"
                            data-minlength-error="<fmt:message key="input.error.minlegth6"
                     bundle="${lang}"/>" data-maxlength-error="<fmt:message key="input.error.maxlegth50"
@@ -46,9 +45,9 @@
                                    bundle="${lang}"/>" placeholder=
                            <fmt:message
                                    key="password" bundle="${lang}"/> required>
-                    <div class="help-block with-errors"></div>
+                    <div class="help-block with-errors"  style="margin-top: 0px; margin-bottom: 0px"></div>
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group">
                     <input type="password" name="inputPasswordConfirm" data-minlength="6"
                            data-maxlength="50" class="form-control" id="inputPasswordConfirm"
                            data-minlength-error="<fmt:message key="input.error.minlegth6"
@@ -58,15 +57,14 @@
                            data-match="#inputPassword" data-match-error="<fmt:message key="register.error.not_match"
                             bundle="${lang}"/>"
                            placeholder=
-                           <fmt:message
-                                   key="register.label.passwordConfirm" bundle="${lang}"/> required>
-                    <div class="help-block with-errors"></div>
+                           "<fmt:message
+                                   key="register.label.passwordConfirm" bundle="${lang}"/>" required>
+                    <div class="help-block with-errors"  style="margin-top: 0px; margin-bottom: 0px"></div>
                 </div>
-            </div>
         </div>
 
-        <div class="form-group">
-            <label for="inputEmail" class="control-label"><fmt:message key="register.label.email"
+        <div class="form-group"  style="display: flex; flex-direction: column">
+            <label for="inputEmail" class="control-label" style="align-self: flex-start"><fmt:message key="register.label.email"
                                                                        bundle="${lang}"/></label>
             <input type="email" name="inputEmail" id="inputEmail" data-minlength="6"
                    data-maxlength="50" class="form-control"
@@ -76,11 +74,11 @@
                    data-error="<fmt:message key="register.error.wrong_input"
                            bundle="${lang}"/>" placeholder=
                            "<fmt:message key="register.label.email" bundle="${lang}"/>" required>
-            <div class="help-block with-errors"></div>
+            <div class="help-block with-errors" style="margin-top: 0px; margin-bottom: 0px"></div>
         </div>
 
-        <div class="form-group">
-            <label for="inputPhone" class="control-label"><fmt:message key="register.label.phone"
+        <div class="form-group" style="display: flex; flex-direction: column">
+            <label for="inputPhone" class="control-label" style="align-self: flex-start"><fmt:message key="register.label.phone"
                                                                        bundle="${lang}"/></label>
             <input type="tel" class="form-control" name="inputPhone"
                    pattern="[\+]?[0-9][(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}"
@@ -89,7 +87,7 @@
                            bundle="${lang}"/>"
                    placeholder=
                    <fmt:message key="register.label.phone" bundle="${lang}"/> required>
-            <div class="help-block with-errors"></div>
+            <div class="help-block with-errors"  style="margin-top: 0px; margin-bottom: 0px"></div>
         </div>
         <div class="form-group">
             <button class="btn btn-lg btn-primary btn-block" type="submit"><fmt:message

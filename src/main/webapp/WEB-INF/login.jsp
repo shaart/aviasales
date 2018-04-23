@@ -2,9 +2,9 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container" style="text-align: center;">
 
-    <form data-toggle="validator" role="form" class="form-signin" action="/login" method="post"
+    <form data-toggle="validator" style="width:300px; display: inline-block" role="form" class="form-signin" action="/login" method="post"
           style="width:250px">
         <h2 class="form-signin-heading"><fmt:message key="log_in" bundle="${lang}"/></h2>
         <div class="form-group">
@@ -14,7 +14,7 @@
                     bundle="${lang}"/>" data-error="<fmt:message key="register.error.wrong_input"
                     bundle="${lang}"/>" placeholder=
                    <fmt:message key="register.label.login" bundle="${lang}"/> required>
-            <div class="help-block with-errors"></div>
+            <div class="help-block with-errors"  style="margin-top: 0px; margin-bottom: 0px"></div>
         </div>
         <div class="form-group">
             <input type="password" data-minlength="6" data-maxlength="50"
@@ -25,7 +25,7 @@
                                    bundle="${lang}"/>" placeholder=
                    <fmt:message
                            key="password" bundle="${lang}"/> required>
-            <div class="help-block with-errors"></div>
+            <div class="help-block with-errors" style="margin-top: 0px; margin-bottom: 0px"></div>
         </div>
         <div class="form-group">
             <button class="btn btn-lg btn-primary btn-block" type="submit"><fmt:message key="log_in"

@@ -38,6 +38,9 @@ public class ProfileServlet extends HttpServlet {
     try {
       HttpSession session = request.getSession();
       Account account = (Account) session.getAttribute("account");
+      if (account == null) {
+        request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+      }
       List<Ticket> tickets = profileService.getAccountTickets(account.getId());
       List<PersonalData> personalDatas = profileService.getAccountPersonalDatas(account.getId());
 
@@ -51,7 +54,7 @@ public class ProfileServlet extends HttpServlet {
       request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
     } catch (Exception e) {
       log.error(e);
-      ErrorHelper.redirectToErrorPage(request, response, e, "/profile");
+      ErrorHelper.redirectToErrorPage(request, response, e, "/");
       return;
     }
   }
