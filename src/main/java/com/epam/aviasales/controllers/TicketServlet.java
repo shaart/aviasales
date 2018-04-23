@@ -19,7 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
+import lombok.extern.log4j.Log4j;
 
+@Log4j
 public class TicketServlet extends HttpServlet {
 
   private TicketService ticketService;
@@ -111,6 +113,7 @@ public class TicketServlet extends HttpServlet {
       return;
     }
     req.getSession().setAttribute("ticket", ticket);
+    log.info("Bought ticket " + ticket);
     resp.sendRedirect("/confirm");
   }
 }
