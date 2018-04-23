@@ -1,4 +1,5 @@
 <%@include file="layout/header.jspf" %>
+<title><fmt:message key="login.label.login" bundle="${lang}"/></title>
 </head>
 <body>
 

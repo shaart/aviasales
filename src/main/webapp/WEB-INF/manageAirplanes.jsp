@@ -164,7 +164,7 @@
                            oninput="setCustomValidity('')" type="text" class="form-control"
                            name="name"
                            value=""
-                           pattern="[_@a-zA-z0-9.]{2,50}"
+                           pattern="[_@a-zA-z0-9.-\s]{2,50}"
                            placeholder="<fmt:message key="airplane.label.name" bundle="${lang}"/>">
                 </td>
                 <td><input required oninvalid='this.setCustomValidity("<fmt:message
@@ -287,7 +287,7 @@
                                        class="form-control"
                                        name="name"
                                        value="${airplane.name}"
-                                       pattern="[_@a-zA-z0-9.]{2,50}"
+                                       pattern="[_@a-zA-z0-9.-\s]{2,50}"
                                        placeholder="<fmt:message key="airplane.label.name" bundle="${lang}"/>">
                             </td>
                             <td><input required oninvalid='this.setCustomValidity("<fmt:message

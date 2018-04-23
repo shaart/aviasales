@@ -148,9 +148,8 @@
                            oninput="setCustomValidity('')" type="text" class="form-control"
                            name="name"
                            value=""
-                           pattern="[_@a-zA-Z0-9.]{2,50}"
+                           pattern="[_@a-zA-z0-9.-\s]{2,50}"
                            placeholder="<fmt:message key="airport.label.name" bundle="${lang}"/>">
-                    <div class="help-block with-errors"></div>
                 </td>
                 <td>
                     <div class="btn-group btn-group-justified">
@@ -253,7 +252,7 @@
                                        oninput="setCustomValidity('')" type="text"
                                        class="form-control"
                                        name="name"
-                                       pattern="[_@a-zA-Z0-9.]{2,50}"
+                                       pattern="[_@a-zA-z0-9.-\s]{2,50}"
                                        value="${airport.name}"
                                        placeholder="<fmt:message key="airport.label.name" bundle="${lang}"/>">
                             </td>
