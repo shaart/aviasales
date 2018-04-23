@@ -41,7 +41,7 @@
         <p><fmt:message key="personal_data.birthday"
                         bundle="${lang}"/>: ${ticket.personalData.dateOfBirth}</p>
         <p><fmt:message key="ticket.price" bundle="${lang}"/>:
-            <fmt:formatNumber value="${ticket.price/100}" minFractionDigits="2"
+            <fmt:formatNumber value="${ticket.price}" minFractionDigits="2"
                               maxFractionDigits="2"/>
             &#8364;</p>
     </div>

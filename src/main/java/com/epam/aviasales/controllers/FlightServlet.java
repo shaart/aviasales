@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 public class FlightServlet extends HttpServlet {
@@ -78,7 +79,24 @@ public class FlightServlet extends HttpServlet {
     if (idAirportFrom == idAirportTo) {
       req.setAttribute("error", "error.the_same_airports");
     }
+    req.getSession().setAttribute("multiplier", setMultiplierOfCost(date));
     req.getSession().setAttribute("flights", flightList);
     req.getRequestDispatcher("/WEB-INF/index.jsp").forward(req, resp);
+  }
+
+  private Integer setMultiplierOfCost(LocalDate date){
+    Period periodBeforeFlight = Period.between(LocalDate.now(), date);
+    if(periodBeforeFlight.getYears()>=1){
+      return 50;
+    } else if (periodBeforeFlight.getMonths()>=6){
+      return 75;
+    } else if (periodBeforeFlight.getMonths()>=3){
+      return 85;
+    } else if (periodBeforeFlight.getMonths()>=1){
+      return 90;
+    } else if (periodBeforeFlight.getDays()>=14){
+      return 95;
+    }
+    return 100;
   }
 }

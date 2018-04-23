@@ -22,8 +22,6 @@ import java.time.LocalDate;
 
 public class TicketServlet extends HttpServlet {
 
-  private static final int BUSINESS_PRICE_AS_CENTS = 140;
-  private static final int ECONOMY_PRICE_AS_CENTS = 100;
   private TicketService ticketService;
   private FlightService flightsService;
   private PersonalDataService personalDataService;
@@ -92,9 +90,8 @@ public class TicketServlet extends HttpServlet {
     }
     personalData = personalDataService.getPersonalDataByPassport(passport);
     Flight flight = (Flight) req.getSession().getAttribute("flight");
-    Integer price =
-        isBusiness ? flight.getBaseTicketPrice() * BUSINESS_PRICE_AS_CENTS
-            : flight.getBaseTicketPrice() * ECONOMY_PRICE_AS_CENTS;
+    Integer basePrice = Integer.parseInt(req.getSession().getAttribute("multiplier").toString());
+    Integer price = isBusiness ? (new Double(basePrice * 1.4)).intValue() : basePrice;
     Account account = (Account) req.getSession().getAttribute("account");
     Ticket ticket = Ticket.builder().personalData(personalData).flight(flight).account(account)
         .price(price).isBusiness(isBusiness).build();
