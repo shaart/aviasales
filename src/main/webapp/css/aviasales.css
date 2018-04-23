@@ -93,3 +93,7 @@ body {
 .s-btn {
   padding-bottom: 20px;
 }
+
+#filtering-row {
+  vertical-align: top;
+}

@@ -10,7 +10,9 @@ import java.util.List;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.extern.log4j.Log4j;
 
+@Log4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PersonalDataServiceImpl implements PersonalDataService {
 
@@ -59,6 +61,7 @@ public class PersonalDataServiceImpl implements PersonalDataService {
         .getPersonalDataByPassport(personalData.getPassport());
     if (personalDataInsideDB == null) {
       personalDataRepository.addPersonalData(personalData);
+      log.info("Added Personal Data: " + personalData);
     } else {
       if (!personalDataInsideDB.getName().equals(personalData.getName()) ||
           !personalDataInsideDB.getDateOfBirth().equals(personalData.getDateOfBirth())) {
