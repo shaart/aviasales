@@ -462,7 +462,7 @@
                                                name="inputConfirmNewPassword"
                                                id="inputConfirmNewPassword"
                                                data-minlength="6" data-maxlength="50"
-                                               data-match="#inputPassword" data-match-error="<fmt:message key="register.error.not_match"
+                                               data-match="#inputNewPassword" data-match-error="<fmt:message key="register.error.not_match"
                             bundle="${lang}"/>"
                                                data-minlength-error="<fmt:message key="input.error.minlegth6"
                     bundle="${lang}"/>" data-maxlength-error="<fmt:message key="input.error.maxlegth50"

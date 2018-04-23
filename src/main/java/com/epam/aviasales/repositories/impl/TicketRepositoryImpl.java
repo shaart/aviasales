@@ -170,7 +170,7 @@ public class TicketRepositoryImpl implements TicketRepository {
     Session session = HibernateUtil.getSessionFactory().openSession();
     Query query =
         session.createQuery(
-            "SELECT personalData "
+            "SELECT DISTINCT personalData "
                 + "from Ticket t WHERE"
                 + " t.account.id = :accountId");
     List list = query.setParameter("accountId", accountId).list();

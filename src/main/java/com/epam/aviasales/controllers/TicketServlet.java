@@ -62,6 +62,7 @@ public class TicketServlet extends HttpServlet {
 
     if (req.getParameter("first_name") == null) {
       req.getRequestDispatcher("/WEB-INF/ticket.jsp").forward(req, resp);
+      return;
     }
 
     String firstName = req.getParameter("first_name").trim();
@@ -71,15 +72,18 @@ public class TicketServlet extends HttpServlet {
         req.getParameter("birthday").trim().equals("")) {
       req.setAttribute("error", "error.type_personal_data");
       req.getRequestDispatcher("/WEB-INF/ticket.jsp").forward(req, resp);
+      return;
     }
     LocalDate birthday = LocalDate.parse(req.getParameter("birthday"));
     if (birthday.toString().compareTo(LocalDate.now().toString()) >= 0) {
       req.setAttribute("error", "error.birthday_after_now");
       req.getRequestDispatcher("/WEB-INF/ticket.jsp").forward(req, resp);
+      return;
     }
     if ((req.getParameter("isBusiness") == null)) {
       req.setAttribute("error", "error.choose_class");
       req.getRequestDispatcher("/WEB-INF/ticket.jsp").forward(req, resp);
+      return;
     }
     Boolean isBusiness = Boolean.parseBoolean(req.getParameter("isBusiness"));
     PersonalData personalData = PersonalData.builder().name(firstName + " " + lastName)
@@ -89,6 +93,7 @@ public class TicketServlet extends HttpServlet {
     } catch (PersonalDataAlreadyExists e) {
       req.setAttribute("error", "error.such_person_is_exist");
       req.getRequestDispatcher("/WEB-INF/ticket.jsp").forward(req, resp);
+      return;
     }
     personalData = personalDataService.getPersonalDataByPassport(passport);
     Flight flight = (Flight) req.getSession().getAttribute("flight");
@@ -106,6 +111,7 @@ public class TicketServlet extends HttpServlet {
           .getFlightById(((Flight) req.getSession().getAttribute("flight")).getId());
       req.getSession().setAttribute("flight", flight);
       req.getRequestDispatcher("/WEB-INF/ticket.jsp").forward(req, resp);
+      return;
     }
     req.getSession().setAttribute("ticket", ticket);
     resp.sendRedirect("/confirm");

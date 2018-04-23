@@ -44,12 +44,8 @@ public class ProfileServlet extends HttpServlet {
       List<Ticket> tickets = profileService.getAccountTickets(account.getId());
       List<PersonalData> personalDatas = profileService.getAccountPersonalDatas(account.getId());
 
-      if (!tickets.isEmpty()) {
-        session.setAttribute("tickets", tickets);
-      }
-      if (!personalDatas.isEmpty()) {
-        session.setAttribute("personalDatas", personalDatas);
-      }
+      session.setAttribute("tickets", !tickets.isEmpty() ? tickets : null);
+      session.setAttribute("personalDatas", !personalDatas.isEmpty() ? personalDatas : null);
 
       request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
     } catch (Exception e) {
@@ -80,10 +76,13 @@ public class ProfileServlet extends HttpServlet {
     request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
   }
 
-  private void returnTicket(HttpServletRequest request, HttpServletResponse response)
+  private void returnTicket(HttpServletRequest request, HttpServletResponse response,
+      Account account)
       throws IOException {
     String ticketId = request.getParameter("ticketId");
     profileService.deleteAccountTicketById(Long.valueOf(ticketId));
+    List<Ticket> tickets = profileService.getAccountTickets(account.getId());
+    request.getSession().setAttribute("tickets", tickets);
     response.sendRedirect("/profile");
   }
 
@@ -160,7 +159,7 @@ public class ProfileServlet extends HttpServlet {
       Account account = (Account) session.getAttribute("account");
 
       if (request.getParameter("returnButton") != null) {
-        returnTicket(request, response);
+        returnTicket(request, response, account);
       }
 
       if (request.getParameter("changePasswordButton") != null) {
