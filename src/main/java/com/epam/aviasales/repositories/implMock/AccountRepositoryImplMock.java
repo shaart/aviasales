@@ -38,8 +38,8 @@ public class AccountRepositoryImplMock implements AccountRepository {
       ACCOUNTS_CACHE.put(Long.valueOf(i),
           Account.builder().id(Long.valueOf(i))
               .role(i % 30 == 0 ? Role.ADMIN : (i % 15 == 0 ? Role.MANAGER : Role.USER))
-              .name(i == 15 ? "Bob Marley" : "BOB-" + i).login("bob" + i)
-              .password(DigestUtils.sha256Hex(String.valueOf(i)))
+              .name(i == 15 ? "Bob Marley" : "Bob Rob" + i).login("bob" + i)
+              .password(DigestUtils.sha256Hex("123456"))
               .email("bob" + i + "@bobworld.com")
               .phone("123456789")
               .build());

@@ -57,11 +57,11 @@ public class ParserServiceImpl implements ParserService {
     personalDataService = PersonalDataServiceImpl.getInstance();
   }
 
-  public <T> T parseParameter(final String parameter, CastType type) {
+  public <T> T parseParameter(String parameter, CastType type) {
     if (parameter == null || parameter.trim().isEmpty()) {
       return null;
     }
-
+    parameter = parameter.trim();
     try {
       switch (type) {
         case LONG:
