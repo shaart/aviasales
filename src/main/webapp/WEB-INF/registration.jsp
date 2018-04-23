@@ -12,8 +12,10 @@
             <label for="inputLogin" class="control-label"><fmt:message key="register.label.login"
                                                                        bundle="${lang}"/></label>
             <input type="login" name="inputLogin" pattern="[_@\.a-zA-z0-9]{1,50}" id="inputLogin"
-                   class="form-control" data-minlength="1" data-minlength-error="<fmt:message key="register.error.wrong_login"
-                    bundle="${lang}"/>" data-error="<fmt:message key="register.error.wrong_login"
+                   class="form-control" data-minlength="1" data-minlength="50"
+                   data-minlength-error="<fmt:message key="input.error.minlegth1"
+                    bundle="${lang}"/>" data-maxlength-error="<fmt:message key="input.error.maxlegth50"
+                    bundle="${lang}"/>" data-error="<fmt:message key="register.error.wrong_input"
                     bundle="${lang}"/>" placeholder=
                    <fmt:message key="register.label.login" bundle="${lang}"/> autofocus required>
             <div class="help-block with-errors"></div>
@@ -24,7 +26,7 @@
                                                                       bundle="${lang}"/></label>
             <input type="text" name="inputName" id="inputName"
                    pattern="[A-Za-z\u0400-\u04FF]{1,20}\s[A-Za-z\u0400-\u04FF]{1,20}\s?[A-Za-z\u0400-\u04FF]{0,20}"
-                   class="form-control"  data-error="<fmt:message key="register.error.wrong_login"
+                   class="form-control" data-error="<fmt:message key="register.error.wrong_input"
                     bundle="${lang}"/>" placeholder=
                    <fmt:message key="register.label.fullname" bundle="${lang}"/> required>
             <div class="help-block with-errors"></div>
@@ -36,8 +38,11 @@
             <div class="form-inline row">
                 <div class="form-group col-md-6">
                     <input type="password" data-minlength="6" data-maxlength="50"
+                           data-minlength-error="<fmt:message key="input.error.minlegth6"
+                    bundle="${lang}"/>" data-maxlength-error="<fmt:message key="input.error.maxlegth50"
+                    bundle="${lang}"/>"
                            class="form-control" id="inputPassword" name="inputPassword"
-                           data-error="<fmt:message key="register.error.wrong_login"
+                           data-error="<fmt:message key="register.error.wrong_input"
                                    bundle="${lang}"/>" placeholder=
                            <fmt:message
                                    key="password" bundle="${lang}"/> required>
@@ -45,7 +50,10 @@
                 </div>
                 <div class="form-group col-md-6">
                     <input type="password" name="inputPasswordConfirm" data-minlength="6"
-                           data-maxlength="50" class="form-control" id="inputPasswordConfirm" data-error="<fmt:message key="register.error.wrong_login"
+                           data-maxlength="50" class="form-control" id="inputPasswordConfirm"
+                           data-minlength-error="<fmt:message key="input.error.minlegth6"
+                    bundle="${lang}"/>" data-maxlength-error="<fmt:message key="input.error.maxlegth50"
+                    bundle="${lang}"/>" data-error="<fmt:message key="register.error.wrong_input"
                             bundle="${lang}"/>"
                            data-match="#inputPassword" data-match-error="<fmt:message key="register.error.not_match"
                             bundle="${lang}"/>"
@@ -62,9 +70,12 @@
                                                                        bundle="${lang}"/></label>
             <input type="email" name="inputEmail" id="inputEmail" data-minlength="6"
                    data-maxlength="50" class="form-control"
-                   data-error="<fmt:message key="register.error.wrong_login"
+                   data-minlength-error="<fmt:message key="input.error.minlegth6"
+                    bundle="${lang}"/>" data-maxlength-error="<fmt:message key="input.error.maxlegth50"
+                    bundle="${lang}"/>"
+                   data-error="<fmt:message key="register.error.wrong_input"
                            bundle="${lang}"/>" placeholder=
-                   "<fmt:message key="register.label.email" bundle="${lang}"/>" required>
+                           "<fmt:message key="register.label.email" bundle="${lang}"/>" required>
             <div class="help-block with-errors"></div>
         </div>
 
@@ -74,9 +85,9 @@
             <input type="tel" class="form-control" name="inputPhone"
                    pattern="[\+]?[0-9][(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}"
                    id="inputPhone"
-                   data-error="<fmt:message key="register.error.wrong_login"
+                   data-error="<fmt:message key="register.error.wrong_input"
                            bundle="${lang}"/>"
-                    placeholder=
+                   placeholder=
                    <fmt:message key="register.label.phone" bundle="${lang}"/> required>
             <div class="help-block with-errors"></div>
         </div>

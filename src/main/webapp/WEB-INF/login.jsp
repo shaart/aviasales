@@ -4,25 +4,24 @@
 
 <div class="container">
 
-    <form data-toggle="validator" role="form" class="form-signin" action="/login" method="post" style="width:250px">
+    <form data-toggle="validator" role="form" class="form-signin" action="/login" method="post"
+          style="width:250px">
         <h2 class="form-signin-heading"><fmt:message key="log_in" bundle="${lang}"/></h2>
-        <%--<div class="form-group">
-            <label for="inputLogin" class="sr-only"><fmt:message key="login.label.login"
-                                                                 bundle="${lang}"/></label>
-            <input type="login" name="inputLogin" id="inputLogin" class="form-control" placeholder=
-            <fmt:message key="username" bundle="${lang}"/> required autofocus>
-        </div>--%>
         <div class="form-group">
-            <input type="login" name="inputLogin" pattern="[_@a-zA-z0-9]{1,50}" id="inputLogin"
-                   class="form-control" data-error="<fmt:message key="register.error.wrong_login"
+            <input type="login" name="inputLogin" pattern="[_@a-zA-z0-9\.]{1,50}" data-minlength="1" data-maxlength="50" id="inputLogin"
+                   class="form-control" data-minlength-error="<fmt:message key="input.error.minlegth1"
+                    bundle="${lang}"/>" data-maxlength-error="<fmt:message key="input.error.maxlegth50"
+                    bundle="${lang}"/>" data-error="<fmt:message key="register.error.wrong_input"
                     bundle="${lang}"/>" placeholder=
                    <fmt:message key="register.label.login" bundle="${lang}"/> required>
             <div class="help-block with-errors"></div>
         </div>
         <div class="form-group">
             <input type="password" data-minlength="6" data-maxlength="50"
-                   class="form-control" id="inputPassword" name="inputPassword"
-                   data-error="<fmt:message key="register.error.wrong_login"
+                   class="form-control" data-minlength-error="<fmt:message key="input.error.minlegth6"
+                    bundle="${lang}"/>" data-maxlength-error="<fmt:message key="input.error.maxlegth50"
+                    bundle="${lang}"/>" id="inputPassword" name="inputPassword"
+                   data-error="<fmt:message key="register.error.wrong_input"
                                    bundle="${lang}"/>" placeholder=
                    <fmt:message
                            key="password" bundle="${lang}"/> required>

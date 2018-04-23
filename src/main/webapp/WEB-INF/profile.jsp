@@ -1,43 +1,3 @@
-<%--
-<%@ page import="java.time.LocalDateTime" %>
-<%@ page import="com.epam.aviasales.domain.PersonalData" %>
-&lt;%&ndash;
-  Created by IntelliJ IDEA.
-  User: vikto
-  Date: 4/12/2018
-  Time: 10:18 AM
-  To change this template use File | Settings | File Templates.
-&ndash;%&gt;
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@taglib uri="/WEB-INF/functions.tld" prefix="f" %>
-<c:set var="language" value="${not empty param.language ?
-    param.language : not empty language ? language : pageContext.request.locale}" scope="session"/>
-<fmt:setLocale value="${language}"/>
-<fmt:setBundle basename="com.epam.aviasales.bundles.global" var="lang"/>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="">
-</head>
-<body>
-
-<script type="text/javascript" src="webjars/jquery/2.1.1/jquery.min.js"></script>
-<script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
---%>
-
-
-<%--<form>
-    <select id="language" name="language" onchange="submit()">
-        <option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
-        <option value="ru" ${language == 'ru' ? 'selected' : ''}>Русский</option>
-    </select>
-</form>--%>
-
-<%--<%@include file="layout/header.jspf" %>--%>
 <%@include file="layout/header.jspf" %>
 <title><fmt:message
         key="profile.title"
@@ -91,7 +51,7 @@
         </tr>
         </tbody>
     </table>
-    <form action="/profile" method="post">
+    <form action="/profile" method="post" data-toggle="validator" role="form">
         <div id="modalEditAccount" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -117,32 +77,56 @@
                                 <th scope="row"><fmt:message key="profile.label.name"
                                                              bundle="${lang}"/></th>
                                 <td>
-                                    <input type="text" name="inputName" id="inputName"
-                                           class="form-control"
-                                           value=
-                                                   "${account.name}" required>
+                                    <div class="form-group">
+                                        <input type="text" name="inputName" id="inputName"
+                                               pattern="[A-Za-z\u0400-\u04FF]{1,20}\s[A-Za-z\u0400-\u04FF]{1,20}\s?[A-Za-z\u0400-\u04FF]{0,20}"
+                                               data-error="<fmt:message key="register.error.wrong_input"
+                    bundle="${lang}"/>"
+                                               class="form-control"
+                                               value=
+                                                       "${account.name}" required>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row"><fmt:message key="login.label.login"
                                                              bundle="${lang}"/></th>
                                 <td>
-
-                                    <input type="login" name="inputLogin" id="inputLogin"
-                                           class="form-control"
-                                           value=
-                                                   "${account.login}"
-                                           autofocus required>
+                                    <div class="form-group">
+                                        <input type="login" name="inputLogin" id="inputLogin"
+                                               pattern="[_@\.a-zA-z0-9]{1,50}"
+                                               data-minlength="1" data-minlength="50"
+                                               data-minlength-error="<fmt:message key="input.error.minlegth1"
+                    bundle="${lang}"/>" data-maxlength-error="<fmt:message key="input.error.maxlegth50"
+                    bundle="${lang}"/>" data-error="<fmt:message key="register.error.wrong_input"
+                    bundle="${lang}"/>"
+                                               class="form-control"
+                                               value=
+                                                       "${account.login}"
+                                               autofocus required>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row"><fmt:message key="profile.label.email"
                                                              bundle="${lang}"/></th>
                                 <td>
-                                    <input type="email" name="inputEmail" id="inputEmail"
-                                           class="form-control"
-                                           value=
-                                                   "${account.email}" required>
+                                    <div class="form-group">
+                                        <input type="email" name="inputEmail" id="inputEmail"
+                                               data-minlength="6"
+                                               data-maxlength="50" class="form-control"
+                                               data-minlength-error="<fmt:message key="input.error.minlegth6"
+                    bundle="${lang}"/>" data-maxlength-error="<fmt:message key="input.error.maxlegth50"
+                    bundle="${lang}"/>"
+                                               data-error="<fmt:message key="register.error.wrong_input"
+                           bundle="${lang}"/>"
+                                               class="form-control"
+                                               value=
+                                                       "${account.email}" required>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
 
                                 </td>
                             </tr>
@@ -151,7 +135,11 @@
                                                              bundle="${lang}"/></th>
                                 <td>
                                     <input type="text" class="form-control" name="inputPhone"
-                                           id="inputPhone" value=
+                                           id="inputPhone"
+                                           pattern="[\+]?[0-9][(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}"
+                                           data-error="<fmt:message key="register.error.wrong_input"
+                           bundle="${lang}"/>"
+                                           value=
                                                    "${account.phone}" required>
 
                                 </td>
@@ -348,13 +336,14 @@
                                     <input type="text" class="form-control"
                                            name="inputPersonalDataName"
                                            id="inputPersonalDataName"
-                                           data-error="<fmt:message key="register.error.wrong_login"
+                                           data-error="<fmt:message key="register.error.wrong_input"
                     bundle="${lang}"/>"
                                            pattern="[A-Za-z\u0400-\u04FF]{1,20}\s[A-Za-z\u0400-\u04FF]{1,20}\s?[A-Za-z\u0400-\u04FF]{0,20}"
                                            value=
                                                    "${modalPersonalData.name}"
                                            required>
-                                    <div class="help-block with-errors"></div></div>
+                                    <div class="help-block with-errors"></div>
+                                </div>
 
                                 <div class="form-group">
                                     <label for="inputPersonalDataPassport"
@@ -363,7 +352,7 @@
                                             bundle="${lang}"/></label>
                                     <input type="text" class="form-control"
                                            name="inputPersonalDataPassport"
-                                           data-error="<fmt:message key="register.error.wrong_login"
+                                           data-error="<fmt:message key="register.error.wrong_input"
                     bundle="${lang}"/>"
                                            pattern="[A-Za-z0-9\s\-]{6,20}"
                                            id="inputPersonalDataPassport"
@@ -437,7 +426,8 @@
                                    bundle="${lang}"/>"
                                            id="inputOldPassword"
                                            required>
-                                    <div class="help-block with-errors"></div></div>
+                                    <div class="help-block with-errors"></div>
+                                </div>
                                 <div class="form-group">
                                     <label for="inputNewPassword"
                                            class="control-label"><fmt:message
