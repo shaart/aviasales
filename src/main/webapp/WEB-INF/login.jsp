@@ -28,7 +28,7 @@
             <div class="help-block with-errors" style="margin-top: 0px; margin-bottom: 0px"></div>
         </div>
         <div class="form-group">
-            <button class="btn btn-lg btn-primary btn-block" type="submit"><fmt:message key="log_in"
+            <button class="btn btn-primary btn-block" type="submit"><fmt:message key="log_in"
                                                                                         bundle="${lang}"/></button>
         </div>
     </form>

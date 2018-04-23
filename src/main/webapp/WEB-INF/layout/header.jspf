@@ -33,7 +33,7 @@
     <script type="text/javascript" src="/js/aviasales.js"></script>
     <script type="text/javascript" src="/js/validator.js"></script>
 
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
@@ -62,14 +62,14 @@
                             </c:if>
                             <li><a href="/profile"><fmt:message key="profile" bundle="${lang}"/></a>
                             </li>
-                            <li><a href="/singout"><fmt:message key="sign_out"
+                            <li><a href="/signout"><fmt:message key="sign_out"
                                                                 bundle="${lang}"/></a></li>
                         </c:otherwise>
                     </c:choose>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <form>
+                        <form class="multi-language">
                             <input type="image" src="/resources/header/russian.png" value="ru"
                                    name="language" onclick="submit()">
                             <input type="image" src="/resources/header/english.png" value="en"

@@ -1,6 +1,6 @@
 <%@include file="layout/header.jspf" %>
-<%--<c:set var="MULTIPLIER_PRICE_FOR_BUSINESS_TICKETS" value="1.4"/>--%>
-<title>aviasales</title>
+<c:set var="MULTIPLIER_PRICE_FOR_BUSINESS_TICKETS" value="1.4"/>
+<title><fmt:message key="title.index" bundle="${lang}"/></title>
 </head>
 
 <body>
@@ -57,7 +57,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-3 m-btn">
                     <input type="submit" value="<fmt:message key="find" bundle="${lang}"/>"
                            class="btn btn-primary btn-block">
                 </div>
@@ -118,8 +118,8 @@
                                                                bundle="${lang}"/>.</label>
                     </c:when>
                     <c:otherwise>
-                        <div class="col-sm-9"></div>
-                        <div class="col-sm-3">
+                        <div class="s-btn col-sm-9"></div>
+                        <div class="s-btn col-sm-3">
                             <input type="submit"
                                    value="<fmt:message key="select" bundle="${lang}"/>"
                                    class="btn btn-primary btn-block">
@@ -130,9 +130,8 @@
         </form>
         <%--<label><c:if test="${error != null}"> ${error}</c:if></label>--%>
     </c:if>
-    <br>
+    <hr/>
 </div>
-
 <%@include file="layout/footer.jspf" %>
 
 </body>

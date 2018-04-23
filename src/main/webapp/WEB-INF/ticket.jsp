@@ -1,5 +1,5 @@
 <%@include file="layout/header.jspf" %>
-<title>aviasales</title>
+<title><fmt:message key="title.ticket" bundle="${lang}"/></title>
 </head>
 
 <body>
@@ -90,14 +90,14 @@
                     (<fmt:message key="ticket.baggage.weight" bundle="${lang}"/> 20 <fmt:message
                         key="ticket.baggage.kg" bundle="${lang}"/>) <br>
                 </c:if>
-                <c:if test="${error != null}">
-                    <h5 class="error"><fmt:message key="${error}" bundle="${lang}"/>!</h5>
-                </c:if>
             </div>
+            <c:if test="${error != null}">
+            <label class="error"><fmt:message key="${error}" bundle="${lang}"/>!</label>
+            </c:if>
             <br>
             <c:if test="${flight.freeSeatBusiness > 0 || flight.freeSeatEconomy > 0}">
             <div class="col-sm-9"></div>
-            <div class="col-sm-3">
+            <div class="s-btn col-sm-3">
                 <input type="submit"
                        value="<fmt:message key="buy" bundle="${lang}"/>"
                        class="btn btn-primary btn-block">
