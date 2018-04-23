@@ -1,4 +1,6 @@
 <%@include file="layout/header.jspf" %>
+<c:set var="MULTIPLIER_PRICE_FOR_BUSINESS_TICKETS" value="${multiplier * 1.4}"/>
+<c:set var="MULTIPLIER" value="${multiplier}"/>
 <title><fmt:message key="title.ticket" bundle="${lang}"/></title>
 </head>
 
@@ -77,7 +79,8 @@
                 <c:if test="${flight.freeSeatEconomy > 0}">
                     <input name="isBusiness" type="radio" value="false"/>
                     <fmt:message key="flight.label.economy_class" bundle="${lang}"/>
-                    <fmt:formatNumber value="${flight.baseTicketPrice}" minFractionDigits="2"
+                    <fmt:formatNumber value="${(flight.baseTicketPrice * MULTIPLIER)/100}"
+                                      minFractionDigits="2"
                                       maxFractionDigits="2"/> &#8364;
                     (<fmt:message key="ticket.baggage.weight" bundle="${lang}"/> 8 <fmt:message
                         key="ticket.baggage.kg" bundle="${lang}"/>) <br>
@@ -85,8 +88,10 @@
                 <c:if test="${flight.freeSeatBusiness > 0}">
                     <input name="isBusiness" type="radio" value="true"/>
                     <fmt:message key="flight.label.business_class" bundle="${lang}"/>
-                    <fmt:formatNumber value="${flight.baseTicketPrice*1.4}" minFractionDigits="2"
-                                      maxFractionDigits="2"/> &#8364;
+                    <fmt:formatNumber
+                            value="${(flight.baseTicketPrice * MULTIPLIER_PRICE_FOR_BUSINESS_TICKETS)/100}"
+                            minFractionDigits="2"
+                            maxFractionDigits="2"/> &#8364;
                     (<fmt:message key="ticket.baggage.weight" bundle="${lang}"/> 20 <fmt:message
                         key="ticket.baggage.kg" bundle="${lang}"/>) <br>
                 </c:if>

@@ -50,5 +50,6 @@ public class MainServlet extends HttpServlet {
     req.getSession().setAttribute("flight", "");
     req.getSession().setAttribute("flights", "");
     req.getSession().setAttribute("ticket", "");
+    req.getSession().setAttribute("multiplier", "");
   }
 }
