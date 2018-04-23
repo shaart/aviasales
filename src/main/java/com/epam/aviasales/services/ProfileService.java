@@ -3,7 +3,6 @@ package com.epam.aviasales.services;
 import com.epam.aviasales.domain.Account;
 import com.epam.aviasales.domain.PersonalData;
 import com.epam.aviasales.domain.Ticket;
-import com.epam.aviasales.exceptions.EmptyResponseFromDB;
 import java.util.List;
 
 public interface ProfileService {
