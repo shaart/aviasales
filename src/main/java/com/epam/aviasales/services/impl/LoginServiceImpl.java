@@ -44,7 +44,7 @@ public class LoginServiceImpl implements LoginService {
 
     List<Account> accounts = accountRepository.getAccountByLogin(login);
     if (accounts.isEmpty()) {
-      errorMessages.add("login.error.doesNotExistMessage");
+      errorMessages.add("login.error.credentials_failed");
       return errorMessages;
     }
 
@@ -55,7 +55,7 @@ public class LoginServiceImpl implements LoginService {
       account.setPassword("");
     } else {
       this.account = null;
-      errorMessages.add("login.error.wrongPassword");
+      errorMessages.add("login.error.credentials_failed");
     }
     return errorMessages;
   }
