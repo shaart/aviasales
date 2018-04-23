@@ -1,5 +1,6 @@
 <%@include file="layout/header.jspf" %>
-<c:set var="MULTIPLIER_PRICE_FOR_BUSINESS_TICKETS" value="1.4"/>
+<c:set var="MULTIPLIER_PRICE_FOR_BUSINESS_TICKETS" value="${multiplier * 1.4}"/>
+<c:set var="MULTIPLIER" value="${multiplier}"/>
 <title><fmt:message key="title.index" bundle="${lang}"/></title>
 </head>
 
@@ -95,15 +96,17 @@
                                         value="${ parsedDateTime }"/></label><br>
 
                             <label><fmt:message key="flight.label.economy_class" bundle="${lang}"/>:
-                                <fmt:formatNumber value="${flight.baseTicketPrice}"
-                                                  minFractionDigits="2" maxFractionDigits="2"/>
+                                <fmt:formatNumber
+                                        value="${(flight.baseTicketPrice * MULTIPLIER)/100}"
+                                        minFractionDigits="2" maxFractionDigits="2"/>
                                 &#8364;</label><br>
                             <label><fmt:message key="flight.label.free_seats"
                                                 bundle="${lang}"/>: ${flight.freeSeatEconomy}</label><br>
                             <label><fmt:message key="flight.label.business_class" bundle="${lang}"/>:
                                 <fmt:formatNumber
-                                        value="${flight.baseTicketPrice * MULTIPLIER_PRICE_FOR_BUSINESS_TICKETS}"
-                                        minFractionDigits="2" maxFractionDigits="2"/> &#8364;</label><br>
+                                        value="${(flight.baseTicketPrice * MULTIPLIER_PRICE_FOR_BUSINESS_TICKETS)/100}"
+                                        minFractionDigits="2" maxFractionDigits="2"/>
+                                &#8364;</label><br>
                             <label><fmt:message key="flight.label.free_seats"
                                                 bundle="${lang}"/>: ${flight.freeSeatBusiness}</label><br>
                         </div>
@@ -115,7 +118,7 @@
                 <c:choose>
                     <c:when test="${account == null}">
                         <label class="error"><fmt:message key="registrate.warning"
-                                                               bundle="${lang}"/>.</label>
+                                                          bundle="${lang}"/>.</label>
                     </c:when>
                     <c:otherwise>
                         <div class="s-btn col-sm-9"></div>
