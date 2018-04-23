@@ -39,8 +39,6 @@ public class FlightServlet extends HttpServlet {
     idAirportTo = Long.valueOf(req.getSession().getAttribute("to").toString());
     date = LocalDate.parse(req.getSession().getAttribute("date").toString());
 
-    List<Flight> flightList = (List<Flight>)req.getSession().getAttribute("flights");
-
     req.getRequestDispatcher("/WEB-INF/index.jsp").forward(req, resp);
   }
 
@@ -48,8 +46,8 @@ public class FlightServlet extends HttpServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
 
-    if(req.getSession().getAttribute("airports") == null ||
-        ((List<Airport>)req.getSession().getAttribute("airports")).size() == 0){
+    if (req.getSession().getAttribute("airports") == null ||
+        ((List<Airport>) req.getSession().getAttribute("airports")).size() == 0) {
       resp.sendRedirect("/");
       return;
     }
@@ -59,8 +57,8 @@ public class FlightServlet extends HttpServlet {
       resp.sendRedirect("/");
       return;
     }
-    if(req.getParameter("date").equals("")){
-      date=LocalDate.now();
+    if (req.getParameter("date").equals("")) {
+      date = LocalDate.now();
     } else {
       date = LocalDate.parse(req.getParameter("date"));
     }
@@ -79,22 +77,22 @@ public class FlightServlet extends HttpServlet {
     if (idAirportFrom == idAirportTo) {
       req.setAttribute("error", "error.the_same_airports");
     }
-    req.getSession().setAttribute("multiplier", setMultiplierOfCost(date));
+    req.getSession().setAttribute("multiplier", getCostPercentByDate(date));
     req.getSession().setAttribute("flights", flightList);
     req.getRequestDispatcher("/WEB-INF/index.jsp").forward(req, resp);
   }
 
-  private Integer setMultiplierOfCost(LocalDate date){
+  private Integer getCostPercentByDate(LocalDate date) {
     Period periodBeforeFlight = Period.between(LocalDate.now(), date);
-    if(periodBeforeFlight.getYears()>=1){
+    if (periodBeforeFlight.getYears() >= 1) {
       return 50;
-    } else if (periodBeforeFlight.getMonths()>=6){
+    } else if (periodBeforeFlight.getMonths() >= 6) {
       return 75;
-    } else if (periodBeforeFlight.getMonths()>=3){
+    } else if (periodBeforeFlight.getMonths() >= 3) {
       return 85;
-    } else if (periodBeforeFlight.getMonths()>=1){
+    } else if (periodBeforeFlight.getMonths() >= 1) {
       return 90;
-    } else if (periodBeforeFlight.getDays()>=14){
+    } else if (periodBeforeFlight.getDays() >= 14) {
       return 95;
     }
     return 100;
