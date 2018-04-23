@@ -13,9 +13,13 @@ import com.epam.aviasales.services.AirportService;
 import com.epam.aviasales.services.FlightService;
 import com.epam.aviasales.services.ParserService;
 import com.epam.aviasales.services.PersonalDataService;
+import com.epam.aviasales.util.Action;
 import com.epam.aviasales.util.CastType;
+import com.epam.aviasales.util.ParseRequestHelper;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.log4j.Log4j;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -64,6 +68,8 @@ public class ParserServiceImpl implements ParserService {
           return (T) Long.valueOf(parameter);
         case INTEGER:
           return (T) Integer.valueOf(parameter);
+        case LOCAL_DATE:
+          return (T) LocalDate.parse(parameter);
         case LOCAL_DATE_TIME:
           return (T) LocalDateTime.parse(parameter);
         case AIRPLANE:
@@ -74,8 +80,6 @@ public class ParserServiceImpl implements ParserService {
           return (T) parameter;
         case PASSWORD:
           return (T) DigestUtils.sha256Hex(parameter);
-        case LOCAL_DATE:
-          return (T) LocalDate.parse(parameter);
         case FLIGHT:
           return (T) flightService.getFlightById(Long.valueOf(parameter));
         case ACCOUNT:
@@ -106,6 +110,10 @@ public class ParserServiceImpl implements ParserService {
   }
 
   public Flight parseFlight(HttpServletRequest req) {
+    Object lang = req.getSession().getAttribute("language");
+    ResourceBundle global = ResourceBundle.getBundle("com.epam.aviasales.bundles.global",
+        lang instanceof String ? new Locale((String) lang) : (Locale) lang);
+
     Long id = parseParameter(req.getParameter("id"), CastType.LONG);
     Airport fromAirport = parseParameter(req.getParameter("fromAirport"), CastType.AIRPORT);
     Airport toAirport = parseParameter(req.getParameter("toAirport"), CastType.AIRPORT);
@@ -114,12 +122,49 @@ public class ParserServiceImpl implements ParserService {
         CastType.LOCAL_DATE_TIME);
     LocalDateTime arrivalTime = parseParameter(req.getParameter("arrivalTime"),
         CastType.LOCAL_DATE_TIME);
-    Integer baseTicketPrice = parseParameter(req.getParameter("baseTicketPrice"), CastType.INTEGER);
+    Integer baseTicketPrice = parseParameter(req.getParameter("baseTicketPrice"),
+        CastType.INTEGER);
     Integer extraBaggagePrice = parseParameter(req.getParameter("extraBaggagePrice"),
         CastType.INTEGER);
-    Integer freeSeatEconomy = parseParameter(req.getParameter("freeSeatEconomy"), CastType.INTEGER);
+    Integer freeSeatEconomy = parseParameter(req.getParameter("freeSeatEconomy"),
+        CastType.INTEGER);
     Integer freeSeatBusiness = parseParameter(req.getParameter("freeSeatBusiness"),
         CastType.INTEGER);
+
+    Action action = ParseRequestHelper.getRequestAction(req);
+    switch (action) {
+      case NONE:
+        break;
+      case DELETE:
+        if (id < 0) {
+          throw new RuntimeException(global.getString("error.id.less.than.zero"));
+        }
+        break;
+      case SAVE:
+        if (id < 0) {
+          throw new RuntimeException(global.getString("error.id.less.than.zero"));
+        }
+      case ADD:
+        if (baseTicketPrice < 0) {
+          throw new RuntimeException(global.getString("error.baseTicketPrice.less.than.zero"));
+        }
+        if (extraBaggagePrice < 0) {
+          throw new RuntimeException(global.getString("error.extraBaggagePrice.less.than.zero"));
+        }
+        if (freeSeatEconomy < 0) {
+          throw new RuntimeException(global.getString("error.freeSeatEcomony.less.than.zero"));
+        }
+        if (freeSeatBusiness < 0) {
+          throw new RuntimeException(global.getString("error.freeSeatBusiness.less.than.zero"));
+        }
+        if (departureTime.isAfter(arrivalTime)) {
+          throw new RuntimeException(global.getString("error.departureTime.after.arrivalTime"));
+        }
+        break;
+      default:
+        log.error("Unknown action at parseFlight()");
+        break;
+    }
 
     return Flight.builder().id(id).fromAirport(fromAirport)
         .toAirport(toAirport)
@@ -130,14 +175,38 @@ public class ParserServiceImpl implements ParserService {
 
   @Override
   public Airport parseAirport(HttpServletRequest req) {
+    Object lang = req.getSession().getAttribute("language");
+    ResourceBundle global = ResourceBundle.getBundle("com.epam.aviasales.bundles.global",
+        lang instanceof String ? new Locale((String) lang) : (Locale) lang);
+
     Long id = parseParameter(req.getParameter("id"), CastType.LONG);
     String name = parseParameter(req.getParameter("name"), CastType.STRING);
+
+    Action action = ParseRequestHelper.getRequestAction(req);
+    switch (action) {
+      case NONE:
+      case ADD:
+        break;
+      case DELETE:
+      case SAVE:
+        if (id < 0) {
+          throw new RuntimeException(global.getString("error.id.less.than.zero"));
+        }
+        break;
+      default:
+        log.error("Unknown action at parseAirport()");
+        break;
+    }
 
     return Airport.builder().id(id).name(name).build();
   }
 
   @Override
   public Airplane parseAirplane(HttpServletRequest req) {
+    Object lang = req.getSession().getAttribute("language");
+    ResourceBundle global = ResourceBundle.getBundle("com.epam.aviasales.bundles.global",
+        lang instanceof String ? new Locale((String) lang) : (Locale) lang);
+
     Long id = parseParameter(req.getParameter("id"), CastType.LONG);
     String name = parseParameter(req.getParameter("name"), CastType.STRING);
     Integer economySeatsCount = parseParameter(req.getParameter("economySeatsCount"),
@@ -145,16 +214,62 @@ public class ParserServiceImpl implements ParserService {
     Integer businessSeatsCount = parseParameter(req.getParameter("businessSeatsCount"),
         CastType.INTEGER);
 
+    Action action = ParseRequestHelper.getRequestAction(req);
+    switch (action) {
+      case NONE:
+        break;
+      case DELETE:
+        if (id < 0) {
+          throw new RuntimeException(global.getString("error.id.less.than.zero"));
+        }
+        break;
+      case SAVE:
+        if (id < 0) {
+          throw new RuntimeException(global.getString("error.id.less.than.zero"));
+        }
+      case ADD:
+        if (economySeatsCount < 0) {
+          throw new RuntimeException(global.getString("error.freeSeatEcomony.less.than.zero"));
+        }
+        if (businessSeatsCount < 0) {
+          throw new RuntimeException(global.getString("error.freeSeatBusiness.less.than.zero"));
+        }
+        break;
+      default:
+        log.error("Unknown action at parseAirplane()");
+        break;
+    }
+
     return Airplane.builder().id(id).name(name).economySeatsCount(economySeatsCount)
         .businessSeatsCount(businessSeatsCount).build();
   }
 
   @Override
   public PersonalData parsePersonalData(HttpServletRequest req) {
+    Object lang = req.getSession().getAttribute("language");
+    ResourceBundle global = ResourceBundle.getBundle("com.epam.aviasales.bundles.global",
+        lang instanceof String ? new Locale((String) lang) : (Locale) lang);
+
     Long id = parseParameter(req.getParameter("id"), CastType.LONG);
     String name = parseParameter(req.getParameter("name"), CastType.STRING);
     String passport = parseParameter(req.getParameter("passport"), CastType.STRING);
     LocalDate dateOfBirth = parseParameter(req.getParameter("dateOfBirth"), CastType.LOCAL_DATE);
+
+    Action action = ParseRequestHelper.getRequestAction(req);
+    switch (action) {
+      case NONE:
+      case ADD:
+        break;
+      case DELETE:
+      case SAVE:
+        if (id < 0) {
+          throw new RuntimeException(global.getString("error.id.less.than.zero"));
+        }
+        break;
+      default:
+        log.error("Unknown action at parsePersonalData()");
+        break;
+    }
 
     return PersonalData.builder().id(id).name(name).passport(passport).dateOfBirth(dateOfBirth)
         .build();
@@ -162,6 +277,10 @@ public class ParserServiceImpl implements ParserService {
 
   @Override
   public Ticket parseTicket(HttpServletRequest req) {
+    Object lang = req.getSession().getAttribute("language");
+    ResourceBundle global = ResourceBundle.getBundle("com.epam.aviasales.bundles.global",
+        lang instanceof String ? new Locale((String) lang) : (Locale) lang);
+
     Long id = parseParameter(req.getParameter("id"), CastType.LONG);
     PersonalData personalData = parseParameter(req.getParameter("personalDataPassport"),
         CastType.PERSONAL_DATA);
@@ -170,12 +289,39 @@ public class ParserServiceImpl implements ParserService {
     Integer price = parseParameter(req.getParameter("price"), CastType.INTEGER);
     Boolean isBusiness = parseParameter(req.getParameter("isBusiness"), CastType.BOOLEAN);
 
+    Action action = ParseRequestHelper.getRequestAction(req);
+    switch (action) {
+      case NONE:
+        break;
+      case DELETE:
+        if (id < 0) {
+          throw new RuntimeException(global.getString("error.id.less.than.zero"));
+        }
+        break;
+      case SAVE:
+        if (id < 0) {
+          throw new RuntimeException(global.getString("error.id.less.than.zero"));
+        }
+      case ADD:
+        if (price < 0) {
+          throw new RuntimeException(global.getString("error.price.less.than.zero"));
+        }
+        break;
+      default:
+        log.error("Unknown action at parseTicket()");
+        break;
+    }
+
     return Ticket.builder().id(id).personalData(personalData).flight(flight).account(account)
         .price(price).isBusiness(isBusiness).build();
   }
 
   @Override
   public Account parseAccount(HttpServletRequest req) {
+    Object lang = req.getSession().getAttribute("language");
+    ResourceBundle global = ResourceBundle.getBundle("com.epam.aviasales.bundles.global",
+        lang instanceof String ? new Locale((String) lang) : (Locale) lang);
+
     Long id = parseParameter(req.getParameter("id"), CastType.LONG);
     Role role = parseParameter(req.getParameter("role"), CastType.ROLE);
     String name = parseParameter(req.getParameter("name"), CastType.STRING);
@@ -183,6 +329,22 @@ public class ParserServiceImpl implements ParserService {
     String login = parseParameter(req.getParameter("login"), CastType.STRING);
     String email = parseParameter(req.getParameter("email"), CastType.STRING);
     String phone = parseParameter(req.getParameter("phone"), CastType.STRING);
+
+    Action action = ParseRequestHelper.getRequestAction(req);
+    switch (action) {
+      case NONE:
+      case ADD:
+        break;
+      case DELETE:
+      case SAVE:
+        if (id < 0) {
+          throw new RuntimeException(global.getString("error.id.less.than.zero"));
+        }
+        break;
+      default:
+        log.error("Unknown action at parseAccount()");
+        break;
+    }
 
     return Account.builder().id(id).role(role).name(name).login(login).password(password)
         .email(email).phone(phone)
