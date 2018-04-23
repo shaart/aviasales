@@ -25,12 +25,11 @@
 <html>
 <head>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/resources/favicon.png">
     <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/aviasales.css">
     <script type="text/javascript" src="/webjars/jquery/2.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript"
-            src="/webjars/jquery-validation/1.17.0/jquery.validate.min.js"></script>
     <script type="text/javascript" src="/js/aviasales.js"></script>
     <script type="text/javascript" src="/js/validator.js"></script>
 
