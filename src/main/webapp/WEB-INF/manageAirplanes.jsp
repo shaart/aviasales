@@ -1,5 +1,5 @@
 <%@include file="layout/header.jspf" %>
-    <title><fmt:message key="manage.airplanes.title" bundle="${lang}"/></title>
+<title><fmt:message key="manage.airplanes.title" bundle="${lang}"/></title>
 </head>
 <c:if test="${account == null || (account.role != 'ADMIN' && account.role != 'MANAGER')}">
     <% response.sendError(403); %>
@@ -164,6 +164,7 @@
                            oninput="setCustomValidity('')" type="text" class="form-control"
                            name="name"
                            value=""
+                           pattern="[_@a-zA-z0-9.]{2,50}"
                            placeholder="<fmt:message key="airplane.label.name" bundle="${lang}"/>">
                 </td>
                 <td><input required oninvalid='this.setCustomValidity("<fmt:message
@@ -286,6 +287,7 @@
                                        class="form-control"
                                        name="name"
                                        value="${airplane.name}"
+                                       pattern="[_@a-zA-z0-9.]{2,50}"
                                        placeholder="<fmt:message key="airplane.label.name" bundle="${lang}"/>">
                             </td>
                             <td><input required oninvalid='this.setCustomValidity("<fmt:message

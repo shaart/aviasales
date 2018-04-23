@@ -1,8 +1,8 @@
 <%@include file="layout/header.jspf" %>
-    <title><fmt:message key="manage.personaldata.title" bundle="${lang}"/></title>
+<title><fmt:message key="manage.personaldata.title" bundle="${lang}"/></title>
 </head>
 <c:if test="${account == null || (account.role != 'ADMIN' && account.role != 'MANAGER')}">
-        <% response.sendError(403); %>
+    <% response.sendError(403); %>
 </c:if>
 <c:set var="COLUMNS_FIRST_NUM" value="0"/>
 <c:set var="COLUMNS_COUNT" value="4"/>
@@ -164,6 +164,7 @@
                            oninput="setCustomValidity('')" type="text" class="form-control"
                            name="name"
                            value=""
+                           pattern="[A-Za-z\u0400-\u04FF]{1,20}\s[A-Za-z\u0400-\u04FF]{1,20}\s?[A-Za-z\u0400-\u04FF]{0,20}"
                            placeholder="<fmt:message key="personaldata.label.name" bundle="${lang}"/>">
                 </td>
                 <td><input required oninvalid='this.setCustomValidity("<fmt:message
@@ -171,6 +172,7 @@
                            oninput="setCustomValidity('')" type="text" class="form-control"
                            name="passport"
                            value=""
+                           pattern="[A-Za-z0-9\s]{1,20}[-]{0,1}[A-Za-z0-9\s]{5,20}"
                            placeholder="<fmt:message key="personaldata.label.passport" bundle="${lang}"/>">
                 </td>
                 <td><input required oninvalid='this.setCustomValidity("<fmt:message
@@ -286,6 +288,7 @@
                                        class="form-control"
                                        name="name"
                                        value="${personaldata.name}"
+                                       pattern="[A-Za-z\u0400-\u04FF]{1,20}\s[A-Za-z\u0400-\u04FF]{1,20}\s?[A-Za-z\u0400-\u04FF]{0,20}"
                                        placeholder="<fmt:message key="personaldata.label.name" bundle="${lang}"/>">
                             </td>
                             <td><input required oninvalid='this.setCustomValidity("<fmt:message
@@ -294,6 +297,7 @@
                                        class="form-control"
                                        name="passport"
                                        value="${personaldata.passport}"
+                                       pattern="[A-Za-z0-9\s]{1,20}[-]{0,1}[A-Za-z0-9\s]{5,20}"
                                        placeholder="<fmt:message key="personaldata.label.passport" bundle="${lang}"/>">
                             </td>
                             <td><input required oninvalid='this.setCustomValidity("<fmt:message

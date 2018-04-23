@@ -1,6 +1,9 @@
 <%@include file="layout/header.jspf" %>
     <title><fmt:message key="manage.title" bundle="${lang}"/></title>
 </head>
+<c:if test="${account == null || (account.role != 'ADMIN' && account.role != 'MANAGER')}">
+    <% response.sendError(403); %>
+</c:if>
 <body>
 <div class="container">
     <div class="row">

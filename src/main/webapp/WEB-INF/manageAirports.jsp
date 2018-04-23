@@ -1,8 +1,8 @@
 <%@include file="layout/header.jspf" %>
-    <title><fmt:message key="manage.airports.title" bundle="${lang}"/></title>
+<title><fmt:message key="manage.airports.title" bundle="${lang}"/></title>
 </head>
 <c:if test="${account == null || (account.role != 'ADMIN' && account.role != 'MANAGER')}">
-        <% response.sendError(403); %>
+<% response.sendError(403); %>
 </c:if>
 <c:set var="COLUMNS_FIRST_NUM" value="0"/>
 <c:set var="COLUMNS_COUNT" value="2"/>
@@ -138,7 +138,7 @@
         </thead>
         <tbody>
         <tr id="adding-row">
-            <form id="addForm" action="/manage/airports" method="post">
+            <form id="addForm" action="/manage/airports" method="post" lang="en">
                 <td><input readonly type="text" disabled class="form-control" width="10" name="id"
                            value="-"
                            placeholder="<fmt:message key="airport.label.id" bundle="${lang}"/>">
@@ -148,12 +148,14 @@
                            oninput="setCustomValidity('')" type="text" class="form-control"
                            name="name"
                            value=""
+                           pattern="[_@a-zA-Z0-9.]{2,50}"
                            placeholder="<fmt:message key="airport.label.name" bundle="${lang}"/>">
+                    <div class="help-block with-errors"></div>
                 </td>
                 <td>
                     <div class="btn-group btn-group-justified">
                         <div class="btn-group">
-                            <input id="add-button" type="submit" class="btn btn-primary"
+                            <input type="submit" class="btn btn-primary"
                                    name="actionAdd"
                                    value="<fmt:message key="page.label.control.add" bundle="${lang}"/>">
                         </div>
@@ -251,6 +253,7 @@
                                        oninput="setCustomValidity('')" type="text"
                                        class="form-control"
                                        name="name"
+                                       pattern="[_@a-zA-Z0-9.]{2,50}"
                                        value="${airport.name}"
                                        placeholder="<fmt:message key="airport.label.name" bundle="${lang}"/>">
                             </td>

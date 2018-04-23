@@ -1,5 +1,5 @@
 <%@include file="layout/header.jspf" %>
-    <title><fmt:message key="manage.accounts.title" bundle="${lang}"/></title>
+<title><fmt:message key="manage.accounts.title" bundle="${lang}"/></title>
 </head>
 <c:if test="${account == null || (account.role != 'ADMIN')}">
     <% response.sendError(403); %>
@@ -190,31 +190,41 @@
                                    key="page.error.field.is.required"
                                    bundle="${lang}"/>")'
                            oninput="setCustomValidity('')" type="text" class="form-control"
-                           name="name" value=""
+                           name="name"
+                           value=""
+                           pattern="[A-Za-z\u0400-\u04FF]{1,20}\s[A-Za-z\u0400-\u04FF]{1,20}\s?[A-Za-z\u0400-\u04FF]{0,20}"
                            placeholder="<fmt:message key="account.label.name" bundle="${lang}"/>">
                 </td>
                 <td><input required oninvalid='this.setCustomValidity("<fmt:message
                         key="page.error.field.is.required" bundle="${lang}"/>")'
                            oninput="setCustomValidity('')" type="text" class="form-control"
-                           name="login" value=""
+                           name="login"
+                           value=""
+                           pattern="[_@a-zA-Z0-9.]{1,50}"
                            placeholder="<fmt:message key="account.label.login" bundle="${lang}"/>">
                 </td>
                 <td><input required oninvalid='this.setCustomValidity("<fmt:message
                         key="page.error.field.is.required" bundle="${lang}"/>")'
                            oninput="setCustomValidity('')" type="password" class="form-control"
-                           name="password" value=""
+                           name="password"
+                           value=""
+                           minlength="6"
                            placeholder="<fmt:message key="account.label.password" bundle="${lang}"/>">
                 </td>
                 <td><input required oninvalid='this.setCustomValidity("<fmt:message
                         key="page.error.field.is.required" bundle="${lang}"/>")'
                            oninput="setCustomValidity('')" type="email" class="form-control"
-                           name="email" value=""
+                           name="email"
+                           value=""
+                           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
                            placeholder="<fmt:message key="account.label.email" bundle="${lang}"/>">
                 </td>
                 <td><input required oninvalid='this.setCustomValidity("<fmt:message
                         key="page.error.field.is.required" bundle="${lang}"/>")'
                            oninput="setCustomValidity('')" type="text" class="form-control"
-                           name="phone" value=""
+                           name="phone"
+                           value=""
+                           pattern="[\+]?[0-9][(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}"
                            placeholder="<fmt:message key="account.label.phone" bundle="${lang}"/>">
                 </td>
                 <td>
@@ -342,6 +352,7 @@
                                        class="form-control"
                                        name="name"
                                        value="${account.name}"
+                                       pattern="[A-Za-z\u0400-\u04FF]{1,20}\s[A-Za-z\u0400-\u04FF]{1,20}\s?[A-Za-z\u0400-\u04FF]{0,20}"
                                        placeholder="<fmt:message key="account.label.name" bundle="${lang}"/>">
                             </td>
                             <td><input required oninvalid='this.setCustomValidity("<fmt:message
@@ -350,6 +361,7 @@
                                        class="form-control"
                                        name="login"
                                        value="${account.login}"
+                                       pattern="[_@a-zA-Z0-9.]{1,50}"
                                        placeholder="<fmt:message key="account.label.login" bundle="${lang}"/>">
                             </td>
                             <td><input required oninvalid='this.setCustomValidity("<fmt:message
@@ -358,6 +370,7 @@
                                        class="form-control"
                                        name="email"
                                        value="${account.email}"
+                                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
                                        placeholder="<fmt:message key="account.label.email" bundle="${lang}"/>">
                             </td>
                             <td><input required oninvalid='this.setCustomValidity("<fmt:message
@@ -366,6 +379,7 @@
                                        class="form-control"
                                        name="phone"
                                        value="${account.phone}"
+                                       pattern="[\+]?[0-9][(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}"
                                        placeholder="<fmt:message key="account.label.phone" bundle="${lang}"/>">
                             </td>
                             <td>
