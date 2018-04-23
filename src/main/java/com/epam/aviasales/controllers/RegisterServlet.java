@@ -19,9 +19,14 @@ public class RegisterServlet extends HttpServlet {
   private RegisterService registerService;
 
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    req.getRequestDispatcher("/WEB-INF/registration.jsp").forward(req, resp);
+    HttpSession session = request.getSession();
+    Account account = (Account) session.getAttribute("account");
+    if (account != null) {
+      request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
+    }
+    request.getRequestDispatcher("/WEB-INF/registration.jsp").forward(request, response);
   }
 
   @Override

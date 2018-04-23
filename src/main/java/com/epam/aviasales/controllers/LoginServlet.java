@@ -17,9 +17,14 @@ public class LoginServlet extends HttpServlet {
   private LoginService loginService;
 
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    req.getRequestDispatcher("/WEB-INF/login.jsp").forward(req, resp);
+    HttpSession session = request.getSession();
+    Account account = (Account) session.getAttribute("account");
+    if (account != null) {
+      request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
+    }
+    request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
   }
 
   /*ToDo: add code for remembeMe checkbox,

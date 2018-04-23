@@ -13,12 +13,10 @@
             <fmt:message key="username" bundle="${lang}"/> required autofocus>
         </div>--%>
         <div class="form-group">
-            <label for="inputLogin" class="control-label"><fmt:message key="register.label.login"
-                                                                       bundle="${lang}"/></label>
             <input type="login" name="inputLogin" pattern="[_@a-zA-z0-9]{1,50}" id="inputLogin"
                    class="form-control" data-error="<fmt:message key="register.error.wrong_login"
                     bundle="${lang}"/>" placeholder=
-                   <fmt:message key="register.label.login" bundle="${lang}"/> autofocus required>
+                   <fmt:message key="register.label.login" bundle="${lang}"/> required>
             <div class="help-block with-errors"></div>
         </div>
         <div class="form-group">
@@ -30,12 +28,6 @@
                            key="password" bundle="${lang}"/> required>
             <div class="help-block with-errors"></div>
         </div>
-        <%--<div class="form-group">
-            <label for="inputPassword" class="sr-only"></label>
-            <input type="password" name="inputPassword" id="inputPassword" class="form-control"
-                   placeholder=
-                   <fmt:message key="password" bundle="${lang}"/> required>
-        </div>--%>
         <div class="form-group">
             <button class="btn btn-lg btn-primary btn-block" type="submit"><fmt:message key="log_in"
                                                                                         bundle="${lang}"/></button>
