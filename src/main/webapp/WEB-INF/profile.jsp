@@ -37,7 +37,7 @@
     </select>
 </form>--%>
 
-<%--<%@include file="layout/header.jsp" %>--%>
+<%--<%@include file="layout/header.jspf" %>--%>
 <%@include file="layout/header.jspf" %>
 <title><fmt:message
         key="profile.title"

@@ -1,9 +1,12 @@
-<c:set var="COLUMNS_FIRST_NUM" value="0"/>
-<c:set var="COLUMNS_COUNT" value="6"/>
-<c:set var="page" value="${page == null || page < 1 ? 1 : page}"/>
 <%@include file="layout/header.jspf" %>
     <title><fmt:message key="manage.tickets.title" bundle="${lang}"/></title>
 </head>
+<c:if test="${account == null || (account.role != 'ADMIN' && account.role != 'MANAGER')}">
+        <% response.sendError(403); %>
+</c:if>
+<c:set var="COLUMNS_FIRST_NUM" value="0"/>
+<c:set var="COLUMNS_COUNT" value="6"/>
+<c:set var="page" value="${page == null || page < 1 ? 1 : page}"/>
 <script type="text/javascript">
   var COLUMNS_START_FROM = ${COLUMNS_FIRST_NUM};
   var COLUMNS_COUNT = ${COLUMNS_COUNT};
@@ -78,7 +81,7 @@
   }
 </script>
 <body>
-<%@include file="layout/manageNavigation.jsp" %>
+<%@include file="layout/manageNavigation.jspf" %>
 <div class="container">
     <h2><fmt:message key="page.header.search" bundle="${lang}"/></h2>
     <table id="searchTable" class="table-bordered">
@@ -202,7 +205,10 @@
                 </td>
                 </td>
                 <td>
-                    <select required class="form-control" name="personalDataPassport">
+                    <select required oninvalid='this.setCustomValidity("<fmt:message
+                            key="page.error.field.is.required" bundle="${lang}"/>")'
+                            oninput="setCustomValidity('')" class="form-control"
+                            name="personalDataPassport">
                         <option value="">
                             <fmt:message key="page.label.choose" bundle="${lang}"/>
                         </option>
@@ -213,7 +219,9 @@
                 </td>
 
                 <td>
-                    <select required class="form-control" name="flightId">
+                    <select required oninvalid='this.setCustomValidity("<fmt:message
+                            key="page.error.field.is.required" bundle="${lang}"/>")'
+                            oninput="setCustomValidity('')" class="form-control" name="flightId">
                         <option value="">
                             <fmt:message key="page.label.choose" bundle="${lang}"/>
                         </option>
@@ -223,7 +231,9 @@
                     </select>
                 </td>
                 <td>
-                    <select required class="form-control" name="accountName">
+                    <select required oninvalid='this.setCustomValidity("<fmt:message
+                            key="page.error.field.is.required" bundle="${lang}"/>")'
+                            oninput="setCustomValidity('')" class="form-control" name="accountName">
                         <option value="">
                             <fmt:message key="page.label.choose" bundle="${lang}"/>
                         </option>
@@ -232,12 +242,17 @@
                         </c:forEach>
                     </select>
                 </td>
-                <td><input required type="number" class="form-control" name="price"
+                <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                        key="page.error.field.is.required" bundle="${lang}"/>")'
+                           oninput="setCustomValidity('')" type="number" class="form-control"
+                           name="price"
                            value=""
                            placeholder="<fmt:message key="ticket.label.price" bundle="${lang}"/>">
                 </td>
                 <td>
-                    <select required name="isBusiness" class="form-control">
+                    <select required oninvalid='this.setCustomValidity("<fmt:message
+                            key="page.error.field.is.required" bundle="${lang}"/>")'
+                            oninput="setCustomValidity('')" name="isBusiness" class="form-control">
                         <option value="">
                             <fmt:message key="page.label.choose" bundle="${lang}"/>
                         </option>
@@ -264,174 +279,189 @@
     </table>
     <br>
     <h2><fmt:message key="page.header.result" bundle="${lang}"/></h2>
-    <div class="text-center">
-        <nav aria-label="page navigation">
-            <ul class="pagination">
-                <c:if test="${page > 1}">
-                    <li class="page-item">
-                        <a class="page-link"
-                           href="${prevPageURL}">
-                            <fmt:message key="page.previous" bundle="${lang}"/>
-                        </a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="${prevPageURL}">
-                                ${page-1}
-                        </a>
-                    </li>
-                </c:if>
-                <li class="page-item">
-                    <a class="page-link" href="${currPageURL}">
-                        ${page}
-                    </a>
-                </li>
-                <li class=" page-item">
-                    <a class="page-link" href="${nextPageURL}">
-                        ${page+1}
-                    </a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="${nextPageURL}">
-                        <fmt:message key="page.next" bundle="${lang}"/>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-    <table id="dataTable" class="table-bordered">
-        <thead>
-        <tr>
-            <th class="text-center" style="width: 5%;">
-                <fmt:message key="ticket.label.id" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 13%;">
-                <fmt:message key="ticket.label.personalData.passport" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 25%;">
-                <fmt:message key="ticket.label.flight" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 15%;">
-                <fmt:message key="ticket.label.account.name" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 7%;">
-                <fmt:message key="ticket.label.price" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 10%;">
-                <fmt:message key="ticket.label.type" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 10%; min-width: 150px;">
-                <fmt:message key="page.label.control" bundle="${lang}"/></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr id="filtering-row">
-            <c:forEach begin="${COLUMNS_FIRST_NUM}" end="${COLUMNS_COUNT - 1}" var="counter">
-                <td>
-                    <div class="form-group has-feedback">
-                        <i class="form-control-feedback glyphicon glyphicon-search"></i>
-                        <input id="seekAtColumn${counter}" class="form-control" type="text"
-                               onkeyup="searchAtTable()"
-                               placeholder="<fmt:message key="page.label.filter" bundle="${lang}"/>"
-                               title="<fmt:message key="page.label.filter.title" bundle="${lang}"/>">
-                    </div>
-                </td>
-            </c:forEach>
-            <td>
-                <div class="btn-group btn-group-justified">
-                    <div class="btn-group">
-                        <input class="btn btn-primary" type="button" onclick="clearFilterFields()"
-                               value="<fmt:message key="page.label.filter.clear" bundle="${lang}"/>"/>
-                    </div>
-                </div>
-            </td>
-        </tr>
-        </tr>
-        <c:forEach var="ticket" items="${tickets}">
-            <tr>
-                <form action="/manage/tickets" method="post">
-                    <td><input readonly type="text" class="form-control" width="10"
-                               name="id"
-                               value="${ticket.id}"
-                               placeholder="<fmt:message key="ticket.label.id" bundle="${lang}"/>">
-                    </td>
-                    <td><input readonly type="text" class="form-control"
-                               name="personalData.passport"
-                               value="${ticket.personalData.passport}"
-                               placeholder="<fmt:message key="ticket.label.personalData.passport" bundle="${lang}"/>">
-                    </td>
-                    <td><input readonly type="text" class="form-control" width="10" name="flight"
-                               value="${ticket.flight}"
-                               placeholder="<fmt:message key="ticket.label.flight" bundle="${lang}"/>">
-                    </td>
-                    <td><input readonly type="text" class="form-control" name="account.name"
-                               value="${ticket.account.name} (${ticket.account.login})"
-                               placeholder="<fmt:message key="ticket.label.account.name" bundle="${lang}"/>">
-                    </td>
-                    <td><input readonly type="number" class="form-control" name="price"
-                               value="${ticket.price}"
-                               placeholder="<fmt:message key="ticket.label.price" bundle="${lang}"/>">
-                    </td>
-                    <c:choose>
-                        <c:when test="${ticket.isBusiness}">
-                            <td><input readonly type="text" class="form-control" name="isBusiness"
-                                       value="<fmt:message key="ticket.label.type.business" bundle="${lang}"/>"
-                                       placeholder="<fmt:message key="ticket.label.isBusiness" bundle="${lang}"/>">
-                            </td>
-                        </c:when>
-                        <c:when test="${!ticket.isBusiness}">
-                            <td><input readonly type="text" class="form-control" name="isBusiness"
-                                       value="<fmt:message key="ticket.label.type.economy" bundle="${lang}"/>"
-                                       placeholder="<fmt:message key="ticket.label.isBusiness" bundle="${lang}"/>">
-                            </td>
-                        </c:when>
-                        <c:otherwise>
-                            <td><input readonly type="text" class="form-control" name="isBusiness"
-                                       value="<fmt:message key="ticket.label.type.unknown" bundle="${lang}"/>"
-                                       placeholder="<fmt:message key="ticket.label.isBusiness" bundle="${lang}"/>">
-                            </td>
-                        </c:otherwise>
-                    </c:choose>
+    <c:choose>
+        <c:when test="${tickets == null || tickets.size() == 0}">
+            <h3><fmt:message key="page.result.no.results" bundle="${lang}"/></h3>
+        </c:when>
+        <c:otherwise>
+            <div class="text-center">
+                <nav aria-label="page navigation">
+                    <ul class="pagination">
+                        <c:if test="${page > 1}">
+                            <li class="page-item">
+                                <a class="page-link"
+                                   href="${prevPageURL}">
+                                    <fmt:message key="page.previous" bundle="${lang}"/>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="${prevPageURL}">
+                                        ${page-1}
+                                </a>
+                            </li>
+                        </c:if>
+                        <li class="page-item">
+                            <a class="page-link" href="${currPageURL}">
+                                    ${page}
+                            </a>
+                        </li>
+                        <li class=" page-item">
+                            <a class="page-link" href="${nextPageURL}">
+                                    ${page+1}
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="${nextPageURL}">
+                                <fmt:message key="page.next" bundle="${lang}"/>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <table id="dataTable" class="table-bordered">
+                <thead>
+                <tr>
+                    <th class="text-center" style="width: 5%;">
+                        <fmt:message key="ticket.label.id" bundle="${lang}"/></th>
+                    <th class="text-center" style="width: 13%;">
+                        <fmt:message key="ticket.label.personalData.passport"
+                                     bundle="${lang}"/></th>
+                    <th class="text-center" style="width: 25%;">
+                        <fmt:message key="ticket.label.flight" bundle="${lang}"/></th>
+                    <th class="text-center" style="width: 15%;">
+                        <fmt:message key="ticket.label.account.name" bundle="${lang}"/></th>
+                    <th class="text-center" style="width: 7%;">
+                        <fmt:message key="ticket.label.price" bundle="${lang}"/></th>
+                    <th class="text-center" style="width: 10%;">
+                        <fmt:message key="ticket.label.type" bundle="${lang}"/></th>
+                    <th class="text-center" style="width: 10%; min-width: 150px;">
+                        <fmt:message key="page.label.control" bundle="${lang}"/></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr id="filtering-row">
+                    <c:forEach begin="${COLUMNS_FIRST_NUM}" end="${COLUMNS_COUNT - 1}"
+                               var="counter">
+                        <td>
+                            <div class="form-group has-feedback">
+                                <i class="form-control-feedback glyphicon glyphicon-search"></i>
+                                <input id="seekAtColumn${counter}" class="form-control" type="text"
+                                       onkeyup="searchAtTable()"
+                                       placeholder="<fmt:message key="page.label.filter" bundle="${lang}"/>"
+                                       title="<fmt:message key="page.label.filter.title" bundle="${lang}"/>">
+                            </div>
+                        </td>
+                    </c:forEach>
                     <td>
                         <div class="btn-group btn-group-justified">
                             <div class="btn-group">
-                                <input type="submit" class="btn btn-primary" name="actionDelete"
-                                       value="<fmt:message key="page.label.control.delete" bundle="${lang}"/>">
+                                <input class="btn btn-primary" type="button"
+                                       onclick="clearFilterFields()"
+                                       value="<fmt:message key="page.label.filter.clear" bundle="${lang}"/>"/>
                             </div>
                         </div>
                     </td>
-                </form>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
-    <div class="text-center">
-        <nav aria-label="page navigation">
-            <ul class="pagination">
-                <c:if test="${page > 1}">
-                    <li class="page-item">
-                        <a class="page-link"
-                           href="${prevPageURL}">
-                            <fmt:message key="page.previous" bundle="${lang}"/>
-                        </a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="${prevPageURL}">
-                                ${page-1}
-                        </a>
-                    </li>
-                </c:if>
-                <li class="page-item">
-                    <a class="page-link" href="${currPageURL}">
-                        ${page}
-                    </a>
-                </li>
-                <li class=" page-item">
-                    <a class="page-link" href="${nextPageURL}">
-                        ${page+1}
-                    </a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="${nextPageURL}">
-                        <fmt:message key="page.next" bundle="${lang}"/>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
+                </tr>
+                </tr>
+                <c:forEach var="ticket" items="${tickets}">
+                    <tr>
+                        <form action="/manage/tickets" method="post">
+                            <td><input readonly type="text" class="form-control" width="10"
+                                       name="id"
+                                       value="${ticket.id}"
+                                       placeholder="<fmt:message key="ticket.label.id" bundle="${lang}"/>">
+                            </td>
+                            <td><input readonly type="text" class="form-control"
+                                       name="personalData.passport"
+                                       value="${ticket.personalData.passport}"
+                                       placeholder="<fmt:message key="ticket.label.personalData.passport" bundle="${lang}"/>">
+                            </td>
+                            <td><input readonly type="text" class="form-control" width="10"
+                                       name="flight"
+                                       value="${ticket.flight}"
+                                       placeholder="<fmt:message key="ticket.label.flight" bundle="${lang}"/>">
+                            </td>
+                            <td><input readonly type="text" class="form-control" name="account.name"
+                                       value="${ticket.account.name} (${ticket.account.login})"
+                                       placeholder="<fmt:message key="ticket.label.account.name" bundle="${lang}"/>">
+                            </td>
+                            <td><input readonly type="number" class="form-control" name="price"
+                                       value="${ticket.price}"
+                                       placeholder="<fmt:message key="ticket.label.price" bundle="${lang}"/>">
+                            </td>
+                            <c:choose>
+                                <c:when test="${ticket.isBusiness}">
+                                    <td><input readonly type="text" class="form-control"
+                                               name="isBusiness"
+                                               value="<fmt:message key="ticket.label.type.business" bundle="${lang}"/>"
+                                               placeholder="<fmt:message key="ticket.label.isBusiness" bundle="${lang}"/>">
+                                    </td>
+                                </c:when>
+                                <c:when test="${!ticket.isBusiness}">
+                                    <td><input readonly type="text" class="form-control"
+                                               name="isBusiness"
+                                               value="<fmt:message key="ticket.label.type.economy" bundle="${lang}"/>"
+                                               placeholder="<fmt:message key="ticket.label.isBusiness" bundle="${lang}"/>">
+                                    </td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td><input readonly type="text" class="form-control"
+                                               name="isBusiness"
+                                               value="<fmt:message key="ticket.label.type.unknown" bundle="${lang}"/>"
+                                               placeholder="<fmt:message key="ticket.label.isBusiness" bundle="${lang}"/>">
+                                    </td>
+                                </c:otherwise>
+                            </c:choose>
+                            <td>
+                                <div class="btn-group btn-group-justified">
+                                    <div class="btn-group">
+                                        <input type="submit" class="btn btn-primary"
+                                               name="actionDelete"
+                                               value="<fmt:message key="page.label.control.delete" bundle="${lang}"/>">
+                                    </div>
+                                </div>
+                            </td>
+                        </form>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <nav aria-label="page navigation">
+                    <ul class="pagination">
+                        <c:if test="${page > 1}">
+                            <li class="page-item">
+                                <a class="page-link"
+                                   href="${prevPageURL}">
+                                    <fmt:message key="page.previous" bundle="${lang}"/>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="${prevPageURL}">
+                                        ${page-1}
+                                </a>
+                            </li>
+                        </c:if>
+                        <li class="page-item">
+                            <a class="page-link" href="${currPageURL}">
+                                    ${page}
+                            </a>
+                        </li>
+                        <li class=" page-item">
+                            <a class="page-link" href="${nextPageURL}">
+                                    ${page+1}
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="${nextPageURL}">
+                                <fmt:message key="page.next" bundle="${lang}"/>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </c:otherwise>
+    </c:choose>
 </div>
 <%@include file="layout/footer.jspf" %>
 </body>

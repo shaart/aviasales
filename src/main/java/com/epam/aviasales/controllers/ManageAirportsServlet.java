@@ -1,13 +1,17 @@
 package com.epam.aviasales.controllers;
 
 import com.epam.aviasales.domain.Airport;
+import com.epam.aviasales.domain.Role;
 import com.epam.aviasales.services.AirportService;
 import com.epam.aviasales.services.ParserService;
 import com.epam.aviasales.services.impl.AirportServiceImpl;
 import com.epam.aviasales.services.impl.ParserServiceImpl;
 import com.epam.aviasales.util.Action;
+import com.epam.aviasales.util.AuthHelper;
+import com.epam.aviasales.util.ErrorHelper;
 import com.epam.aviasales.util.ParseRequestHelper;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,6 +24,8 @@ public class ManageAirportsServlet extends HttpServlet {
 
   private ParserService parserService;
   private AirportService airportService;
+  private static final String SERVLET_ADDRESS = "/manage/airports";
+  private static final List<Role> ALLOWED_ROLES = Arrays.asList(Role.ADMIN, Role.MANAGER);
 
   @Override
   public void init() throws ServletException {
@@ -34,6 +40,12 @@ public class ManageAirportsServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
+
+    boolean canAccess = AuthHelper.isAllowedUser(req, resp, ALLOWED_ROLES, SERVLET_ADDRESS);
+    if (!canAccess) {
+      return;
+    }
+
     try {
       final int DEFAULT_PAGE_SIZE = 15;
       final int DEFAULT_PAGE = 1;
@@ -53,15 +65,19 @@ public class ManageAirportsServlet extends HttpServlet {
 
       req.getRequestDispatcher("/WEB-INF/manageAirports.jsp").forward(req, resp);
     } catch (Exception e) {
-      log.error(e.getCause(), e);
-      req.setAttribute("error", e.toString());
-      req.getRequestDispatcher("/WEB-INF/error.jsp").forward(req, resp);
+      ErrorHelper.redirectToErrorPage(req, resp, e, SERVLET_ADDRESS);
+      return;
     }
   }
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
+
+    boolean canAccess = AuthHelper.isAllowedUser(req, resp, ALLOWED_ROLES, SERVLET_ADDRESS);
+    if (!canAccess) {
+      return;
+    }
 
     Action action = ParseRequestHelper.getRequestAction(req);
     try {
@@ -85,14 +101,14 @@ public class ManageAirportsServlet extends HttpServlet {
           break;
       }
     } catch (Exception e) {
-      log.error(e.getCause(), e);
-      resp.sendError(400);
+      ErrorHelper.redirectToErrorPage(req, resp, e, SERVLET_ADDRESS);
       return;
     }
     try {
-      resp.sendRedirect("/manage/airports");
+      resp.sendRedirect(SERVLET_ADDRESS);
     } catch (IOException e) {
-      log.error(e);
+      ErrorHelper.redirectToErrorPage(req, resp, e, SERVLET_ADDRESS);
+      return;
     }
   }
 }

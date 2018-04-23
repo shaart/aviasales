@@ -25,13 +25,13 @@
 <html>
 <head>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/resources/favicon.png">
     <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/aviasales.css">
-    <script type="text/javascript" src="webjars/jquery/2.1.1/jquery.min.js"></script>
-    <script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript"
-            src="webjars/jquery-validation/1.17.0/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="/webjars/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/aviasales.js"></script>
+    <script type="text/javascript" src="/js/validator.js"></script>
 
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
@@ -70,10 +70,9 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <form>
-                            <input type="image" src="../resources/header/russia.png" value="ru"
+                            <input type="image" src="/resources/header/russian.png" value="ru"
                                    name="language" onclick="submit()">
-                            <input type="image" src="../resources/header/united-kingdom.png"
-                                   value="en"
+                            <input type="image" src="/resources/header/english.png" value="en"
                                    name="language" onclick="submit()">
                         </form>
                     </li>
@@ -81,3 +80,10 @@
             </div><!--/.nav-collapse -->
         </div>
     </nav>
+    <script>
+    $(document).ready(function() {
+      $("form").validate({
+        lang: '${language}' // or whatever language option you have.
+      });
+    });
+    </script>

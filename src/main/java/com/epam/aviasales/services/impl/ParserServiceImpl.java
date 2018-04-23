@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.log4j.Log4j;
+import org.apache.commons.codec.digest.DigestUtils;
 
 @Log4j
 public class ParserServiceImpl implements ParserService {
@@ -71,6 +72,8 @@ public class ParserServiceImpl implements ParserService {
           return (T) airportsService.getAirportByName(parameter);
         case STRING:
           return (T) parameter;
+        case PASSWORD:
+          return (T) DigestUtils.sha256Hex(parameter);
         case LOCAL_DATE:
           return (T) LocalDate.parse(parameter);
         case FLIGHT:
@@ -176,11 +179,13 @@ public class ParserServiceImpl implements ParserService {
     Long id = parseParameter(req.getParameter("id"), CastType.LONG);
     Role role = parseParameter(req.getParameter("role"), CastType.ROLE);
     String name = parseParameter(req.getParameter("name"), CastType.STRING);
+    String password = parseParameter(req.getParameter("password"), CastType.PASSWORD);
     String login = parseParameter(req.getParameter("login"), CastType.STRING);
     String email = parseParameter(req.getParameter("email"), CastType.STRING);
     String phone = parseParameter(req.getParameter("phone"), CastType.STRING);
 
-    return Account.builder().id(id).role(role).name(name).login(login).email(email).phone(phone)
+    return Account.builder().id(id).role(role).name(name).login(login).password(password)
+        .email(email).phone(phone)
         .build();
   }
 }

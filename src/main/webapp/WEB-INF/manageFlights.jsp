@@ -1,9 +1,12 @@
-<c:set var="COLUMNS_FIRST_NUM" value="0"/>
-<c:set var="COLUMNS_COUNT" value="10"/>
-<c:set var="page" value="${page == null || page < 1 ? 1 : page}"/>
 <%@include file="layout/header.jspf" %>
     <title><fmt:message key="manage.flights.title" bundle="${lang}"/></title>
 </head>
+<c:if test="${account == null || (account.role != 'ADMIN' && account.role != 'MANAGER')}">
+        <% response.sendError(403); %>
+</c:if>
+<c:set var="COLUMNS_FIRST_NUM" value="0"/>
+<c:set var="COLUMNS_COUNT" value="10"/>
+<c:set var="page" value="${page == null || page < 1 ? 1 : page}"/>
 <script type="text/javascript">
   var COLUMNS_START_FROM = ${COLUMNS_FIRST_NUM};
   var COLUMNS_COUNT = ${COLUMNS_COUNT};
@@ -78,7 +81,7 @@
   }
 </script>
 <body>
-<%@include file="layout/manageNavigation.jsp" %>
+<%@include file="layout/manageNavigation.jspf" %>
 <c:if test="${not empty error}">
     <div class="alert alert-danger">
             ${error}
@@ -283,7 +286,10 @@
                            placeholder="<fmt:message key="flight.label.id" bundle="${lang}"/>">
                 </td>
                 <td>
-                    <select required class="form-control" name="fromAirport" size="1">
+                    <select required oninvalid='this.setCustomValidity("<fmt:message
+                            key="page.error.field.is.required" bundle="${lang}"/>")'
+                            oninput="setCustomValidity('')" class="form-control" name="fromAirport"
+                            size="1">
                         <c:choose>
                             <c:when test="${not empty fromAirport}">
                                 <option selected value="">
@@ -310,7 +316,10 @@
                     </select>
                 </td>
                 <td>
-                    <select required class="form-control" data-live-search="true" name="toAirport"
+                    <select required oninvalid='this.setCustomValidity("<fmt:message
+                            key="page.error.field.is.required" bundle="${lang}"/>")'
+                            oninput="setCustomValidity('')" class="form-control"
+                            data-live-search="true" name="toAirport"
                             size="1">
                         <c:choose>
                             <c:when test="${not empty toAirport}">
@@ -338,7 +347,10 @@
                     </select>
                 </td>
                 <td>
-                    <select required class="form-control" data-live-search="true" name="airplane"
+                    <select required oninvalid='this.setCustomValidity("<fmt:message
+                            key="page.error.field.is.required" bundle="${lang}"/>")'
+                            oninput="setCustomValidity('')" class="form-control"
+                            data-live-search="true" name="airplane"
                             size="1">
                         <c:choose>
                             <c:when test="${not empty airplane}">
@@ -373,19 +385,31 @@
                            placeholder="<fmt:message key="flight.label.arrival" bundle="${lang}"/>"
                            pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" required>
                 </td>
-                <td><input required type="number" class="form-control" name="baseTicketPrice"
+                <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                        key="page.error.field.is.required" bundle="${lang}"/>")'
+                           oninput="setCustomValidity('')" type="number" class="form-control"
+                           name="baseTicketPrice"
                            value=""
                            placeholder="<fmt:message key="flight.label.base_ticket_price" bundle="${lang}"/>">
                 </td>
-                <td><input required type="number" class="form-control" name="extraBaggagePrice"
+                <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                        key="page.error.field.is.required" bundle="${lang}"/>")'
+                           oninput="setCustomValidity('')" type="number" class="form-control"
+                           name="extraBaggagePrice"
                            value=""
                            placeholder="<fmt:message key="flight.label.extra_baggage_price" bundle="${lang}"/>">
                 </td>
-                <td><input required type="number" class="form-control" name="freeSeatEconomy"
+                <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                        key="page.error.field.is.required" bundle="${lang}"/>")'
+                           oninput="setCustomValidity('')" type="number" class="form-control"
+                           name="freeSeatEconomy"
                            value=""
                            placeholder="<fmt:message key="flight.label.free_seat_economy" bundle="${lang}"/>">
                 </td>
-                <td><input required type="number" class="form-control" name="freeSeatBusiness"
+                <td><input required oninvalid='this.setCustomValidity("<fmt:message
+                        key="page.error.field.is.required" bundle="${lang}"/>")'
+                           oninput="setCustomValidity('')" type="number" class="form-control"
+                           name="freeSeatBusiness"
                            value=""
                            placeholder="<fmt:message key="flight.label.free_seat_business" bundle="${lang}"/>">
                 </td>
@@ -404,216 +428,232 @@
     </table>
     <br>
     <h2><fmt:message key="flight.header.result" bundle="${lang}"/></h2>
-    <div class="text-center">
-        <nav aria-label="page navigation">
-            <ul class="pagination">
-                <c:if test="${page > 1}">
-                    <li class="page-item">
-                        <a class="page-link"
-                           href="${prevPageURL}">
-                            <fmt:message key="page.previous" bundle="${lang}"/>
-                        </a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="${prevPageURL}">
-                                ${page-1}
-                        </a>
-                    </li>
-                </c:if>
-                <li class="page-item">
-                    <a class="page-link" href="${currPageURL}">
-                        ${page}
-                    </a>
-                </li>
-                <li class=" page-item">
-                    <a class="page-link" href="${nextPageURL}">
-                        ${page+1}
-                    </a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="${nextPageURL}">
-                        <fmt:message key="page.next" bundle="${lang}"/>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-    <table id="dataTable" class="table-responsive">
-        <thead>
-        <tr>
-            <th class="text-center" style="width: 5%; min-width: 70px;">
-                <fmt:message key="flight.label.id" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%; min-width: 110px;">
-                <fmt:message key="flight.label.from" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%; min-width: 110px;">
-                <fmt:message key="flight.label.to" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%; min-width: 120px;">
-                <fmt:message key="flight.label.airplane" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 5%; max-width: 240px;">
-                <fmt:message key="flight.label.departure" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 5%; max-width: 240px;">
-                <fmt:message key="flight.label.arrival" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 10%; min-width: 80px;">
-                <fmt:message key="flight.label.base_ticket_price" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 10%; min-width: 75px;">
-                <fmt:message key="flight.label.extra_baggage_price" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 5%; min-width: 60px;">
-                <fmt:message key="flight.label.free_seat_economy" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 5%; min-width: 60px;">
-                <fmt:message key="flight.label.free_seat_business" bundle="${lang}"/></th>
-            <th class="text-center" style="width: 20%; min-width: 170px;">
-                <fmt:message key="flight.label.control" bundle="${lang}"/></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr id="filtering-row">
-            <c:forEach begin="${COLUMNS_FIRST_NUM}" end="${COLUMNS_COUNT - 1}" var="counter">
-                <td>
-                    <div class="form-group has-feedback">
-                        <i class="form-control-feedback glyphicon glyphicon-search"></i>
-                        <input id="seekAtColumn${counter}" class="form-control" type="text"
-                               onkeyup="searchAtTable()"
-                               placeholder="<fmt:message key="flight.label.filter" bundle="${lang}"/>"
-                               title="<fmt:message key="flight.label.filter.title" bundle="${lang}"/>">
-                    </div>
-                </td>
-            </c:forEach>
-            <td>
-                <div class="btn-group btn-group-justified">
-                    <div class="btn-group">
-                        <input class="btn btn-primary" type="button" onclick="clearFilterFields()"
-                               value="<fmt:message key="flight.label.filter.clear" bundle="${lang}"/>"/>
-                    </div>
-                </div>
-            </td>
-        </tr>
-        </tr>
-        <c:forEach var="flight" items="${flights}">
-            <tr>
-                <form action="/manage/flights" method="post">
-                    <td><input readonly type="text" class="form-control" width="10" name="id"
-                               value="${flight.id}"></td>
-                    <td>
-                        <select class="form-control" name="fromAirport" size="1">
-                            <c:forEach var="airport" items="${airports}">
-                                <c:choose>
-                                    <c:when test="${airport.name == flight.fromAirport.name}">
-                                        <option selected
-                                                value="${airport.name}">${airport.name}</option>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <option value="${airport.name}">${airport.name}</option>
-                                    </c:otherwise>
-                                </c:choose>
-                            </c:forEach>
-                        </select>
-                    </td>
-                    <td>
-                        <select class="form-control" data-live-search="true" name="toAirport"
-                                size="1">
-                            <c:forEach var="airport" items="${airports}">
-                                <c:choose>
-                                    <c:when test="${airport.name == flight.toAirport.name}">
-                                        <option selected
-                                                value="${airport.name}">${airport.name}</option>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <option value="${airport.name}">${airport.name}</option>
-                                    </c:otherwise>
-                                </c:choose>
-                            </c:forEach>
-                        </select>
-                    </td>
-                    <td>
-                        <select class="form-control" data-live-search="true" name="airplane"
-                                size="1">
-                            <c:forEach var="airplane" items="${airplanes}">
-                                <c:choose>
-                                    <c:when test="${airplane.name == flight.airplane.name}">
-                                        <option selected
-                                                value="${airplane.name}">${airplane.name}</option>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <option value="${airplane.name}">${airplane.name}</option>
-                                    </c:otherwise>
-                                </c:choose>
-                            </c:forEach>
-                        </select>
-                    </td>
-                    <td><fmt:parseDate value="${ flight.departureTime }"
-                                       pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime"
-                                       type="both"/>
-                        <input type="datetime-local" class="form-control" name="departureTime"
-                               value="<fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm" value="${ parsedDateTime }"/>"
-                               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" required>
-                            <%--value="${juf:getLocalizedDateTime(flight.departureTime, language)}">--%>
-                    </td>
-                    <td><fmt:parseDate value="${ flight.arrivalTime }"
-                                       pattern="yyyy-MM-dd'T'HH:mm"
-                                       var="parsedDateTime" type="both"/>
-                        <input type="datetime-local" class="form-control" name="arrivalTime"
-                               value="<fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm" value="${ parsedDateTime }"/>"
-                               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" required>
-                    </td>
-                    <td><input type="number" class="form-control" name="baseTicketPrice"
-                               value="${flight.baseTicketPrice}"></td>
-                    <td><input type="number" class="form-control" name="extraBaggagePrice"
-                               value="${flight.extraBaggagePrice}"></td>
-                    <td><input type="number" class="form-control" name="freeSeatEconomy"
-                               value="${flight.freeSeatEconomy}"></td>
-                    <td><input type="number" class="form-control" name="freeSeatBusiness"
-                               value="${flight.freeSeatBusiness}"></td>
+    <c:choose>
+        <c:when test="${flights == null || flights.size() == 0}">
+            <h3><fmt:message key="page.result.no.results" bundle="${lang}"/></h3>
+        </c:when>
+        <c:otherwise>
+            <div class="text-center">
+                <nav aria-label="page navigation">
+                    <ul class="pagination">
+                        <c:if test="${page > 1}">
+                            <li class="page-item">
+                                <a class="page-link"
+                                   href="${prevPageURL}">
+                                    <fmt:message key="page.previous" bundle="${lang}"/>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="${prevPageURL}">
+                                        ${page-1}
+                                </a>
+                            </li>
+                        </c:if>
+                        <li class="page-item">
+                            <a class="page-link" href="${currPageURL}">
+                                    ${page}
+                            </a>
+                        </li>
+                        <li class=" page-item">
+                            <a class="page-link" href="${nextPageURL}">
+                                    ${page+1}
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="${nextPageURL}">
+                                <fmt:message key="page.next" bundle="${lang}"/>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <table id="dataTable" class="table-responsive">
+                <thead>
+                <tr>
+                    <th class="text-center" style="width: 5%; min-width: 70px;">
+                        <fmt:message key="flight.label.id" bundle="${lang}"/></th>
+                    <th class="text-center" style="width: 20%; min-width: 110px;">
+                        <fmt:message key="flight.label.from" bundle="${lang}"/></th>
+                    <th class="text-center" style="width: 20%; min-width: 110px;">
+                        <fmt:message key="flight.label.to" bundle="${lang}"/></th>
+                    <th class="text-center" style="width: 20%; min-width: 120px;">
+                        <fmt:message key="flight.label.airplane" bundle="${lang}"/></th>
+                    <th class="text-center" style="width: 5%; max-width: 240px;">
+                        <fmt:message key="flight.label.departure" bundle="${lang}"/></th>
+                    <th class="text-center" style="width: 5%; max-width: 240px;">
+                        <fmt:message key="flight.label.arrival" bundle="${lang}"/></th>
+                    <th class="text-center" style="width: 10%; min-width: 80px;">
+                        <fmt:message key="flight.label.base_ticket_price" bundle="${lang}"/></th>
+                    <th class="text-center" style="width: 10%; min-width: 75px;">
+                        <fmt:message key="flight.label.extra_baggage_price" bundle="${lang}"/></th>
+                    <th class="text-center" style="width: 5%; min-width: 60px;">
+                        <fmt:message key="flight.label.free_seat_economy" bundle="${lang}"/></th>
+                    <th class="text-center" style="width: 5%; min-width: 60px;">
+                        <fmt:message key="flight.label.free_seat_business" bundle="${lang}"/></th>
+                    <th class="text-center" style="width: 20%; min-width: 170px;">
+                        <fmt:message key="flight.label.control" bundle="${lang}"/></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr id="filtering-row">
+                    <c:forEach begin="${COLUMNS_FIRST_NUM}" end="${COLUMNS_COUNT - 1}"
+                               var="counter">
+                        <td>
+                            <div class="form-group has-feedback">
+                                <i class="form-control-feedback glyphicon glyphicon-search"></i>
+                                <input id="seekAtColumn${counter}" class="form-control" type="text"
+                                       onkeyup="searchAtTable()"
+                                       placeholder="<fmt:message key="flight.label.filter" bundle="${lang}"/>"
+                                       title="<fmt:message key="flight.label.filter.title" bundle="${lang}"/>">
+                            </div>
+                        </td>
+                    </c:forEach>
                     <td>
                         <div class="btn-group btn-group-justified">
                             <div class="btn-group">
-                                <input type="submit" class="btn btn-primary" name="actionSave"
-                                       value="<fmt:message key="flight.label.control.save" bundle="${lang}"/>">
-                            </div>
-                            <div class="btn-group">
-                                <input type="submit" class="btn btn-primary" name="actionDelete"
-                                       value="<fmt:message key="flight.label.control.delete" bundle="${lang}"/>">
+                                <input class="btn btn-primary" type="button"
+                                       onclick="clearFilterFields()"
+                                       value="<fmt:message key="flight.label.filter.clear" bundle="${lang}"/>"/>
                             </div>
                         </div>
                     </td>
-                </form>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
-    <div class="text-center">
-        <nav aria-label="page navigation">
-            <ul class="pagination">
-                <c:if test="${page > 1}">
-                    <li class="page-item">
-                        <a class="page-link"
-                           href="${prevPageURL}">
-                            <fmt:message key="page.previous" bundle="${lang}"/>
-                        </a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="${prevPageURL}">
-                                ${page-1}
-                        </a>
-                    </li>
-                </c:if>
-                <li class="page-item">
-                    <a class="page-link" href="${currPageURL}">
-                        ${page}
-                    </a>
-                </li>
-                <li class=" page-item">
-                    <a class="page-link" href="${nextPageURL}">
-                        ${page+1}
-                    </a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="${nextPageURL}">
-                        <fmt:message key="page.next" bundle="${lang}"/>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
+                </tr>
+                </tr>
+                <c:forEach var="flight" items="${flights}">
+                    <tr>
+                        <form action="/manage/flights" method="post">
+                            <td><input readonly type="text" class="form-control" width="10"
+                                       name="id"
+                                       value="${flight.id}"></td>
+                            <td>
+                                <select class="form-control" name="fromAirport" size="1">
+                                    <c:forEach var="airport" items="${airports}">
+                                        <c:choose>
+                                            <c:when test="${airport.name == flight.fromAirport.name}">
+                                                <option selected
+                                                        value="${airport.name}">${airport.name}</option>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <option value="${airport.name}">${airport.name}</option>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-control" data-live-search="true"
+                                        name="toAirport"
+                                        size="1">
+                                    <c:forEach var="airport" items="${airports}">
+                                        <c:choose>
+                                            <c:when test="${airport.name == flight.toAirport.name}">
+                                                <option selected
+                                                        value="${airport.name}">${airport.name}</option>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <option value="${airport.name}">${airport.name}</option>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-control" data-live-search="true" name="airplane"
+                                        size="1">
+                                    <c:forEach var="airplane" items="${airplanes}">
+                                        <c:choose>
+                                            <c:when test="${airplane.name == flight.airplane.name}">
+                                                <option selected
+                                                        value="${airplane.name}">${airplane.name}</option>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <option value="${airplane.name}">${airplane.name}</option>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                </select>
+                            </td>
+                            <td><fmt:parseDate value="${ flight.departureTime }"
+                                               pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime"
+                                               type="both"/>
+                                <input type="datetime-local" class="form-control"
+                                       name="departureTime"
+                                       value="<fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm" value="${ parsedDateTime }"/>"
+                                       pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
+                                       required>
+                                    <%--value="${juf:getLocalizedDateTime(flight.departureTime, language)}">--%>
+                            </td>
+                            <td><fmt:parseDate value="${ flight.arrivalTime }"
+                                               pattern="yyyy-MM-dd'T'HH:mm"
+                                               var="parsedDateTime" type="both"/>
+                                <input type="datetime-local" class="form-control" name="arrivalTime"
+                                       value="<fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm" value="${ parsedDateTime }"/>"
+                                       pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
+                                       required>
+                            </td>
+                            <td><input type="number" class="form-control" name="baseTicketPrice"
+                                       value="${flight.baseTicketPrice}"></td>
+                            <td><input type="number" class="form-control" name="extraBaggagePrice"
+                                       value="${flight.extraBaggagePrice}"></td>
+                            <td><input type="number" class="form-control" name="freeSeatEconomy"
+                                       value="${flight.freeSeatEconomy}"></td>
+                            <td><input type="number" class="form-control" name="freeSeatBusiness"
+                                       value="${flight.freeSeatBusiness}"></td>
+                            <td>
+                                <div class="btn-group btn-group-justified">
+                                    <div class="btn-group">
+                                        <input type="submit" class="btn btn-primary"
+                                               name="actionSave"
+                                               value="<fmt:message key="flight.label.control.save" bundle="${lang}"/>">
+                                    </div>
+                                    <div class="btn-group">
+                                        <input type="submit" class="btn btn-primary"
+                                               name="actionDelete"
+                                               value="<fmt:message key="flight.label.control.delete" bundle="${lang}"/>">
+                                    </div>
+                                </div>
+                            </td>
+                        </form>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <nav aria-label="page navigation">
+                    <ul class="pagination">
+                        <c:if test="${page > 1}">
+                            <li class="page-item">
+                                <a class="page-link"
+                                   href="${prevPageURL}">
+                                    <fmt:message key="page.previous" bundle="${lang}"/>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="${prevPageURL}">
+                                        ${page-1}
+                                </a>
+                            </li>
+                        </c:if>
+                        <li class="page-item">
+                            <a class="page-link" href="${currPageURL}">
+                                    ${page}
+                            </a>
+                        </li>
+                        <li class=" page-item">
+                            <a class="page-link" href="${nextPageURL}">
+                                    ${page+1}
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="${nextPageURL}">
+                                <fmt:message key="page.next" bundle="${lang}"/>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </c:otherwise>
+    </c:choose>
 </div>
 <%@include file="layout/footer.jspf" %>
 </body>
