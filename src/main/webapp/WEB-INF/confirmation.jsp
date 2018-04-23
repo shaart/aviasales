@@ -1,5 +1,5 @@
 <%@include file="layout/header.jspf" %>
-<title>aviasales</title>
+<title><fmt:message key="title.confirmation" bundle="${lang}"/></title>
 </head>
 
 <body>

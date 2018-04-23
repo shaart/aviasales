@@ -153,11 +153,11 @@
   </servlet-mapping>
   <!-- SING OUT -->
   <servlet>
-    <servlet-name>SingOutServlet</servlet-name>
-    <servlet-class>com.epam.aviasales.controllers.SingOutServlet</servlet-class>
+    <servlet-name>SignOutServlet</servlet-name>
+    <servlet-class>com.epam.aviasales.controllers.SignOutServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>SingOutServlet</servlet-name>
-    <url-pattern>/singout</url-pattern>
+    <servlet-name>SignOutServlet</servlet-name>
+    <url-pattern>/signout</url-pattern>
   </servlet-mapping>
 </web-app>

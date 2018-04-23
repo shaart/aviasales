@@ -90,7 +90,7 @@
             <div class="help-block with-errors"  style="margin-top: 0px; margin-bottom: 0px"></div>
         </div>
         <div class="form-group">
-            <button class="btn btn-lg btn-primary btn-block" type="submit"><fmt:message
+            <button class="btn btn-primary btn-block" type="submit"><fmt:message
                     key="register.label.signup" bundle="${lang}"/></button>
         </div>
     </form>
